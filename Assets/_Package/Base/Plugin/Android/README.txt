@@ -1,0 +1,1 @@
+Please drag this file to Plugins/Android folder

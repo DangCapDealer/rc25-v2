@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e0f0383e287f0f47ab1255198fcde15, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  Characters:
+  - ID: Orange
+    Icon: {fileID: 21300000, guid: a6a8f7d47981dc84dadc64a3dd8c0a38, type: 3}
+    Prefab: {fileID: 5594401520251053128, guid: 0f1885074e3fa7d4ea9f674050fdc002, type: 3}
+  - ID: Computer
+    Icon: {fileID: 21300000, guid: a17cb312ab6b4de4d9ec44ef35958206, type: 3}
+    Prefab: {fileID: 2302549226669967715, guid: ae1c7cdcd569dd848add1b7fadfd759c, type: 3}
+  - ID: Red
+    Icon: {fileID: 21300000, guid: dde6bf7ff7e5cb649a8c4a82d5c608c4, type: 3}
+    Prefab: {fileID: 8980325765420774130, guid: aecd94cfcf721124da8c376dd3460385, type: 3}
+  - ID: Durple
+    Icon: {fileID: 21300000, guid: 5577a65349d0c6247a84e3838d277c16, type: 3}
+    Prefab: {fileID: 5222546230263490579, guid: 874111644c4bc4e4a86eb43311a95bb0, type: 3}
+  - ID: Garnold
+    Icon: {fileID: 21300000, guid: ea31ff10ee5d9084db3c9204a9cf3651, type: 3}
+    Prefab: {fileID: 4857789508089107167, guid: 5d34e098a12cf2b4a8dd605334919226, type: 3}
+  - ID: Jevin
+    Icon: {fileID: 21300000, guid: 1c110a5bf7fcc3c4ea36a23f94c602ef, type: 3}
+    Prefab: {fileID: 7458795236710059083, guid: e404111116fbed94caaa80523c37c91b, type: 3}
+  - ID: Lime
+    Icon: {fileID: 21300000, guid: dc6029a34bed4514b9ce2f1187df9157, type: 3}
+    Prefab: {fileID: 3850760768410276784, guid: e1182dc096ad28b4cb4ea7393c260d51, type: 3}
+  - ID: Mr Tree
+    Icon: {fileID: 21300000, guid: 68143bbd40693654f9141685938f2297, type: 3}
+    Prefab: {fileID: 1898504628872922963, guid: 23098186c99f3994d9fa609ce42fd88a, type: 3}
+  - ID: Brown
+    Icon: {fileID: 21300000, guid: e69588f4331074a4a9c340ba9943895c, type: 3}
+    Prefab: {fileID: 2088828770091697083, guid: 927467329138a374d87f6751a1d5d838, type: 3}
+  - ID: Pink
+    Icon: {fileID: 21300000, guid: 910e42458f70bef4e95f5007eab45728, type: 3}
+    Prefab: {fileID: 3106136958341658162, guid: 42668d94d05bfd34389643408f8923fd, type: 3}
+  - ID: Black
+    Icon: {fileID: 21300000, guid: 65a162b44a55c2344ae78ae499691534, type: 3}
+    Prefab: {fileID: 3385233564154913613, guid: c45f86b79f2eda244a5c692ca2e65fbd, type: 3}
+  - ID: Robot
+    Icon: {fileID: 21300000, guid: 6c37829cfb6f46d43b2454a1356703a4, type: 3}
+    Prefab: {fileID: 6705867025998381311, guid: 28fc89868e67fb1428c1bbbdaf0281d5, type: 3}
+  - ID: Sky
+    Icon: {fileID: 21300000, guid: 6d51e6f04d17f7544874ebf827a2924f, type: 3}
+    Prefab: {fileID: 8188887784762187032, guid: 5df9585a6f8a00f4fbf14f560d10fbde, type: 3}
+  - ID: Tunner
+    Icon: {fileID: 21300000, guid: 269e9bb5234a3a546ae677e3dff72d75, type: 3}
+    Prefab: {fileID: 5184092401388709296, guid: c7937a5eaf81588458fb10fed3c33409, type: 3}
+  - ID: White
+    Icon: {fileID: 21300000, guid: 69080cbad4bfb8447a747880958adf9a, type: 3}
+    Prefab: {fileID: 8760929717443306349, guid: 5969f0d9745b7f446ba65003abf99531, type: 3}
