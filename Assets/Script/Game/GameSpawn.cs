@@ -9,6 +9,13 @@ public class GameSpawn : MonoSingleton<GameSpawn>
     public GameObject GrayPrefab;
 
     public List<GameObject> BaseObjects = new List<GameObject>();
+    public List<GameObject> CreateObjects = new List<GameObject>();
+
+    public CharacterDataSO.CharacterSO FindCharacterData(string msg)
+    {
+        var dataFromSO = CharacterData.Find(msg);
+        return dataFromSO;
+    }
 
     public Transform CheckingNearCharacterInPool(Vector2 target)
     {
@@ -30,7 +37,18 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     public void SpawnCharacterIntoPosition(string msg, Transform target)
     {
-        target.SetActive(false);
+        var dataFromSO = FindCharacterData(msg);
+        if (dataFromSO == null)
+        {
+            Debug.Log($"Data {msg} not found");
+            return;
+        }
+
+        PoolByID.Instance.PushToPool(target.gameObject);
+        var character = PoolByID.Instance.GetPrefab(dataFromSO.Prefab, target.position, Quaternion.identity, this.transform);
+        CreateObjects.Add(character);
+        var script = character.GetComponent<Character>();
+        script.CreateCharacter();
     }    
 
 
@@ -46,22 +64,29 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     private void OnThemeStype(string msg)
     {
-        BaseObjects.ForEach(x => PoolByID.Instance.PushToPool(x));
-        BaseObjects.Clear();
+        RemoveAllCharacter();
 
         for (int i = 0; i < GameManager.Instance.NumberOfCharacter; i++)
         {
             var position = GridInCamera.Instance.GetPosition(i).WithZ(0);
             if (msg == "Normal")
             {
-                var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, position, Quaternion.identity, transform);
+                var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, position, Quaternion.identity, this.transform);
                 BaseObjects.Add(sponky);
             }
             else if (msg == "Horror")
             {
-                var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, transform);
+                var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
                 BaseObjects.Add(sponky);
             }
         }
     }
+
+    public void RemoveAllCharacter()
+    {
+        BaseObjects.ForEach(x => PoolByID.Instance.PushToPool(x));
+        BaseObjects.Clear();
+        CreateObjects.ForEach(x => PoolByID.Instance.PushToPool(x));
+        CreateObjects.Clear();
+    }    
 }

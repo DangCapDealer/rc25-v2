@@ -11,8 +11,35 @@ public class GameUICanvas : MonoBehaviour
 
     public void CreateGame()
     {
+        CreateUIGame();
         GridInCamera.Instance.CreatePosition();
         GameEvent.OnThemeStypeMethod(GameManager.Instance.Style.ToString());
+    }
+
+    private void CreateUIGame()
+    {
+        Content.ForChild(_child =>
+        {
+            var dataSO = GameSpawn.Instance.FindCharacterData(_child.name);
+            if(dataSO == null)
+            {
+                Debug.Log($"Data {_child.name} not found");
+                return;
+            }
+
+            _child.ForChild(_childType =>
+            {
+                _childType.localPosition = Vector3.zero;
+                _childType.SetActive(true);
+            });
+
+            var imgs = _child.GetComponentsInChildren<Image>();
+            imgs.ForEach(img =>
+            {
+                img.sprite = dataSO.Icon;
+                img.preserveAspect = true;
+            });
+        });
     }
 
     public void AddSlotInGame()
@@ -69,6 +96,7 @@ public class GameUICanvas : MonoBehaviour
         else
         {
             ContentMask.enabled = true;
+            target.SetActive(false);
             GameSpawn.Instance.SpawnCharacterIntoPosition(msg, targetObject);
         }
     }
@@ -103,5 +131,19 @@ public class GameUICanvas : MonoBehaviour
 
         return null;
     }
+
+    public void BtnHome()
+    {
+        CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
+        GameSpawn.Instance.RemoveAllCharacter();
+    }    
+
+    public void BtnAuto()
+    {
+        for(int i = 0; i < Content.childCount;i++)
+        {
+            var child = Content.GetChild(i);
+        }    
+    }    
 
 }
