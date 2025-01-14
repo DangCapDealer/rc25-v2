@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
-    public AudioClip AudioClip;
-    public AudioSource AudioSource;
+    private SoundPrefab _soundPrefab;
 
     public bool IsMute = false;
     public bool IsHeadphone = false;
@@ -16,16 +15,19 @@ public class Character : MonoBehaviour
         IsMute = false;
         IsHeadphone = false;
 
-        AudioSource.mute = IsMute;
-        AudioSource.clip = AudioClip;
-        AudioSource.loop = true;
-        AudioSource.Play();
+        _soundPrefab = SoundSpawn.Instance.Find(transform.name);
+        _soundPrefab.Mute = IsMute;
 
+        RegisterCameraCanvas(gameCamera);
+        RegisterCanvas();
+    }
+
+    private void RegisterCameraCanvas(Camera gameCamera)
+    {
         var canvasObject = this.transform.GetChild(0);
         var canvasScript = canvasObject.GetComponent<Canvas>();
         canvasScript.worldCamera = gameCamera;
-        RegisterCanvas();
-    }
+    }    
 
     private void RegisterCanvas()
     {
@@ -90,16 +92,16 @@ public class Character : MonoBehaviour
         if(target == this.transform)
         {
             IsMute = !IsMute;
-            AudioSource.mute = IsMute;
+            //AudioSource.mute = IsMute;
 
-            if(AudioSource.mute == true)
-            {
-                SetAnimationCanvas("Mute", "Play");
-            }    
-            else
-            {
-                SetAnimationCanvas("Mute", "Stop");
-            }    
+            //if(AudioSource.mute == true)
+            //{
+            //    SetAnimationCanvas("Mute", "Play");
+            //}    
+            //else
+            //{
+            //    SetAnimationCanvas("Mute", "Stop");
+            //}    
         }      
     }
 
@@ -123,25 +125,25 @@ public class Character : MonoBehaviour
         else
         {
             IsHeadphone = TurnOfHeadphone == 1 ? true : false;
-            if(IsHeadphone == true)
-            {
-                AudioSource.mute = true;
-                SetAnimationCanvas("Mute", "Stop");
-                SetAnimationCanvas("Headphone", "Play");
-            }    
-            else
-            {
-                AudioSource.mute = IsMute;
-                if (AudioSource.mute == true)
-                {
-                    SetAnimationCanvas("Mute", "Play");
-                }
-                else
-                {
-                    SetAnimationCanvas("Mute", "Stop");
-                }
-                SetAnimationCanvas("Headphone", "Stop");
-            }    
+            //if(IsHeadphone == true)
+            //{
+            //    AudioSource.mute = true;
+            //    SetAnimationCanvas("Mute", "Stop");
+            //    SetAnimationCanvas("Headphone", "Play");
+            //}    
+            //else
+            //{
+            //    AudioSource.mute = IsMute;
+            //    if (AudioSource.mute == true)
+            //    {
+            //        SetAnimationCanvas("Mute", "Play");
+            //    }
+            //    else
+            //    {
+            //        SetAnimationCanvas("Mute", "Stop");
+            //    }
+            //    SetAnimationCanvas("Headphone", "Stop");
+            //}    
         }
 
         if (TurnOfHeadphone == 2) TurnOfHeadphone = 0;

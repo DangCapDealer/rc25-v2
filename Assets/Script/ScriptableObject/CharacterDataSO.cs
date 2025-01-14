@@ -1,3 +1,4 @@
+using EditorCools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class CharacterDataSO : ScriptableObject
         public string ID;
         public Sprite Icon;
         public GameObject Prefab;
+        public AudioClip AudioClip;
     }
 
     public CharacterSO[] Characters;
@@ -23,5 +25,5 @@ public class CharacterDataSO : ScriptableObject
                 return Characters[i];
         }
         return null;
-    }
+    }   
 }

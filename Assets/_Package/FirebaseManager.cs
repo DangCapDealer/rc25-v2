@@ -47,7 +47,8 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
             }
         });
         yield return WaitForSecondCache.WAIT_TIME_ONE;
-        Manager.Instance.IsFirebase = true;
+        if (Manager.Instance != null)
+            Manager.Instance.IsFirebase = true;
     }    
 
     public void LogUMP(string message)
