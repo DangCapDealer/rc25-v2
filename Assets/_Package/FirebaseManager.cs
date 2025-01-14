@@ -19,8 +19,6 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
         StartCoroutine(LoadFirebase());
     }
 
-    public bool IsNativeAd_Item = false;
-
     private IEnumerator LoadFirebase()
     {
         Firebase.FirebaseApp.Create();
@@ -74,167 +72,10 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
         {
             LogMessage(message);
         }
-    }
-
-    public void EventWinLevel(string number_win, string number_time)
-    {
-        if (IsInitialized == false)
-        {
-            AddMessage(() =>
-            {
-                var parameters = new Parameter[]
-                {
-                        new Parameter("win_level_count", number_win),
-                        new Parameter("play_time", number_time),
-                };
-                FirebaseAnalytics.LogEvent("win_level", parameters);
-            });
-        }
-        else
-        {
-            var parameters = new Parameter[]
-            {
-                new Parameter("win_level_count", number_win),
-                new Parameter("play_time", number_time),
-            };
-           // Debug.Log("win_level");
-            //parameters.Log();
-            FirebaseAnalytics.LogEvent("win_level", parameters);
-        }
-    }
-
-    public void EventLoseLevel(string number_lose, string number_time)
-    {
-        if (IsInitialized == false)
-        {
-            AddMessage(() =>
-            {
-                var parameters = new Parameter[]
-                {
-                        new Parameter("lose_level_count", number_lose),
-                        new Parameter("play_time", number_time),
-                };
-                FirebaseAnalytics.LogEvent("lose_level", parameters);
-            });
-        }
-        else
-        {
-            var parameters = new Parameter[]
-            {
-                new Parameter("lose_level_count", number_lose),
-                new Parameter("play_time", number_time),
-            };
-           // Debug.Log("lose_level");
-            //parameters.Log();
-            FirebaseAnalytics.LogEvent("lose_level", parameters);
-        }
-    }  
-    
-    public void EventFirstLoseLevel(string number_time)
-    {
-        if (IsInitialized == false)
-        {
-            AddMessage(() =>
-            {
-                var parameters = new Parameter[]
-                {
-                        new Parameter("play_time", number_time),
-                };
-                FirebaseAnalytics.LogEvent("first_lose", parameters);
-            });
-        }
-        else
-        {
-            var parameters = new Parameter[]
-            {
-                new Parameter("play_time", number_time),
-            };
-           // Debug.Log("first_lose");
-            //parameters.Log();
-            FirebaseAnalytics.LogEvent("first_lose", parameters);
-        }
     }   
-    
-    public void EventLeaveLevel(string number_home, string number_time)
-    {
-        if (IsInitialized == false)
-        {
-            AddMessage(() =>
-            {
-                var parameters = new Parameter[]
-                {
-                    new Parameter("leave_level_count", number_home),
-                    new Parameter("play_time", number_time),
-                };
-                FirebaseAnalytics.LogEvent("leave_level", parameters);
-            });
-        }
-        else
-        {
-            var parameters = new Parameter[]
-            {
-                new Parameter("leave_level_count", number_home),
-                new Parameter("play_time", number_time),
-            };
-           // Debug.Log("leave_level");
-            //parameters.Log();
-            FirebaseAnalytics.LogEvent("leave_level", parameters);
-        }
-    }    
-
-    public void EventClickItem(string message, string number_click)
-    {
-        if (IsInitialized == false)
-        {
-            AddMessage(() =>
-            {
-                var parameters = new Parameter[]
-                {
-                    new Parameter("click_number", number_click),
-                };
-                FirebaseAnalytics.LogEvent($"item_{message}", parameters);
-            });
-        }
-        else
-        {
-            var parameters = new Parameter[]
-            {
-                new Parameter("click_number", number_click),
-            };
-           // Debug.Log($"item_{message}");
-            //parameters.Log();
-            FirebaseAnalytics.LogEvent($"item_{message}", parameters);
-        }
-    }
-
-    public void EventClickButton(string message, string number_click)
-    {
-        if (IsInitialized == false)
-        {
-            AddMessage(() =>
-            {
-                var parameters = new Parameter[]
-                {
-                    new Parameter("click_number", number_click),
-                };
-                FirebaseAnalytics.LogEvent($"button_{message}", parameters);
-            });
-        }
-        else
-        {
-            var parameters = new Parameter[]
-            {
-                new Parameter("click_number", number_click),
-            };
-           // Debug.Log($"button_{message}");
-            FirebaseAnalytics.LogEvent($"button_{message}", parameters);
-        }
-
-    }    
 
     private void LogMessage(string message)
     {
-       // Debug.Log($"[{this.GetType().ToString()}] Log event: {message}");
         FirebaseAnalytics.LogEvent(message);
     }
 
@@ -285,8 +126,7 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
           .ContinueWithOnMainThread(
             task =>
             {
-                var value_native_ad_item = remoteConfig.GetValue("native_ad_item").DoubleValue;
-                IsNativeAd_Item = value_native_ad_item == 0 ? false : true;
+
             });
     }
 #else

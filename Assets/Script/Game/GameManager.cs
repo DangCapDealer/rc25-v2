@@ -12,4 +12,10 @@ public class GameManager : MonoSingleton<GameManager>
 
     public GameStyle Style = GameStyle.Normal;
     public int NumberOfCharacter = 7;
+
+    public void GameReset()
+    {
+        Style = GameStyle.Normal;
+        NumberOfCharacter = 7;
+    }    
 }

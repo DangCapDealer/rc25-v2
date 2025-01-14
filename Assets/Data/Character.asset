@@ -25,9 +25,9 @@ MonoBehaviour:
   - ID: Durple
     Icon: {fileID: 21300000, guid: d20906879a8671548bee4e2f7060c1a6, type: 3}
     Prefab: {fileID: 5222546230263490579, guid: 874111644c4bc4e4a86eb43311a95bb0, type: 3}
-  - ID: Garnold
+  - ID: Yellow
     Icon: {fileID: 21300000, guid: 64c9fad00e29d9d47bf8fdb329bb7a1f, type: 3}
-    Prefab: {fileID: 4857789508089107167, guid: 5d34e098a12cf2b4a8dd605334919226, type: 3}
+    Prefab: {fileID: 4857789508089107167, guid: 1a329ca34ada9ab4b89499ead33fe96e, type: 3}
   - ID: Jevin
     Icon: {fileID: 21300000, guid: e38474caf1bd50542bd59827fd7bf612, type: 3}
     Prefab: {fileID: 7458795236710059083, guid: e404111116fbed94caaa80523c37c91b, type: 3}
@@ -58,3 +58,18 @@ MonoBehaviour:
   - ID: White
     Icon: {fileID: 21300000, guid: 390541d2010940048a671fad5e8b44d0, type: 3}
     Prefab: {fileID: 8760929717443306349, guid: 5969f0d9745b7f446ba65003abf99531, type: 3}
+  - ID: Green
+    Icon: {fileID: 21300000, guid: 3b790b6f8af8d7440ba08392868551b7, type: 3}
+    Prefab: {fileID: 5284352214393645551, guid: b786bf3580e9e8740ac27432151338d2, type: 3}
+  - ID: Gray
+    Icon: {fileID: 21300000, guid: a2e4d1f75d4488f4dac18daaededeb55, type: 3}
+    Prefab: {fileID: 3385233564154913613, guid: e2987b3c324f5a6489b2f80c400a41b7, type: 3}
+  - ID: Sliver
+    Icon: {fileID: 21300000, guid: 71aa8f15ab750de41a4d3d86af943577, type: 3}
+    Prefab: {fileID: 3385233564154913613, guid: 6656117e7904a504ba9fd18b4c3644e5, type: 3}
+  - ID: Sliver
+    Icon: {fileID: 21300000, guid: 71aa8f15ab750de41a4d3d86af943577, type: 3}
+    Prefab: {fileID: 3385233564154913613, guid: 6656117e7904a504ba9fd18b4c3644e5, type: 3}
+  - ID: Garnold
+    Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
+    Prefab: {fileID: 4857789508089107167, guid: 5d34e098a12cf2b4a8dd605334919226, type: 3}

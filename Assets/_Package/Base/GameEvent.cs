@@ -126,12 +126,20 @@ public class GameEvent
             OnUIDrag?.Invoke(msg);
     }
 
-    public delegate void ThemeStype(string msg);
-    public static event ThemeStype OnThemeStype;
-    public static void OnThemeStypeMethod(string msg)
+    public delegate void UITheme(string msg);
+    public static event UITheme OnUITheme;
+    public static void OnUIThemeMethod(string msg)
     {
-        if (OnThemeStype != null)
-            OnThemeStype?.Invoke(msg);
+        if (OnUITheme != null)
+            OnUITheme?.Invoke(msg);
+    }
+
+    public delegate void CharacterUISetup(string msg, Transform target);
+    public static event CharacterUISetup OnCharacterUISetup;
+    public static void OnCharacterUISetupMethod(string msg, Transform target)
+    {
+        if (OnCharacterUISetup != null)
+            OnCharacterUISetup?.Invoke(msg, target);
     }
 
 }
