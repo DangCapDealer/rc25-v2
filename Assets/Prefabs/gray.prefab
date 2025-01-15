@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: a441a84120e0be243af7ccdf1d4e183c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,10 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f221f626cdb0f2468d7b89dca965fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AudioClip: {fileID: 8300000, guid: 8c2067886bf99c04ea76a2f04166cb79, type: 3}
-  AudioSource: {fileID: 0}
-  IsMute: 0
-  IsHeadphone: 0
 --- !u!65 &5761378586744098956
 BoxCollider:
   m_ObjectHideFlags: 0

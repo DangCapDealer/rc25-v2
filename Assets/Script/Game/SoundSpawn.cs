@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class SoundSpawn : MonoSingleton<SoundSpawn>
@@ -21,6 +20,8 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
             soundObject.name = totalCharacter[i].ID;
             var script = soundObject.GetComponent<SoundPrefab>();
             script.Create(totalCharacter[i].AudioClip);
+            var eventSound = soundObject.GetComponent<BeatDetection>();
+            eventSound.CallBackFunction += CallBackFunction;
         }
     }
 
@@ -54,5 +55,14 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
             var script = child.GetComponent<SoundPrefab>();
             script.Reload();
         }
-    }    
+    }
+
+    public event Action<BeatDetection.EventInfo> _OnBeatDetection;
+    public void CallBackFunction(BeatDetection.EventInfo eventInfo)
+    {
+        if (_OnBeatDetection != null)
+            _OnBeatDetection?.Invoke(eventInfo);
+
+        Debug.Log(eventInfo.messageInfo);
+    }
 }
