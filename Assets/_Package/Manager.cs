@@ -16,17 +16,10 @@ public enum Scene
 public class Manager : MonoSingletonGlobal<Manager>
 {
     public Scene Scene = Scene.Loading;
-    public int NumberOfReplay = 0;
-    public int NumberOfOpen = 0;
-    public int NumberOfDead = 0;
-
-
-    public string Mode = "Hard";
 
     [Header("Loading")]
     public bool IsAds = false;
     public bool IsFirebase = false;
-    public bool IsIngame = false;
     public bool IsLoading = false;
     [SerializeField] private LoadingCanvas loadingCanvas;
 
@@ -41,17 +34,6 @@ public class Manager : MonoSingletonGlobal<Manager>
         if (IsRuntimeData == false) RuntimeStorageData.CreateData();
         else RuntimeStorageData.ReadData();
         PlayerPrefsOverride.SetBool("Data", true);
-
-        if(RuntimeStorageData.Player.LastDayLogin != DateTime.Now.Day)
-        {
-            RuntimeStorageData.Player.LastDayLogin = DateTime.Now.Day;
-            RuntimeStorageData.Player.NumberOfDay += 1;
-        }
-    }
-
-    private void Start()
-    {
-        Application.targetFrameRate = 60;
     }
 
     public void LoadScene(Scene name, LoadSceneMode mode = LoadSceneMode.Single)
@@ -65,17 +47,7 @@ public class Manager : MonoSingletonGlobal<Manager>
         IsLoading = true;
         loadingCanvas.Show();
         CoroutineUtils.PlayCoroutineOneSecond(() => LoadScene(Scene.Ingame));
-    }
-
-
-    public string GameId;
-    public void ShowLoading(string GameId)
-    {
-        this.GameId = GameId;
-        IsLoading = true;
-        loadingCanvas.Show();
-        CoroutineUtils.PlayCoroutineOneSecond(() => LoadScene(Scene.MiniGame));
-    }    
+    }  
     
     public void HideLoading()
     {

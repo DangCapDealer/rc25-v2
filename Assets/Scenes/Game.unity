@@ -2332,6 +2332,7 @@ MonoBehaviour:
   CharacterData: {fileID: 11400000, guid: c3c21110f7e49764fbc61798ded4219b, type: 2}
   WhitePrefab: {fileID: 4251731535529576491, guid: 226e32f0a377dce41847fd97691c4aaf, type: 3}
   GrayPrefab: {fileID: 7338166958465028397, guid: a98420da2112b784ab3ca74eb2f0f55f, type: 3}
+  NumberofCharacter: 0
   BaseObjects: []
   CreateObjects: []
   RuntimeDataObjects: []
@@ -6396,51 +6397,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393640777}
   m_CullTransparentMesh: 1
---- !u!1 &1418571598
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1418571599}
-  - component: {fileID: 1418571600}
-  m_Layer: 0
-  m_Name: FirebaseManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1418571599
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418571598}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1418571600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418571598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c313309a0450334d8ba32b8d7be55e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsInitialized: 0
 --- !u!1 &1435011938
 GameObject:
   m_ObjectHideFlags: 0
@@ -9316,4 +9272,3 @@ SceneRoots:
   - {fileID: 458105393}
   - {fileID: 163871255}
   - {fileID: 475630200}
-  - {fileID: 1418571599}

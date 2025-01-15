@@ -834,6 +834,11 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
 #else
 
+    private void Start()
+    {
+        Manager.Instance.ShowLoading();
+    }
+
     public void ShowRewardedAd(UnityAction callback)
     {
         Debug.Log($"[{this.GetType().ToString()}] Show Rewarded Ad.");

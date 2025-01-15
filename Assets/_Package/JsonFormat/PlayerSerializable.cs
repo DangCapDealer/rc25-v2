@@ -24,8 +24,6 @@ public class PlayerSerializable
     public int Gold;
     public string Language;
     public List<string> Packages;
-    public int LastDayLogin = 0;
-    public int NumberOfDay = 0;
 
     public PlayerSerializable()
     {
@@ -34,7 +32,6 @@ public class PlayerSerializable
         Gold = 0;
         Language = "English";
         Packages = new List<string>();
-        NumberOfDay = 0;
     }
 
     public bool IsProductId(string productId)
