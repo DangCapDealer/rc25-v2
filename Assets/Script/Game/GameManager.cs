@@ -16,10 +16,14 @@ public class GameManager : MonoSingleton<GameManager>
 
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => Manager.Instance.IsLoading == false);
-        yield return WaitForSecondCache.WAIT_TIME_ONE;
+        if(Manager.Instance != null)
+        {
+            yield return new WaitUntil(() => Manager.Instance.IsLoading == false);
+            yield return WaitForSecondCache.WAIT_TIME_ONE;
 
-        Manager.Instance.HideLoading();
+            Manager.Instance.HideLoading();
+        }
+        yield return null;
     }
 
     public void GameReset()

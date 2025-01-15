@@ -115,7 +115,6 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     public void CreateNewPositionCharacter()
     {
-        Debug.Log("Create new base character");
         GridInCamera.Instance.CreatePosition();
         for (int i = 0; i < RuntimeDataObjects.Count; i++)
         {
