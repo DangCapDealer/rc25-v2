@@ -8,7 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 public class GameUICanvas : MonoBehaviour
 {
     public Transform Content;
-    public Transform Pointer;
+    //public Transform Pointer;
 
     public void CreateGame()
     {
@@ -43,9 +43,8 @@ public class GameUICanvas : MonoBehaviour
             return;
 
         GameManager.Instance.NumberOfCharacter += 1;
-
-        GridInCamera.Instance.CreatePosition();
-        GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
+        GameSpawn.Instance.CreateNewPositionCharacter();
+        //GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
     }
 
     private void OnEnable()
@@ -69,7 +68,7 @@ public class GameUICanvas : MonoBehaviour
     {
         _targetMsg = GetPositionByName(msg);
         _contentParent = _targetMsg.parent;
-        _targetMsg.parent = this.transform;
+        _targetMsg.SetParent(this.transform);
     }
 
     private void OnUIDragUp(string msg)
@@ -79,17 +78,21 @@ public class GameUICanvas : MonoBehaviour
         if (targetObject == null)
         {
             _targetMsg.DOKill();
-            _targetMsg.DOMove(_contentParent.position, 0.1f).OnComplete(() => { _targetMsg.parent = _contentParent; });
+            _targetMsg.DOMove(_contentParent.position, 0.1f).OnComplete(() => 
+            {
+                _targetMsg.SetParent(_contentParent);
+                _targetMsg = null;
+                _contentParent = null;
+            });
         }
         else
         {
-            _targetMsg.parent = _contentParent;
+            _targetMsg.SetParent(_contentParent);
             _targetMsg.SetActive(false);
             GameSpawn.Instance.SpawnCharacterIntoPosition(_contentParent.name, targetObject);
+            _targetMsg = null;
+            _contentParent = null;
         }
-
-        _targetMsg = null;
-        _contentParent = null;
     }
 
 

@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class GridInCamera : MonoSingleton<GridInCamera>
 {
@@ -34,6 +37,20 @@ public class GridInCamera : MonoSingleton<GridInCamera>
     {
         return this.transform.GetChild(index).position;
     }    
+
+    public Vector3 GetLastPosition()
+    {
+        int count = _objects.Length;
+        for (int i = count - 1; i >= 0; i--)
+        {
+            var _child = _objects[i];
+            if (_child.IsActive() == true)
+            {
+                return _child.position;
+            }
+        }
+        return Vector3.zero; 
+    }
 
     private void createRowWithY(int columns, float yPos)
     {

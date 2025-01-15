@@ -7,16 +7,16 @@ public class Character : MonoBehaviour
 {
     private SoundPrefab _soundPrefab;
 
-    public bool IsMute = false;
-    public bool IsHeadphone = false;
+    //public bool IsMute = false;
+    //public bool IsHeadphone = false;
 
     public void CreateCharacter(Camera gameCamera)
     {
-        IsMute = false;
-        IsHeadphone = false;
+        //IsMute = false;
+        //IsHeadphone = false;
 
         _soundPrefab = SoundSpawn.Instance.Find(transform.name);
-        _soundPrefab.Mute = IsMute;
+        _soundPrefab.Mute = false;
 
         RegisterCameraCanvas(gameCamera);
         RegisterCanvas();
@@ -58,7 +58,7 @@ public class Character : MonoBehaviour
     
     public void BtnRemove()
     {
-        GameSpawn.Instance.CreateBaseCharacter(this.transform);
+        //GameSpawn.Instance.CreateBaseCharacter(this.transform);
         GameSpawn.Instance.RemoveCharacter(this.gameObject);
     }
 
@@ -91,62 +91,38 @@ public class Character : MonoBehaviour
     {
         if(target == this.transform)
         {
-            IsMute = !IsMute;
-            //AudioSource.mute = IsMute;
-
-            //if(AudioSource.mute == true)
-            //{
-            //    SetAnimationCanvas("Mute", "Play");
-            //}    
-            //else
-            //{
-            //    SetAnimationCanvas("Mute", "Stop");
-            //}    
-        }      
-    }
-
-    private int TurnOfHeadphone;
-    private void CaculateHeadphone(Transform target)
-    {
-        TurnOfHeadphone += 1;
-        if (target == this.transform)
-        {
-            IsHeadphone = TurnOfHeadphone == 1 ? true : false;
-            if(IsHeadphone == true)
+            _soundPrefab.Mute = !_soundPrefab.Mute;
+            if (_soundPrefab.Mute == true)
             {
-                SetAnimationCanvas("Headphone", "Play");
-            }   
+                SetAnimationCanvas("Mute", "Play");
+                SetAnimationCanvas("Headphone", "Stop");
+            }
             else
             {
+                SetAnimationCanvas("Mute", "Stop");
                 SetAnimationCanvas("Headphone", "Stop");
-            }    
+            }
+        }
+        else
+        {
+            SetAnimationCanvas("Headphone", "Stop");
+        }
+    }
 
+    private void CaculateHeadphone(Transform target)
+    {
+        if (target == this.transform)
+        {
+            _soundPrefab.Mute = false;
+            SetAnimationCanvas("Mute", "Stop");
+            SetAnimationCanvas("Headphone", "Play");
         }   
         else
         {
-            IsHeadphone = TurnOfHeadphone == 1 ? true : false;
-            //if(IsHeadphone == true)
-            //{
-            //    AudioSource.mute = true;
-            //    SetAnimationCanvas("Mute", "Stop");
-            //    SetAnimationCanvas("Headphone", "Play");
-            //}    
-            //else
-            //{
-            //    AudioSource.mute = IsMute;
-            //    if (AudioSource.mute == true)
-            //    {
-            //        SetAnimationCanvas("Mute", "Play");
-            //    }
-            //    else
-            //    {
-            //        SetAnimationCanvas("Mute", "Stop");
-            //    }
-            //    SetAnimationCanvas("Headphone", "Stop");
-            //}    
+            _soundPrefab.Mute = true;
+            SetAnimationCanvas("Mute", "Play");
+            SetAnimationCanvas("Headphone", "Stop");
         }
-
-        if (TurnOfHeadphone == 2) TurnOfHeadphone = 0;
     }    
 
     private void OnTouchBegan(RaycastHit hit)
