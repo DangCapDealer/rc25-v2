@@ -7,14 +7,8 @@ public class Character : MonoBehaviour
 {
     private SoundPrefab _soundPrefab;
 
-    //public bool IsMute = false;
-    //public bool IsHeadphone = false;
-
     public void CreateCharacter(Camera gameCamera)
     {
-        //IsMute = false;
-        //IsHeadphone = false;
-
         _soundPrefab = SoundSpawn.Instance.Find(transform.name);
         _soundPrefab.Mute = false;
 
@@ -24,14 +18,14 @@ public class Character : MonoBehaviour
 
     private void RegisterCameraCanvas(Camera gameCamera)
     {
-        var canvasObject = this.transform.GetChild(0);
+        var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
         var canvasScript = canvasObject.GetComponent<Canvas>();
         canvasScript.worldCamera = gameCamera;
     }    
 
     private void RegisterCanvas()
     {
-        var canvasObject = this.transform.GetChild(0);
+        var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
         canvasObject.SetActive(false);
         var characterSetting = canvasObject.GetChild(0);
 
@@ -58,7 +52,6 @@ public class Character : MonoBehaviour
     
     public void BtnRemove()
     {
-        //GameSpawn.Instance.CreateBaseCharacter(this.transform);
         GameSpawn.Instance.RemoveCharacter(this.gameObject);
     }
 
@@ -130,7 +123,7 @@ public class Character : MonoBehaviour
         if (hit.transform != this.transform)
             return;
 
-        var canvasObject = this.transform.GetChild(0);
+        var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
         canvasObject.SetActive(!canvasObject.IsActive());
     }
 
@@ -138,7 +131,7 @@ public class Character : MonoBehaviour
     {
         if (msg[0] == "Mute")
         {
-            var canvasObject = this.transform.GetChild(0);
+            var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
             var characterSetting = canvasObject.GetChild(0);
             var animation = characterSetting.GetChild(1).GetComponent<Animation>();
             if (msg[1] == "Play")
@@ -154,7 +147,7 @@ public class Character : MonoBehaviour
         }
         else if (msg[0] == "Headphone")
         {
-            var canvasObject = this.transform.GetChild(0);
+            var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
             var characterSetting = canvasObject.GetChild(0);
             var animation = characterSetting.GetChild(2).GetComponent<Animation>();
             if (msg[1] == "Play")

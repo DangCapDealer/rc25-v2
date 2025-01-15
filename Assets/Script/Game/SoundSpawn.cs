@@ -11,11 +11,11 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
         var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
         for (int i = 0; i < totalCharacter.Length; i++)
         {
-            if(totalCharacter[i].AudioClip == null)
+            if (totalCharacter[i].AudioClip == null)
             {
                 Debug.LogError($"Audio clip missing {totalCharacter[i].ID}");
                 continue;
-            }    
+            }
 
             var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
             soundObject.name = totalCharacter[i].ID;
@@ -34,4 +34,25 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
         }
         return null;
     }
+
+    public void MuteAll()
+    {
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            var child = this.transform.GetChild(i);
+            var script = child.GetComponent<SoundPrefab>();
+            script.Mute = true;
+            script.Reload();
+        }
+    }
+
+    public void Reload()
+    {
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            var child = this.transform.GetChild(i);
+            var script = child.GetComponent<SoundPrefab>();
+            script.Reload();
+        }
+    }    
 }

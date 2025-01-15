@@ -66,6 +66,9 @@ public class GameUICanvas : MonoBehaviour
     private Transform _contentParent;
     private void OnUIDragDown(string msg)
     {
+        if (_targetMsg != null || _contentParent != null)
+            return;
+
         _targetMsg = GetPositionByName(msg);
         _contentParent = _targetMsg.parent;
         _targetMsg.SetParent(this.transform);
@@ -73,6 +76,9 @@ public class GameUICanvas : MonoBehaviour
 
     private void OnUIDragUp(string msg)
     {
+        if (_targetMsg == null || _contentParent == null)
+            return;
+
         var local = _targetMsg.position.AddX(-30.0f).AddY(1.0f).WithZ(0);
         var targetObject = GameSpawn.Instance.CheckingNearPositionInPool(local);
         if (targetObject == null)
@@ -153,6 +159,7 @@ public class GameUICanvas : MonoBehaviour
         CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
         GameManager.Instance.GameReset();
         GameSpawn.Instance.RemoveAllCharacter();
+        SoundSpawn.Instance.MuteAll();
     }
 
     public void BtnAuto()
@@ -188,6 +195,7 @@ public class GameUICanvas : MonoBehaviour
     public void BtnReset()
     {
         GameSpawn.Instance.RemoveAllCharacter();
+        SoundSpawn.Instance.MuteAll();
         GameManager.Instance.GameReset();
         GridInCamera.Instance.CreatePosition();
         GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());

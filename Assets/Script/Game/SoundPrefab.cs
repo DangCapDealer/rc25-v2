@@ -23,4 +23,13 @@ public class SoundPrefab : MonoBehaviour
         get { return AudioSource.mute; }
         set {  AudioSource.mute = value; }
     }
+
+    public void Reload()
+    {
+        if (AudioSource != null)
+        {
+            AudioSource.Stop(); // Stop the audio
+            AudioSource.Play(); // Play the audio from the beginning }
+        }
+    }
 }

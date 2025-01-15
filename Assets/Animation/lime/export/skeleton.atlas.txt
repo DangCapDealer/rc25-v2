@@ -1,0 +1,14 @@
+skeleton.png
+size:360,360
+filter:Linear,Linear
+pma:true
+1
+bounds:250,57,81,81
+2
+bounds:2,7,61,61
+DAU
+bounds:2,70,246,286
+MIENG
+bounds:65,53,100,15
+than
+bounds:250,140,106,216

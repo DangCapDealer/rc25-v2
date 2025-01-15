@@ -2334,6 +2334,7 @@ MonoBehaviour:
   GrayPrefab: {fileID: 7338166958465028397, guid: a98420da2112b784ab3ca74eb2f0f55f, type: 3}
   BaseObjects: []
   CreateObjects: []
+  RuntimeDataObjects: []
 --- !u!1 &475630199
 GameObject:
   m_ObjectHideFlags: 0

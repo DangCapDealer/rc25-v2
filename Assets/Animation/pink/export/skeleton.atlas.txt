@@ -1,0 +1,30 @@
+skeleton.png
+size:412,412
+filter:Linear,Linear
+pma:true
+1
+bounds:318,150,81,81
+2
+bounds:85,117,53,53
+3
+bounds:189,147,87,45
+4
+bounds:2,131,81,81
+Layer 1
+bounds:395,327,35,15
+offsets:0,1,35,16
+rotate:90
+dau
+bounds:2,214,206,196
+long may
+bounds:395,288,37,10
+rotate:90
+mieng
+bounds:395,364,46,13
+rotate:90
+no
+bounds:85,172,102,40
+tai
+bounds:318,233,75,177
+than
+bounds:210,194,106,216

@@ -1,0 +1,81 @@
+green.png
+size:540,540
+filter:Linear,Linear
+pma:true
+1
+bounds:348,238,84,84
+offsets:1,1,86,86
+11231
+bounds:348,152,84,84
+offsets:1,1,86,86
+123
+bounds:2,78,55,55
+offsets:1,1,57,57
+123123
+bounds:452,452,85,44
+offsets:1,1,87,46
+rotate:90
+141
+bounds:417,66,84,84
+offsets:1,1,86,86
+141421
+bounds:230,183,12,9
+offsets:1,1,14,11
+rotate:90
+2
+bounds:59,78,55,55
+offsets:1,1,57,57
+4
+bounds:434,238,84,84
+offsets:1,1,86,86
+Ellipse 594 copy 2
+bounds:434,190,86,46
+Shape 1
+bounds:241,106,105,216
+offsets:1,1,107,218
+Shape 26
+bounds:230,197,55,9
+offsets:1,1,57,11
+rotate:90
+Shape 30
+bounds:122,254,117,145
+Shape 31
+bounds:122,72,106,180
+Shape 32
+bounds:230,2,102,185
+rotate:90
+Shape 36
+bounds:2,135,114,111
+rotate:90
+Shape 37
+bounds:2,251,118,148
+Shape 38
+bounds:207,14,20,56
+Shape 39
+bounds:2,14,56,141
+rotate:90
+Shape 40
+bounds:348,126,64,24
+offsets:1,1,66,26
+Shape 804
+bounds:230,169,12,9
+offsets:1,1,14,11
+rotate:90
+dau
+bounds:246,324,213,204
+offsets:1,1,215,206
+rotate:90
+hoa 1
+bounds:145,12,60,58
+offsets:1,1,62,60
+hoa 2
+bounds:468,28,37,36
+offsets:1,1,39,38
+hoa 3
+bounds:434,153,36,35
+offsets:1,1,38,37
+hoa 4
+bounds:417,16,49,48
+offsets:1,1,51,50
+ts1
+bounds:2,401,242,136

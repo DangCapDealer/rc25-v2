@@ -1,0 +1,116 @@
+{ "skeleton": { "images": "C:/spine/rikko/incredibox/vinevia/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Shape 1", "bone": "root", "attachment": "Shape 1" },
+	{ "name": "ts1", "bone": "root", "attachment": "ts1" },
+	{ "name": "dau", "bone": "root", "attachment": "dau" },
+	{ "name": "11231", "bone": "root", "attachment": "11231" },
+	{ "name": "123", "bone": "root", "attachment": "123" },
+	{ "name": "Ellipse 594 copy 2", "bone": "root", "attachment": "Ellipse 594 copy 2" },
+	{ "name": "Shape 804", "bone": "root", "attachment": "Shape 804" },
+	{ "name": "4", "bone": "root" },
+	{ "name": "1", "bone": "root", "attachment": "1" },
+	{ "name": "2", "bone": "root", "attachment": "2" },
+	{ "name": "123123", "bone": "root", "attachment": "123123" },
+	{ "name": "141421", "bone": "root", "attachment": "141421" },
+	{ "name": "141", "bone": "root" },
+	{ "name": "Shape 40", "bone": "root", "attachment": "Shape 40" },
+	{ "name": "Shape 30", "bone": "root", "attachment": "Shape 30" },
+	{ "name": "hoa 4", "bone": "root", "attachment": "hoa 4" },
+	{ "name": "Shape 31", "bone": "root", "attachment": "Shape 31" },
+	{ "name": "hoa 3", "bone": "root", "attachment": "hoa 3" },
+	{ "name": "Shape 37", "bone": "root", "attachment": "Shape 37" },
+	{ "name": "Shape 39", "bone": "root", "attachment": "Shape 39" },
+	{ "name": "Shape 38", "bone": "root", "attachment": "Shape 38" },
+	{ "name": "Shape 36", "bone": "root", "attachment": "Shape 36" },
+	{ "name": "Shape 32", "bone": "root", "attachment": "Shape 32" },
+	{ "name": "Shape 26", "bone": "root", "attachment": "Shape 26" },
+	{ "name": "hoa 1", "bone": "root", "attachment": "hoa 1" },
+	{ "name": "hoa 2", "bone": "root", "attachment": "hoa 2" },
+],
+"skins": {
+	"default": {
+		"Shape 1": {
+			"Shape 1": { "x": 177.5, "y": -421, "width": 107, "height": 218 }
+		},
+		"ts1": {
+			"ts1": { "x": 165, "y": -331, "width": 242, "height": 136 }
+		},
+		"dau": {
+			"dau": { "x": 177.5, "y": -254, "width": 215, "height": 206 }
+		},
+		"11231": {
+			"11231": { "x": 133, "y": -260, "width": 86, "height": 86 }
+		},
+		"123": {
+			"123": { "x": 132.5, "y": -259.5, "width": 57, "height": 57 }
+		},
+		"Ellipse 594 copy 2": {
+			"Ellipse 594 copy 2": { "x": 133, "y": -240, "width": 86, "height": 46 }
+		},
+		"Shape 804": {
+			"Shape 804": { "x": 88, "y": -256.5, "width": 14, "height": 11 }
+		},
+		"4": {
+			"4": { "x": 133, "y": -260, "width": 86, "height": 86 }
+		},
+		"1": {
+			"1": { "x": 221, "y": -260, "width": 86, "height": 86 }
+		},
+		"2": {
+			"2": { "x": 220.5, "y": -259.5, "width": 57, "height": 57 }
+		},
+		"123123": {
+			"123123": { "x": 221.5, "y": -240, "width": 87, "height": 46 }
+		},
+		"141421": {
+			"141421": { "x": 266, "y": -256.5, "width": 14, "height": 11 }
+		},
+		"141": {
+			"141": { "x": 221, "y": -260, "width": 86, "height": 86 }
+		},
+		"Shape 40": {
+			"Shape 40": { "x": 175, "y": -155, "width": 66, "height": 26 }
+		},
+		"Shape 30": {
+			"Shape 30": { "x": 106.5, "y": -218.5, "width": 117, "height": 145 }
+		},
+		"hoa 4": {
+			"hoa 4": { "x": 76.5, "y": -227, "width": 51, "height": 50 }
+		},
+		"Shape 31": {
+			"Shape 31": { "x": 112, "y": -237, "width": 106, "height": 180 }
+		},
+		"hoa 3": {
+			"hoa 3": { "x": 93, "y": -268.5, "width": 38, "height": 37 }
+		},
+		"Shape 37": {
+			"Shape 37": { "x": 242, "y": -228, "width": 118, "height": 148 }
+		},
+		"Shape 39": {
+			"Shape 39": { "x": 230, "y": -125.5, "width": 56, "height": 141 }
+		},
+		"Shape 38": {
+			"Shape 38": { "x": 187, "y": -201, "width": 20, "height": 56 }
+		},
+		"Shape 36": {
+			"Shape 36": { "x": 234, "y": -207.5, "width": 114, "height": 111 }
+		},
+		"Shape 32": {
+			"Shape 32": { "x": 140, "y": -242.5, "width": 102, "height": 185 }
+		},
+		"Shape 26": {
+			"Shape 26": { "x": 178.5, "y": -320.5, "width": 57, "height": 11 }
+		},
+		"hoa 1": {
+			"hoa 1": { "x": 137, "y": -182, "width": 62, "height": 60 }
+		},
+		"hoa 2": {
+			"hoa 2": { "x": 260.5, "y": -204, "width": 39, "height": 38 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

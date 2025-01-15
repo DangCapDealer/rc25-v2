@@ -1,0 +1,20 @@
+skeleton.png
+size:692,692
+filter:Linear,Linear
+pma:true
+DAU
+bounds:2,2,206,196
+rotate:90
+LONG MAY
+bounds:110,224,46,12
+MAT1
+bounds:110,344,82,82
+MAT2
+bounds:110,287,55,55
+MIENG
+bounds:110,238,47,4
+rotate:90
+MU_
+bounds:2,428,208,260
+THAN
+bounds:2,210,106,216

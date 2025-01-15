@@ -8,5 +8,6 @@ public class HomeUICanvas : MonoBehaviour
     {
         CanvasSystem.Instance.ChooseScreen("GameUICanvas");
         CanvasSystem.Instance._gameUICanvas.CreateGame();
+        SoundSpawn.Instance.Reload();
     }    
 }
