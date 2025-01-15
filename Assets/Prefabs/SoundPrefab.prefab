@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3410651098171410695}
   - component: {fileID: 4496042443690988840}
   - component: {fileID: 620872342264053182}
+  - component: {fileID: -439745339567001844}
   m_Layer: 0
   m_Name: SoundPrefab
   m_TagString: Untagged
@@ -141,3 +142,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 032b2b89243cd6647a8a0e2b06fa1e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-439745339567001844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512891598763306843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa05b32b9fb1346b98c73d65c46c5fd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beatMode: 2

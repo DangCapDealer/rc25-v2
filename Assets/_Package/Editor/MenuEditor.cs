@@ -105,21 +105,14 @@ public class MenuEditor
     static void OpenLoadingScene()
     {
         EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
-        EditorSceneManager.OpenScene("Assets/_Trip/Open.unity");
+        EditorSceneManager.OpenScene("Assets/Scenes/Loading.unity");
     }
 
     [MenuItem("Tools/Scene/Game %s2")]
     static void OpenGameScene()
     {
         EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
-        EditorSceneManager.OpenScene("Assets/_Trip/Game.unity");
-    }
-
-    [MenuItem("Tools/Scene/Game %s3")]
-    static void OpenMiniScene()
-    {
-        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
-        EditorSceneManager.OpenScene("Assets/_Trip/MiniGame.unity");
+        EditorSceneManager.OpenScene("Assets/Scenes/Game.unity");
     }
 
     [MenuItem("Tools/Scene/Change %`")]
@@ -128,13 +121,10 @@ public class MenuEditor
         var scene = SceneManager.GetActiveScene();
         switch(scene.name)
         {
-            case "Open":
+            case "Loading":
                 OpenGameScene();
                 break;
             case "Game":
-                OpenLoadingScene();
-                break;
-            case "MiniGame":
                 OpenLoadingScene();
                 break;
         }    

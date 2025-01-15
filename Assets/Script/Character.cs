@@ -53,6 +53,7 @@ public class Character : MonoBehaviour
     public void BtnRemove()
     {
         GameSpawn.Instance.RemoveCharacter(this.gameObject);
+        _soundPrefab.Mute = true;
     }
 
     private void OnEnable()
