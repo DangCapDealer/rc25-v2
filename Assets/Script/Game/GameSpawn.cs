@@ -15,6 +15,8 @@ public class GameSpawn : MonoSingleton<GameSpawn>
     public GameObject WhitePrefab;
     public GameObject GrayPrefab;
 
+    public int NumberofCharacter = 0;
+
     public List<GameObject> BaseObjects = new List<GameObject>();
     public List<GameObject> CreateObjects = new List<GameObject>();
 
@@ -71,6 +73,10 @@ public class GameSpawn : MonoSingleton<GameSpawn>
         var script = character.GetComponent<Character>();
         script.CreateCharacter(GameCamera);
 
+        NumberofCharacter += 1;
+        if (NumberofCharacter == 1)
+            SoundSpawn.Instance.Reload();
+
         ChangeRuntimeObject(target, character.transform);
     }    
 
@@ -87,6 +93,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     private void OnUITheme(string msg)
     {
+        NumberofCharacter = 0;
         RemoveAllCharacter();
         for (int i = 0; i < GameManager.Instance.NumberOfCharacter; i++)
         {
@@ -138,6 +145,8 @@ public class GameSpawn : MonoSingleton<GameSpawn>
             BaseObjects.Add(sponky);
 
             ChangeRuntimeObject(character.transform, sponky.transform);
+
+            NumberofCharacter -= 1;
         }
         else if (GameManager.Instance.Style == GameManager.GameStyle.Horror)
         {
@@ -145,13 +154,15 @@ public class GameSpawn : MonoSingleton<GameSpawn>
             BaseObjects.Add(sponky);
 
             ChangeRuntimeObject(character.transform, sponky.transform);
+
+            NumberofCharacter -= 1;
         }
     }   
     
-    public void CreateBaseCharacter(Transform character)
-    {
-        CreateBaseCharacter(character.position);
-    } 
+    //public void CreateBaseCharacter(Transform character)
+    //{
+    //    CreateBaseCharacter(character.position);
+    //} 
     
     public void CreateBaseCharacter(Vector3 position)
     {
