@@ -6,6 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "Data/Character", order = 1)]
 public class CharacterDataSO : ScriptableObject
 {
+    public enum PayType
+    {
+        None,
+        Ads
+    }    
+
     [System.Serializable]
     public class CharacterSO
     {
@@ -13,6 +19,7 @@ public class CharacterDataSO : ScriptableObject
         public Sprite Icon;
         public GameObject Prefab;
         public AudioClip AudioClip;
+        public PayType PayType;
     }
 
     public CharacterSO[] Characters;

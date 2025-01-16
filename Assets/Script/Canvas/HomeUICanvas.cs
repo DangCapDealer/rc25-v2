@@ -6,17 +6,27 @@ public class HomeUICanvas : MonoBehaviour
 {
     private void OnEnable()
     {
-        Manager.Instance.IngameScreenID = "HomeUICanvas";
+        if (Manager.Instance != null)
+            Manager.Instance.IngameScreenID = "HomeUICanvas";
     }
 
 
     public void BtnSingle()
     {
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        if(AdManager.Instance == null)
         {
             CanvasSystem.Instance.ChooseScreen("GameUICanvas");
             CanvasSystem.Instance._gameUICanvas.CreateGame();
             SoundSpawn.Instance.Reload();
-        });
+        }   
+        else
+        {
+            AdManager.Instance.ShowInterstitialHomeAd(() =>
+            {
+                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+                CanvasSystem.Instance._gameUICanvas.CreateGame();
+                SoundSpawn.Instance.Reload();
+            });
+        }    
     }    
 }

@@ -54,8 +54,10 @@ public class GameUICanvas : MonoBehaviour
         GameEvent.OnUITheme += OnUITheme;
 
 
-        Manager.Instance.IngameScreenID = "GameUICanvas";
-        AdManager.Instance.InterAdSpaceTimeAutoCounter = 0;
+        if (Manager.Instance != null)
+            Manager.Instance.IngameScreenID = "GameUICanvas";
+        if (AdManager.Instance != null)
+            AdManager.Instance.InterAdSpaceTimeAutoCounter = 0;
     }
 
     private void OnDisable()
@@ -159,13 +161,23 @@ public class GameUICanvas : MonoBehaviour
 
     public void BtnHome()
     {
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        if(AdManager.Instance != null)
+        {
+            AdManager.Instance.ShowInterstitialHomeAd(() =>
+            {
+                CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
+                GameManager.Instance.GameReset();
+                GameSpawn.Instance.RemoveAllCharacter();
+                SoundSpawn.Instance.MuteAll();
+            });
+        }    
+        else
         {
             CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
             GameManager.Instance.GameReset();
             GameSpawn.Instance.RemoveAllCharacter();
             SoundSpawn.Instance.MuteAll();
-        });
+        }    
     }
 
     public void BtnAuto()

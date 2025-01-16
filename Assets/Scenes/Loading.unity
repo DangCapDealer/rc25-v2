@@ -903,14 +903,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInitalized: 0
-  _adUnitId: ca-app-pub-3940256099942544~3347511713
+  _adUnitId: ca-app-pub-5904408074441373~4518678593
   UseBanner: 0
   IsPreloadBanner: 0
   IsBanner: 0
   BannerAdState: 2
   _status: 1
   _bannerReloadCount: 0
-  _adUnitBannerId: ca-app-pub-3940256099942544/6300978111
+  _adUnitBannerId: ca-app-pub-5904408074441373/6896326270
   UseInterstitial: 1
   _loadingInterstitalAd: {fileID: 12750472}
   IsPreloadInterstitial: 1
@@ -919,27 +919,27 @@ MonoBehaviour:
   _interstitalReloadCount: 0
   InterAdSpaceTimeAutoCounter: 0
   InterAdSpaceTimeAuto: 40
-  _adUnitInterId: ca-app-pub-3940256099942544/1033173712
+  _adUnitInterId: ca-app-pub-5904408074441373/8836093904
   IsPreloadinterstitialHome: 1
   InterHomeAdState: 2
   InterHomeAdShowState: 0
   _interstitialHomeAdReloadCount: 0
   InterHomeAdSpaceTimeAutoCounter: 0
   InterHomeAdSpaceTimeAuto: 30
-  _adUnitInterHomeId: ca-app-pub-3940256099942544/1033173712
-  _adUnitInterOpenId: ca-app-pub-3940256099942544/1033173712
+  _adUnitInterHomeId: ca-app-pub-5904408074441373/2893502086
+  _adUnitInterOpenId: ca-app-pub-5904408074441373/3310341039
   InterOpenAdMaximusTimeCounter: 0
   InterOpenAdMaximusTime: 15
-  UseReward: 1
-  IsPreloadReward: 1
+  UseReward: 0
+  IsPreloadReward: 0
   RewardAdState: 2
   _rewardReloadCount: 0
-  _adUnitRewardId: ca-app-pub-3940256099942544/5224354917
+  _adUnitRewardId: ca-app-pub-5904408074441373/1580420414
   UseOpen: 1
   IsPreloadOpen: 1
   OpenAdState: 2
   _openReloadCount: 0
-  _adUnitOpenId: ca-app-pub-3940256099942544/9257395921
+  _adUnitOpenId: ca-app-pub-5904408074441373/7523012234
   OpenAdSpaceTimeCounter: 0
   OpenAdSpaceTime: 15
 --- !u!1 &2042424516
