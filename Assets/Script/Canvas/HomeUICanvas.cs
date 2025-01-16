@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class HomeUICanvas : MonoBehaviour
 {
+    private void OnEnable()
+    {
+        Manager.Instance.IngameScreenID = "HomeUICanvas";
+    }
+
+
     public void BtnSingle()
     {
-        CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-        CanvasSystem.Instance._gameUICanvas.CreateGame();
-        SoundSpawn.Instance.Reload();
+        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        {
+            CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+            CanvasSystem.Instance._gameUICanvas.CreateGame();
+            SoundSpawn.Instance.Reload();
+        });
     }    
 }

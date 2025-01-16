@@ -52,11 +52,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             Debug.Log($"[{this.GetType().ToString()}] Admob Initialized");
             Manager.Instance.IsAds = true;
             IsInitalized = true;
-            PromiseShowInterstitialAd(null, () =>
-            {
-                if (StoryManager.Instance != null)
-                    StoryManager.Instance.CompleteLoading();
-            });
+            PromiseShowInterstitialAd(null, () => { Manager.Instance.CompleteOpenAd(); });
             Dictionary<string, AdapterStatus> map = initStatus.getAdapterStatusMap();
             foreach (KeyValuePair<string, AdapterStatus> keyValuePair in map)
             {
@@ -77,17 +73,29 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         });
         yield return new WaitUntil(() => IsInitalized);
         yield return WaitForSecondCache.WAIT_TIME_EIGHT;
-        LoadRewardedAd();
-        //LoadBannerAd();
-        LoadInterstitialAd();
-        LoadAppOpenAd();
-
-
+        if (UseReward == true)
+        {
+            LoadRewardedAd();
+        }    
+        if (UseBanner == true)
+        {
+            LoadBannerAd();
+        }    
+        if (UseInterstitial == true)
+        {
+            LoadInterstitialAd();
+            LoadInterstitialHomeAd();
+        }
+        if (UseOpen == true)
+        {
+            LoadAppOpenAd();
+        }    
     }
 
     private float AfterAdReload = 10.0f;
     private float TimerBannerAdReload = 0.0f;
     private float TimerInterstitialAdReload = 0.0f;
+    private float TimerInterstitialHomeAdReload = 0.0f;
     private float TimerRewardedAdReload = 0.0f;
     private float TimerOpenAdReload = 0.0f;
 
@@ -99,31 +107,45 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         if (IsInitalized == false)
             return;
 
-        //if (IsPreloadBanner)
-        //{
-        //    TimerBannerAdReload += Time.deltaTime;
-        //    if (TimerBannerAdReload > AfterAdReload)
-        //    {
-        //        if (BannerAdState == AdState.NotAvailable /*&& _interstitalReloadCount <= 10*/)
-        //        {
-        //            TimerBannerAdReload = 0;
-        //            LoadBannerAd();
-        //        }
-        //    }
-        //}
+        if (IsPreloadBanner)
+        {
+            TimerBannerAdReload += Time.deltaTime;
+            if (TimerBannerAdReload > AfterAdReload)
+            {
+                if (BannerAdState == AdState.NotAvailable /*&& _interstitalReloadCount <= 10*/)
+                {
+                    TimerBannerAdReload = 0;
+                    LoadBannerAd();
+                }
+            }
+        }
 
         if (IsPreloadInterstitial)
         {
             TimerInterstitialAdReload += Time.deltaTime;
             if (TimerInterstitialAdReload > AfterAdReload)
             {
+                if (InterHomeAdState == AdState.NotAvailable /*&& _interstitalReloadCount <= 10*/)
+                {
+                    TimerInterstitialHomeAdReload = 0;
+                    LoadInterstitialHomeAd();
+                }    
+            }
+        }
+
+        if (IsPreloadinterstitialHome)
+        {
+            TimerInterstitialHomeAdReload += Time.deltaTime;
+            if (TimerInterstitialHomeAdReload > AfterAdReload)
+            {
                 if (InterAdState == AdState.NotAvailable /*&& _interstitalReloadCount <= 10*/)
                 {
                     TimerInterstitialAdReload = 0;
                     LoadInterstitialAd();
-                }    
+                }
             }
         }
+
         CaculaterCounterInterAd();
         CaculaterCounterInterOpenAd();
 
@@ -156,6 +178,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
 
     [Header("Ad Banner")]
+    public bool UseBanner = false;
     public bool IsPreloadBanner = true;
     public bool IsBanner = false;
     public AdState BannerAdState = AdState.NotAvailable;
@@ -307,6 +330,16 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
     public UnityAction ActionOnAfterInterstitalAd;
     [Header("Ad Interstitial")]
+    public bool UseInterstitial = true;
+    public GameObject _loadingInterstitalAd;
+
+    public void ResetInterstitialAdCounter()
+    {
+        InterAdSpaceTimeAutoCounter = 0;
+        InterHomeAdSpaceTimeAutoCounter = 0;
+    }    
+
+
     public bool IsPreloadInterstitial = true;
     public AdState InterAdState = AdState.NotAvailable;
     public enum AdShowState
@@ -318,56 +351,20 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public AdShowState InterAdShowState = AdShowState.None;
 
     public int _interstitalReloadCount = 0;
-    public GameObject _loadingInterstitalAd;
 
-    public float InterAdSpaceTimeCounter = 0.0f;
     public float InterAdSpaceTimeAutoCounter = 0;
-    public float InterAdSpaceTime = 15.0f;
     public float InterAdSpaceTimeAuto = 60.0f;
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
     public string _adUnitInterId = "ca-app-pub-5904408074441373/8357882100";
-    [Header("Ad Open Interstitial")]
-    public string _adUnitInterOpenId = "ca-app-pub-5904408074441373/7180531807";
 #elif UNITY_IPHONE
     public string _adUnitInterId = "ca-app-pub-5904408074441373/5604148681";
-    [Header("Ad Open Interstitial")]
-    public string _adUnitInterOpenId = "ca-app-pub-5904408074441373/4650159660";
 #else
     public string _adUnitInterId = "unused";
-#endif
-
-    public float InterOpenAdMaximusTimeCounter = 0.0f;
-    public float InterOpenAdMaximusTime = 15.0f;
-
-    private void CaculaterCounterInterOpenAd()
-    {
-        if(InterOpenAdMaximusTimeCounter <= InterOpenAdMaximusTime)
-        {
-            InterOpenAdMaximusTimeCounter += Time.deltaTime;
-            if (InterOpenAdMaximusTimeCounter > InterOpenAdMaximusTime)
-            {
-                StoryManager.Instance.CompleteLoading();
-            }    
-        }    
-    }    
-
-
-    private void CaculaterCounterInterAd()
-    {
-        InterAdSpaceTimeCounter += Time.deltaTime;
-        if(RuntimeStorageData.Player.NumberOfDay > 3 && Manager.Instance.IsIngame == true)
-        {
-            InterAdSpaceTimeAutoCounter += Time.deltaTime;
-            if (InterAdSpaceTimeAutoCounter > InterAdSpaceTimeAuto)
-            {
-                InterAdSpaceTimeAutoCounter = 0;
-                ShowInterstitialAd(null);
-            }    
-        }    
-    }    
+#endif  
 
     private InterstitialAd _interstitialAd;
+    private InterstitialAd _interstitialHomeAd;
     private InterstitialAd _interstitialOpenAd;
 
     /// <summary>
@@ -417,28 +414,10 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
 
     /// <summary>
-    /// Show the interstitial ad with space time.
-    /// </summary>
-    public void ShowInterstitialAdWithSpaceTime(UnityAction CALLBACK)
-    {
-        Debug.Log($"[{this.GetType().ToString()}] Show Interstitial Ad With Space Time");
-        if (InterAdSpaceTimeCounter > InterAdSpaceTime)
-        {
-            InterAdSpaceTimeCounter = 0;
-            ShowInterstitialAd(CALLBACK);
-        }
-        else
-        {
-            if (CALLBACK != null)
-                CALLBACK?.Invoke();
-        }
-    }
-
-    /// <summary>
     /// Shows the interstitial ad.
     /// </summary>
     /// 
-    public void ShowInterstitialAd(UnityAction CALLBACK)
+    public void ShowInterstitialAd(UnityAction Callback)
     {
         if (InterAdShowState == AdShowState.Pending)
             return;
@@ -454,22 +433,221 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             ActionOnAfterInterstitalAd = () =>
             {
                 InterAdShowState = AdShowState.None;
-                if (CALLBACK != null)
-                    CALLBACK?.Invoke();
+                InterAdState = AdState.NotAvailable;
+                if (Callback != null)
+                    Callback?.Invoke();
                 _loadingInterstitalAd?.SetActive(false);
             };
             CoroutineUtils.PlayCoroutine(() =>
             {
                 _interstitialAd.Show();
             }, 1.0f);
+
+            ResetInterstitialAdCounter();
         }
         else
         {
             Debug.Log($"[{this.GetType().ToString()}] Interstitial ad is not ready yet.");
-            if (CALLBACK != null)
-                CALLBACK?.Invoke();
+            if (Callback != null)
+                Callback?.Invoke();
         }
     }
+
+    private void ListenToInterAdEvents()
+    {
+        // Raised when the ad is estimated to have earned money.
+        _interstitialAd.OnAdPaid += (AdValue adValue) =>
+        {
+            //AppflyerEventSender.Instance.logAdRevenue(adValue);
+            Debug.Log(String.Format("Interstitial ad paid {0} {1}.",
+                adValue.Value,
+                adValue.CurrencyCode));
+        };
+        // Raised when an impression is recorded for an ad.
+        _interstitialAd.OnAdImpressionRecorded += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad recorded an impression.");
+        };
+        // Raised when a click is recorded for an ad.
+        _interstitialAd.OnAdClicked += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad was clicked.");
+        };
+        // Raised when an ad opened full screen content.
+        _interstitialAd.OnAdFullScreenContentOpened += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad full screen content opened.");
+        };
+        // Raised when the ad closed full screen content.
+        _interstitialAd.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad full screen content closed.");
+            ActionOnAfterInterstitalAd?.Invoke();
+        };
+        // Raised when the ad failed to open full screen content.
+        _interstitialAd.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad failed to open full screen content " +
+                           "with error : " + error);
+            ActionOnAfterInterstitalAd?.Invoke();
+        };
+    }
+
+    [Header("Ad Home Interstitial")]
+
+    public bool IsPreloadinterstitialHome = true;
+    public AdState InterHomeAdState = AdState.NotAvailable;
+    public AdShowState InterHomeAdShowState = AdShowState.None;
+    public int _interstitialHomeAdReloadCount = 0;
+
+    public float InterHomeAdSpaceTimeAutoCounter = 0;
+    public float InterHomeAdSpaceTimeAuto = 30.0f;
+
+#if UNITY_ANDROID
+    public string _adUnitInterHomeId = "ca-app-pub-5904408074441373/8357882100";
+#elif UNITY_IPHONE
+    public string _adUnitInterHomeId = "ca-app-pub-5904408074441373/5604148681";
+#else
+    public string _adUnitInterHomeId = "unused";
+#endif
+
+    public void LoadInterstitialHomeAd()
+    {
+        if (RuntimeStorageData.Player.IsAds)
+            return;
+        if (InterHomeAdState == AdState.Loading)
+            return;
+        InterHomeAdState = AdState.Loading;
+
+        // Clean up the old ad before loading a new one.
+        if (_interstitialHomeAd != null)
+        {
+            _interstitialHomeAd.Destroy();
+            _interstitialHomeAd = null;
+        }
+
+        Debug.Log($"[{this.GetType().ToString()}] Loading the interstitial home ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        InterstitialAd.Load(_adUnitInterHomeId, adRequest, (InterstitialAd ad, LoadAdError error) =>
+        {
+            // if error is not null, the load request failed.
+            if (error != null || ad == null)
+            {
+                InterHomeAdState = AdState.NotAvailable;
+                _interstitialHomeAdReloadCount += 1;
+                Debug.Log($"[{this.GetType().ToString()}] interstitial ad failed to load an ad " +
+                               "with error : " + error);
+                return;
+            }
+
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad loaded with response : "
+                      + ad.GetResponseInfo());
+
+            _interstitialHomeAd = ad;
+            InterHomeAdState = AdState.Ready;
+            ListenToInterHomeAdEvents();
+            _interstitialHomeAdReloadCount = 0;
+        });
+    }
+
+    public void ShowInterstitialHomeAd(UnityAction Callback)
+    {
+        if (InterHomeAdShowState == AdShowState.Pending)
+            return;
+        if (InterHomeAdSpaceTimeAutoCounter < InterHomeAdSpaceTimeAuto)
+        {
+            if (Callback != null)
+                Callback?.Invoke();
+            return;
+        }    
+
+        if (_interstitialHomeAd != null &&
+            _interstitialHomeAd.CanShowAd())
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Showing interstitial home ad.");
+            InterHomeAdShowState = AdShowState.Pending;
+            _loadingInterstitalAd?.SetActive(true);
+            OpenAdSpaceTimeCounter = 0;
+
+            ActionOnAfterInterstitalAd = () =>
+            {
+                InterHomeAdShowState = AdShowState.None;
+                InterHomeAdState = AdState.NotAvailable;
+                if (Callback != null)
+                    Callback?.Invoke();
+                _loadingInterstitalAd?.SetActive(false);
+            };
+            CoroutineUtils.PlayCoroutine(() =>
+            {
+                _interstitialHomeAd.Show();
+            }, 1.0f);
+
+            ResetInterstitialAdCounter();
+        }
+        else
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial home ad is not ready yet.");
+            if (Callback != null)
+                Callback?.Invoke();
+        }
+    }
+
+    private void ListenToInterHomeAdEvents()
+    {
+        // Raised when the ad is estimated to have earned money.
+        _interstitialHomeAd.OnAdPaid += (AdValue adValue) =>
+        {
+            //AppflyerEventSender.Instance.logAdRevenue(adValue);
+            Debug.Log(String.Format("Interstitial home ad paid {0} {1}.",
+                adValue.Value,
+                adValue.CurrencyCode));
+        };
+        // Raised when an impression is recorded for an ad.
+        _interstitialHomeAd.OnAdImpressionRecorded += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial home ad recorded an impression.");
+        };
+        // Raised when a click is recorded for an ad.
+        _interstitialHomeAd.OnAdClicked += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial home ad was clicked.");
+        };
+        // Raised when an ad opened full screen content.
+        _interstitialHomeAd.OnAdFullScreenContentOpened += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial home ad full screen content opened.");
+        };
+        // Raised when the ad closed full screen content.
+        _interstitialHomeAd.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial home ad full screen content closed.");
+            ActionOnAfterInterstitalAd?.Invoke();
+        };
+        // Raised when the ad failed to open full screen content.
+        _interstitialHomeAd.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Interstitial home ad failed to open full screen content " +
+                           "with error : " + error);
+            ActionOnAfterInterstitalAd?.Invoke();
+        };
+    }
+
+#if UNITY_ANDROID
+    [Header("Ad Open Interstitial")]
+    public string _adUnitInterOpenId = "ca-app-pub-5904408074441373/7180531807";
+#elif UNITY_IPHONE
+    [Header("Ad Open Interstitial")]
+    public string _adUnitInterOpenId = "ca-app-pub-5904408074441373/4650159660";
+#else
+    public string _adUnitInterId = "unused";
+#endif
+
+    public float InterOpenAdMaximusTimeCounter = 0.0f;
+    public float InterOpenAdMaximusTime = 15.0f;
 
     public void PromiseShowInterstitialAd(UnityAction showAd, UnityAction afterAd)
     {
@@ -527,55 +705,43 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             else
             {
                 Debug.Log("Out of time show open ad");
-            }    
+            }
         });
     }
 
-    private void ListenToInterAdEvents()
+    private void CaculaterCounterInterOpenAd()
     {
-        // Raised when the ad is estimated to have earned money.
-        _interstitialAd.OnAdPaid += (AdValue adValue) =>
+        if (InterOpenAdMaximusTimeCounter <= InterOpenAdMaximusTime)
         {
-            //AppflyerEventSender.Instance.logAdRevenue(adValue);
-            Debug.Log(String.Format("Interstitial ad paid {0} {1}.",
-                adValue.Value,
-                adValue.CurrencyCode));
-        };
-        // Raised when an impression is recorded for an ad.
-        _interstitialAd.OnAdImpressionRecorded += () =>
+            InterOpenAdMaximusTimeCounter += Time.deltaTime;
+            if (InterOpenAdMaximusTimeCounter > InterOpenAdMaximusTime)
+            {
+                Manager.Instance.CompleteOpenAd();
+            }
+        }
+    }
+    private void CaculaterCounterInterAd()
+    {
+        if (Manager.Instance.IsIngame == true && Manager.Instance.IngameScreenID == "GameUICanvas")
         {
-            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad recorded an impression.");
-        };
-        // Raised when a click is recorded for an ad.
-        _interstitialAd.OnAdClicked += () =>
+            InterAdSpaceTimeAutoCounter += Time.deltaTime;
+            if (InterAdSpaceTimeAutoCounter > InterAdSpaceTimeAuto)
+            {
+                InterAdSpaceTimeAutoCounter = 0;
+                ShowInterstitialAd(null);
+            }
+        }
+
+        if (Manager.Instance.IsIngame == true)
         {
-            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad was clicked.");
-        };
-        // Raised when an ad opened full screen content.
-        _interstitialAd.OnAdFullScreenContentOpened += () =>
-        {
-            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad full screen content opened.");
-        };
-        // Raised when the ad closed full screen content.
-        _interstitialAd.OnAdFullScreenContentClosed += () =>
-        {
-            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad full screen content closed.");
-            InterAdState = AdState.NotAvailable;
-            ActionOnAfterInterstitalAd?.Invoke();
-        };
-        // Raised when the ad failed to open full screen content.
-        _interstitialAd.OnAdFullScreenContentFailed += (AdError error) =>
-        {
-            Debug.Log($"[{this.GetType().ToString()}] Interstitial ad failed to open full screen content " +
-                           "with error : " + error);
-            InterAdState = AdState.NotAvailable;
-            ActionOnAfterInterstitalAd?.Invoke();
-        };
+            InterHomeAdSpaceTimeAutoCounter += Time.deltaTime;
+        }
     }
 
 
 
     [Header("Ad Reward")]
+    public bool UseReward = true;
     public bool IsPreloadReward = true;
     public AdState RewardAdState = AdState.NotAvailable;
     public int _rewardReloadCount = 0;
@@ -634,7 +800,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         });
     }
 
-    public void ShowRewardedAd(UnityAction CALLBACK)
+    public void ShowRewardedAd(UnityAction Callback)
     {
         const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
 
@@ -643,7 +809,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             OpenAdSpaceTimeCounter = 0;
             _rewardedAd.Show((Reward reward) =>
             {
-                CALLBACK?.Invoke();
+                Callback?.Invoke();
                 // TODO: Reward the user.
                 Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
             });
@@ -691,6 +857,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
 
     [Header("Ad Open")]
+    public bool UseOpen = true;
     public bool IsPreloadOpen = true;
     public AdState OpenAdState = AdState.NotAvailable;
     public int _openReloadCount = 0;
@@ -839,22 +1006,22 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         Manager.Instance.ShowLoading();
     }
 
-    public void ShowRewardedAd(UnityAction callback)
+    public void ShowRewardedAd(UnityAction Callback)
     {
         Debug.Log($"[{this.GetType().ToString()}] Show Rewarded Ad.");
-        callback?.Invoke();
+        Callback?.Invoke();
     }
 
-    public void ShowInterstitialAdWithSpaceTime(UnityAction callback)
+    public void ShowInterstitialAdWithSpaceTime(UnityAction Callback)
     {
         Debug.Log($"[{this.GetType().ToString()}] Show Interstitial Ad With Space Time.");
-        callback?.Invoke();
+        Callback?.Invoke();
     }
 
-    public void ShowInterstitialAd(UnityAction callback)
+    public void ShowInterstitialAd(UnityAction Callback)
     {
         Debug.Log($"[{this.GetType().ToString()}] Show Interstitial Ad.");
-        callback?.Invoke();
+        Callback?.Invoke();
     }
 
     public void CheckingOpenAd()

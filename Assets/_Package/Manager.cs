@@ -21,6 +21,8 @@ public class Manager : MonoSingletonGlobal<Manager>
     public bool IsAds = false;
     public bool IsFirebase = false;
     public bool IsLoading = false;
+    public bool IsIngame = true;
+    public string IngameScreenID = "";
     [SerializeField] private LoadingCanvas loadingCanvas;
 
     protected override void Awake()
@@ -35,6 +37,22 @@ public class Manager : MonoSingletonGlobal<Manager>
         else RuntimeStorageData.ReadData();
         PlayerPrefsOverride.SetBool("Data", true);
     }
+
+    public void Start()
+    {
+        IsLoading = true;
+        loadingCanvas.Show(null, 0.0f, 0.6f);
+    }
+
+    public void CompleteOpenAd()
+    {
+        loadingCanvas.Show(() => 
+        {
+            LoadScene(Scene.Ingame);
+            IsLoading = false; 
+        }, 0.6f, 1.0f);
+    }    
+
 
     public void LoadScene(Scene name, LoadSceneMode mode = LoadSceneMode.Single)
     {
