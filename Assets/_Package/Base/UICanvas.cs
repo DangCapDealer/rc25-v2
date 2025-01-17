@@ -5,13 +5,7 @@ using UnityEngine;
 public enum Popup
 {
     None,
-    Computer,
-    Defeat,
-    Pause,
-    Setting,
-    Victory,
-    Map,
-    Difficulty
+    Unlock
 }
 
 public enum PopupAnimation

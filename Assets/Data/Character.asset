@@ -22,7 +22,7 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 82b384602ab781c418d245b0a2d9a957, type: 3}
     Prefab: {fileID: 2302549226669967715, guid: ae1c7cdcd569dd848add1b7fadfd759c, type: 3}
     AudioClip: {fileID: 8300000, guid: a01bae62d64020943af2a98508be6ca3, type: 3}
-    PayType: 0
+    PayType: 1
   - ID: Red
     Icon: {fileID: 21300000, guid: 8aab35f86e619084f817268a03f10fda, type: 3}
     Prefab: {fileID: 8980325765420774130, guid: aecd94cfcf721124da8c376dd3460385, type: 3}
@@ -37,7 +37,7 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 64c9fad00e29d9d47bf8fdb329bb7a1f, type: 3}
     Prefab: {fileID: 4857789508089107167, guid: 1a329ca34ada9ab4b89499ead33fe96e, type: 3}
     AudioClip: {fileID: 8300000, guid: 0a3e30d6b9924ed42b78b3cdb40daf1e, type: 3}
-    PayType: 0
+    PayType: 1
   - ID: Lime
     Icon: {fileID: 21300000, guid: 6bd97a80dbb6b9845b4857ae46f93b1b, type: 3}
     Prefab: {fileID: 3850760768410276784, guid: e1182dc096ad28b4cb4ea7393c260d51, type: 3}
@@ -57,12 +57,7 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 1f48aabf5f980dd4493077e68d4e5769, type: 3}
     Prefab: {fileID: 3106136958341658162, guid: 42668d94d05bfd34389643408f8923fd, type: 3}
     AudioClip: {fileID: 8300000, guid: 7fb856b84974e094c86735ddb66f44c7, type: 3}
-    PayType: 0
-  - ID: Black
-    Icon: {fileID: 21300000, guid: 65a162b44a55c2344ae78ae499691534, type: 3}
-    Prefab: {fileID: 3385233564154913613, guid: c45f86b79f2eda244a5c692ca2e65fbd, type: 3}
-    AudioClip: {fileID: 8300000, guid: 8c2067886bf99c04ea76a2f04166cb79, type: 3}
-    PayType: 0
+    PayType: 1
   - ID: Robot
     Icon: {fileID: 21300000, guid: e60ed7da0e229aa45acdb1128a3a9c7b, type: 3}
     Prefab: {fileID: 6705867025998381311, guid: 28fc89868e67fb1428c1bbbdaf0281d5, type: 3}
@@ -77,7 +72,7 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 390541d2010940048a671fad5e8b44d0, type: 3}
     Prefab: {fileID: 8760929717443306349, guid: 5969f0d9745b7f446ba65003abf99531, type: 3}
     AudioClip: {fileID: 8300000, guid: 0729ad2cd6830bc49a7660a6ecb0d2cb, type: 3}
-    PayType: 0
+    PayType: 1
   - ID: Green
     Icon: {fileID: 21300000, guid: 3b790b6f8af8d7440ba08392868551b7, type: 3}
     Prefab: {fileID: 5284352214393645551, guid: b786bf3580e9e8740ac27432151338d2, type: 3}
@@ -97,7 +92,7 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
     Prefab: {fileID: 4857789508089107167, guid: 5d34e098a12cf2b4a8dd605334919226, type: 3}
     AudioClip: {fileID: 8300000, guid: af5074a4c2e78644abfa0183a60e5967, type: 3}
-    PayType: 0
+    PayType: 1
   - ID: Aurelia
     Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
     Prefab: {fileID: 4731492737148403582, guid: e8d4356f81204f04bbc2d6d9153cef95, type: 3}
@@ -107,7 +102,7 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
     Prefab: {fileID: 6576998888303530667, guid: 9e275ea07c8496d479b81a9ad6155356, type: 3}
     AudioClip: {fileID: 8300000, guid: 77614b09928b6964c829f99c14f906ca, type: 3}
-    PayType: 0
+    PayType: 1
   - ID: Bear
     Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
     Prefab: {fileID: 8454167887678377268, guid: 3ece8c62b6040df43a8ed104499060cf, type: 3}
@@ -117,7 +112,7 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
     Prefab: {fileID: 3594725921126902108, guid: 37e620a77cba17246b897cf3c9897b69, type: 3}
     AudioClip: {fileID: 8300000, guid: 1415f9ba69ad4544ab926e7ecbcaf4fc, type: 3}
-    PayType: 0
+    PayType: 1
   - ID: Parker
     Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
     Prefab: {fileID: 64199056511469472, guid: 62656a09c4fe8ec419ddf79a7b36ab9e, type: 3}

@@ -8,6 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 public class GameUICanvas : MonoBehaviour
 {
     public Transform Content;
+    public GameObject CharacterUIPrefab;
     //public Transform Pointer;
 
     public void CreateGame()
@@ -19,22 +20,38 @@ public class GameUICanvas : MonoBehaviour
 
     private void CreateUIGame()
     {
-        Content.ForChild(_child =>
+        var dataCharacterSO = GameSpawn.Instance.GetAllCharacter();
+        for (int i = 0; i < dataCharacterSO.Length; i++)
         {
-            var dataSO = GameSpawn.Instance.FindCharacterData(_child.name);
-            if (dataSO == null)
-            {
-                Debug.Log($"Data {_child.name} not found");
-                return;
-            }
-
-            var imgs = _child.GetComponentsInChildren<Image>();
-            imgs.ForEach(img =>
-            {
-                img.sprite = dataSO.Icon;
-                img.preserveAspect = true;
-            });
-        });
+            var _childCount = Content.childCount;
+            GameObject _child = null;
+            if(i >= _childCount) _child = PoolByID.Instance.GetPrefab(CharacterUIPrefab, Content);
+            else _child = Content.GetChild(i).gameObject;
+            //_child.SetActive(true);
+            //_child.name = dataCharacterSO[i].ID;
+            var _script = _child.GetComponent<CharacterUIHandle>();
+            _script.Create(dataCharacterSO[i]);
+            //if(dataCharacterSO[i].PayType == CharacterDataSO.PayType.Ads)
+            //{
+            //    _child.name = $"{_child.name}_ads";
+            //    var lockedUI = _child.FindChildByParent("Locked");
+            //    lockedUI.SetActive(true);
+            //}    
+            //else
+            //{
+            //    var lockedUI = _child.FindChildByParent("Locked");
+            //    lockedUI.SetActive(false);
+            //}    
+            //for(int j = 0; j < _child.transform.childCount; j++)
+            //{
+            //    var x = _child.transform.GetChild(j);
+            //    if (x.name.StartsWith("Icon") == false)
+            //        continue;
+            //    var img = _child.transform.GetChild(j).GetComponent<Image>();
+            //    img.sprite = dataCharacterSO[i].Icon;
+            //    img.preserveAspect = true;
+            //}    
+        }
     }
 
     public void AddSlotInGame()
@@ -44,7 +61,6 @@ public class GameUICanvas : MonoBehaviour
 
         GameManager.Instance.NumberOfCharacter += 1;
         GameSpawn.Instance.CreateNewPositionCharacter();
-        //GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
     }
 
     private void OnEnable()
@@ -111,13 +127,18 @@ public class GameUICanvas : MonoBehaviour
     {
         Content.ForChild(_child =>
         {
-            _child.ForChild(x =>
+            for (int j = 0; j < _child.childCount; j++)
             {
-                x.localPosition = Vector2.zero;
+                var x = _child.GetChild(j);
+                if (x.name.StartsWith("Icon") == false)
+                    continue;
 
-                if (x.name.EndsWith(msg) == true) x.SetActive(true);
-                else x.SetActive(false);
-            });
+                x.localPosition = Vector2.zero;
+                if (x.name.EndsWith(GameManager.Instance.Style.ToString()) == true)
+                    x.SetActive(true);
+                else
+                    x.SetActive(false);
+            }
         });
     }
 
@@ -147,15 +168,18 @@ public class GameUICanvas : MonoBehaviour
             if (child.name != name)
                 continue;
 
-            child.ForChild(x =>
+            for(int j = 0;j < child.childCount; j++)
             {
-                x.localPosition = Vector2.zero;
+                var x = child.GetChild(j);
+                if (x.name.StartsWith("Icon") == false)
+                    continue;
 
-                if (x.name.EndsWith(GameManager.Instance.Style.ToString()) == true) 
+                x.localPosition = Vector2.zero;
+                if (x.name.EndsWith(GameManager.Instance.Style.ToString()) == true)
                     x.SetActive(true);
-                else 
+                else
                     x.SetActive(false);
-            });
+            }    
         }
     }    
 
@@ -217,5 +241,10 @@ public class GameUICanvas : MonoBehaviour
         GameManager.Instance.GameReset();
         GridInCamera.Instance.CreatePosition();
         GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
+    }    
+
+    public void BtnUnlock()
+    {
+        CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Unlock);   
     }    
 }

@@ -14,6 +14,9 @@ public class Character : MonoBehaviour
 
         RegisterCameraCanvas(gameCamera);
         RegisterCanvas();
+
+        SetAnimationCanvas("Mute", "Stop");
+        SetAnimationCanvas("Headphone", "Stop");
     }
 
     private void RegisterCameraCanvas(Camera gameCamera)
@@ -133,33 +136,39 @@ public class Character : MonoBehaviour
         if (msg[0] == "Mute")
         {
             var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
-            var characterSetting = canvasObject.GetChild(0);
-            var animation = characterSetting.GetChild(1).GetComponent<Animation>();
+            var scriptCharacterCanvas = canvasObject.GetComponent<CharacterCanvasHandle>();
+            //var characterSetting = canvasObject.GetChild(0);
+            //var animation = characterSetting.GetChild(1).GetComponent<Animation>();
             if (msg[1] == "Play")
             {
-                animation.Play();
+                //animation.Play();
+                scriptCharacterCanvas.SetMuteCharacterUI(0);
             }    
             else if (msg[1] == "Stop")
             {
-                animation.Stop();
-                var image = characterSetting.GetChild(1).GetComponent<Image>();
-                image.color = image.color.WithAlpha(1.0f);
+                //animation.Stop();
+                //var image = characterSetting.GetChild(1).GetComponent<Image>();
+                //image.color = image.color.WithAlpha(1.0f);
+                scriptCharacterCanvas.SetMuteCharacterUI(1);
             }
         }
         else if (msg[0] == "Headphone")
         {
             var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
-            var characterSetting = canvasObject.GetChild(0);
-            var animation = characterSetting.GetChild(2).GetComponent<Animation>();
+            var scriptCharacterCanvas = canvasObject.GetComponent<CharacterCanvasHandle>();
+            //var characterSetting = canvasObject.GetChild(0);
+            //var animation = characterSetting.GetChild(2).GetComponent<Animation>();
             if (msg[1] == "Play")
             {
-                animation.Play();
+                //animation.Play();
+                scriptCharacterCanvas.SetHeadphoneCharacterUI(1);
             }
             else if (msg[1] == "Stop")
             {
-                animation.Stop();
-                var image = characterSetting.GetChild(2).GetComponent<Image>();
-                image.color = image.color.WithAlpha(1.0f);
+                //animation.Stop();
+                //var image = characterSetting.GetChild(2).GetComponent<Image>();
+                //image.color = image.color.WithAlpha(1.0f);
+                scriptCharacterCanvas.SetHeadphoneCharacterUI(0);
             }
         }    
     }    

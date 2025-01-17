@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,17 +41,17 @@ public class Manager : MonoSingletonGlobal<Manager>
 
     public void Start()
     {
-        IsLoading = true;
-        loadingCanvas.Show(null, 0.0f, 0.6f);
+        loadingCanvas.Show(null, 0.0f, 0.9f);
     }
 
     public void CompleteOpenAd()
     {
-        loadingCanvas.Show(() => 
+        Debug.Log("[Manager] Complete ad");
+        IsLoading = false;
+        loadingCanvas.Show(() =>
         {
-            LoadScene(Scene.Ingame);
-            IsLoading = false; 
-        }, 0.6f, 1.0f);
+            loadingCanvas.Hide();
+        }, 0.9f, 1.0f, 10.0f, 0.1f);
     }    
 
 
@@ -59,31 +60,6 @@ public class Manager : MonoSingletonGlobal<Manager>
         Scene = name;
         SceneManager.LoadScene((int)name, mode);
     }    
-
-    public void ShowLoading()
-    {
-        IsLoading = true;
-        loadingCanvas.Show();
-        CoroutineUtils.PlayCoroutineOneSecond(() => LoadScene(Scene.Ingame));
-    }  
-    
-    public void HideLoading()
-    {
-        CoroutineUtils.PlayCoroutineOneSecond(() =>
-        {
-            loadingCanvas.Hide();
-        });
-    }
-
-    public void CorotineLoading(UnityAction CALLBACK)
-    {
-        loadingCanvas.Show();
-        CoroutineUtils.PlayCoroutineOneSecond(() =>
-        {
-            CALLBACK?.Invoke();
-            CoroutineUtils.PlayCoroutineHaftSecond(() => loadingCanvas.Hide());
-        });
-    }
 
     public void CaculateRCoin(int value, UnityAction<int> confirm, UnityAction reject)
     {

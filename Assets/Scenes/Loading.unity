@@ -211,11 +211,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5159247575651866161, guid: 5b9759c937bb84e4499be9d72f7ce6e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5815721794540274367, guid: 5b9759c937bb84e4499be9d72f7ce6e6, type: 3}
       propertyPath: m_Name
       value: LoadingAdCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 5815721794540274367, guid: 5b9759c937bb84e4499be9d72f7ce6e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433515184111859262, guid: 5b9759c937bb84e4499be9d72f7ce6e6, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

@@ -7,15 +7,15 @@ using UnityEngine;
 public class PlayerSerializable
 {
     [System.Serializable]
-    public class ItemLevel
+    public class CharacterUnlockData
     {
-        public PoolName Id;
-        public int Level;
+        public string Id;
+        public string Time;
 
-        public ItemLevel(PoolName id, int level)
+        public CharacterUnlockData(string id, string time)
         {
             Id = id;
-            Level = level;
+            Time = time;
         }
     }
 
@@ -24,6 +24,7 @@ public class PlayerSerializable
     public int Gold;
     public string Language;
     public List<string> Packages;
+    public List<CharacterUnlockData> CharacterUnlocks;
 
     public PlayerSerializable()
     {
@@ -32,6 +33,7 @@ public class PlayerSerializable
         Gold = 0;
         Language = "English";
         Packages = new List<string>();
+        CharacterUnlocks = new List<CharacterUnlockData>();
     }
 
     public bool IsProductId(string productId)
@@ -44,6 +46,32 @@ public class PlayerSerializable
     {
         if (Packages.Contains(productId) == false)
             Packages.Add(productId);
+    }
+
+    public CharacterUnlockData GetCharacterUnlockData(string productId)
+    {
+        for(int i = 0; i < CharacterUnlocks.Count; i++)
+        {
+            if (CharacterUnlocks[i].Id == productId)
+                return CharacterUnlocks[i];
+        }
+
+        return null;
+    }
+
+    public void AddCharacterUnlockData(string productID)
+    {
+        var exists = CharacterUnlocks.Exists(x => x.Id == productID);
+        if(exists == false)
+        {
+            CharacterUnlockData data = new CharacterUnlockData(productID, DateTime.Now.ToString());
+            CharacterUnlocks.Add(data);
+        }    
+        else
+        {
+            var data = CharacterUnlocks.Find(x => x.Id == productID);
+            data.Time = DateTime.Now.ToString();
+        }    
     }
 }
 

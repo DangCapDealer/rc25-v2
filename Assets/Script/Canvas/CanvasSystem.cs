@@ -6,6 +6,7 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
 {
     public HomeUICanvas _homeUICanvas;
     public GameUICanvas _gameUICanvas;
+    public PopupUICanvas _popupUICanvas;
 
     public GameObject[] _screenUICanvas;
 

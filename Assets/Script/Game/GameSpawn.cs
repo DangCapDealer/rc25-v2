@@ -22,6 +22,11 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     public List<GameObject> RuntimeDataObjects = new List<GameObject>();
 
+    public CharacterDataSO.CharacterSO[] GetAllCharacter()
+    {
+        return CharacterData.Characters;
+    }    
+
     public CharacterDataSO.CharacterSO FindCharacterData(string msg)
     {
         var dataFromSO = CharacterData.Find(msg);

@@ -52,6 +52,11 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             Debug.Log($"[{this.GetType().ToString()}] Admob Initialized");
             Manager.Instance.IsAds = true;
             IsInitalized = true;
+            //#if UNITY_EDITOR
+            //            PromiseShowInterstitialAd(() => { Manager.Instance.CompleteOpenAd(); }, null);
+            //#else
+            //            PromiseShowInterstitialAd(null, () => { Manager.Instance.CompleteOpenAd(); });
+            //#endif
             PromiseShowInterstitialAd(null, () => { Manager.Instance.CompleteOpenAd(); });
             Dictionary<string, AdapterStatus> map = initStatus.getAdapterStatusMap();
             foreach (KeyValuePair<string, AdapterStatus> keyValuePair in map)
@@ -361,7 +366,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public string _adUnitInterId = "ca-app-pub-5904408074441373/5604148681";
 #else
     public string _adUnitInterId = "unused";
-#endif  
+#endif
 
     private InterstitialAd _interstitialAd;
     private InterstitialAd _interstitialHomeAd;
@@ -570,7 +575,6 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         {
             Debug.Log($"[{this.GetType().ToString()}] Showing interstitial home ad.");
             InterHomeAdShowState = AdShowState.Pending;
-            _loadingInterstitalAd?.SetActive(true);
             OpenAdSpaceTimeCounter = 0;
 
             ActionOnAfterInterstitalAd = () =>
@@ -579,13 +583,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
                 InterHomeAdState = AdState.NotAvailable;
                 if (Callback != null)
                     Callback?.Invoke();
-                _loadingInterstitalAd?.SetActive(false);
             };
-            CoroutineUtils.PlayCoroutine(() =>
-            {
-                _interstitialHomeAd.Show();
-            }, 1.0f);
-
+            _interstitialHomeAd.Show();
             ResetInterstitialAdCounter();
         }
         else
@@ -692,14 +691,11 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
             Debug.Log($"[{this.GetType().ToString()}] Showing interstitial ad.");
             showAd?.Invoke();
-            ActionOnAfterInterstitalAd = () =>
-            {
-                afterAd?.Invoke();
-            };
+            ActionOnAfterInterstitalAd = () => { afterAd?.Invoke(); };
 
             if (InterOpenAdMaximusTimeCounter <= InterOpenAdMaximusTime)
             {
-                InterOpenAdMaximusTimeCounter = InterOpenAdMaximusTime;
+                InterOpenAdMaximusTimeCounter = 999;
                 _interstitialOpenAd.Show();
             }
             else
@@ -1029,4 +1025,4 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         Debug.Log($"[{this.GetType().ToString()}] Checking Open Ad.");
     }
 #endif
-}
+        }

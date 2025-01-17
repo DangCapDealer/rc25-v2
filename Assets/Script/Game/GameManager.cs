@@ -19,8 +19,6 @@ public class GameManager : MonoSingleton<GameManager>
         if(Manager.Instance != null)
         {
             yield return new WaitUntil(() => Manager.Instance.IsLoading == false);
-            Manager.Instance.HideLoading();
-            yield return null;
             Manager.Instance.IsIngame = true;
         }
         yield return null;
