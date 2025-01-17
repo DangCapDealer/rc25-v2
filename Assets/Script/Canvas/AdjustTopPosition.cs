@@ -2,6 +2,13 @@
 
 public class AdjustImagePosition : MonoBehaviour
 {
+    //public enum AdjustType
+    //{
+    //    Rate,
+    //    Pixel
+    //}    
+
+    //public AdjustType type = AdjustType.Rate;
     public float rate = 1.0f / 3.0f;
     public RectTransform rectTransform;
 

@@ -118,13 +118,13 @@ MonoBehaviour:
     Prefab: {fileID: 64199056511469472, guid: 62656a09c4fe8ec419ddf79a7b36ab9e, type: 3}
     AudioClip: {fileID: 8300000, guid: 93aa693d234495c48acadd9f54b89144, type: 3}
     PayType: 0
-  - ID: Mroona
+  - ID: Mroona & Wyrum
     Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
     Prefab: {fileID: 5285206090367846856, guid: b2a18145f0261be4f85e2726bdfa5649, type: 3}
     AudioClip: {fileID: 8300000, guid: 9941bab610711f14b94ca267b2f397bf, type: 3}
     PayType: 0
-  - ID: Wyrum
-    Icon: {fileID: 21300000, guid: 7f3739957427f3d4b86efbe475f96e18, type: 3}
-    Prefab: {fileID: 5022315092004934326, guid: cc469964d62b9b64684d1371cf998578, type: 3}
-    AudioClip: {fileID: 8300000, guid: 9941bab610711f14b94ca267b2f397bf, type: 3}
+  - ID: Sun
+    Icon: {fileID: 21300000, guid: ae2603217bd905d4884669cd715a195e, type: 3}
+    Prefab: {fileID: 4851450103748602391, guid: 7ff59b527ee10c14abf6597155c9b2b2, type: 3}
+    AudioClip: {fileID: 8300000, guid: 5f36f386e0bfdb54b8f9ebea9d90bff8, type: 3}
     PayType: 0

@@ -26,6 +26,12 @@ public class Manager : MonoSingletonGlobal<Manager>
     public string IngameScreenID = "";
     [SerializeField] private LoadingCanvas loadingCanvas;
 
+    [Header("Firebase Data")]
+    public double BannerReloadTimer = 30;
+    public bool IsPopupUnlock = false;
+    public double InterHomeReloadTimer = 30;
+    public double InterAutoReloadTimer = 40;
+
     protected override void Awake()
     {
         QualitySettings.vSyncCount = 1;

@@ -7,11 +7,15 @@ public class GameUICanvas : MonoBehaviour
     public GameObject CharacterUIPrefab;
     //public Transform Pointer;
 
+    public Transform BtnUnlockTransform;
+
     public void CreateGame()
     {
         CreateUIGame();
         GridInCamera.Instance.CreatePosition();
         GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
+
+        BtnUnlockTransform.SetActive(Manager.Instance.IsPopupUnlock);
     }
 
     private void CreateUIGame()
@@ -182,6 +186,8 @@ public class GameUICanvas : MonoBehaviour
                 GameManager.Instance.GameReset();
                 GameSpawn.Instance.RemoveAllCharacter();
                 SoundSpawn.Instance.MuteAll();
+                AdManager.Instance.HideBannerAd();
+                AdManager.Instance.ShowBannerMERCAd();
             });
         }    
         else
@@ -190,6 +196,8 @@ public class GameUICanvas : MonoBehaviour
             GameManager.Instance.GameReset();
             GameSpawn.Instance.RemoveAllCharacter();
             SoundSpawn.Instance.MuteAll();
+            AdManager.Instance.HideBannerAd();
+            AdManager.Instance.ShowBannerMERCAd();
         }    
     }
 

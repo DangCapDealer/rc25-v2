@@ -82,6 +82,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         if (UseBanner == true)
         {
             LoadBannerAd();
+            LoadBannerMERCAd();
         }    
         if (UseInterstitial == true)
         {
@@ -94,8 +95,11 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         }    
     }
 
+
     private float AfterAdReload = 10.0f;
+    private float TimerBannerAutoReload = 0.0f;
     private float TimerBannerAdReload = 0.0f;
+    private float TimerBannerMERCAdReload = 0.0f;
     private float TimerInterstitialAdReload = 0.0f;
     private float TimerInterstitialHomeAdReload = 0.0f;
     private float TimerRewardedAdReload = 0.0f;
@@ -111,6 +115,15 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         if (IsInitalized == false)
             return;
 
+        TimerBannerAutoReload += Time.deltaTime;
+        if(TimerBannerAutoReload >= Manager.Instance.BannerReloadTimer)
+        {
+            if (BannerAdState == AdState.Ready)
+                BannerAdState = AdState.NotAvailable;
+            if (BannerMERCAdState == AdState.Ready)
+                BannerMERCAdState = AdState.NotAvailable;
+        }    
+
         if (IsPreloadBanner)
         {
             TimerBannerAdReload += Time.deltaTime;
@@ -120,6 +133,19 @@ public class AdManager : MonoSingletonGlobal<AdManager>
                 {
                     TimerBannerAdReload = 0;
                     LoadBannerAd();
+                }
+            }
+        }
+
+        if (IsPreloadBannerMERC)
+        {
+            TimerBannerMERCAdReload += Time.deltaTime;
+            if (TimerBannerMERCAdReload > AfterAdReload)
+            {
+                if (BannerMERCAdState == AdState.NotAvailable /*&& _interstitalReloadCount <= 10*/)
+                {
+                    TimerBannerMERCAdReload = 0;
+                    LoadBannerMERCAd();
                 }
             }
         }
@@ -206,11 +232,10 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     [Header("Ad Banner")]
     public bool UseBanner = false;
     public bool IsPreloadBanner = true;
-    public bool IsBanner = false;
     public AdState BannerAdState = AdState.NotAvailable;
-    public AdBannerSize _status = AdBannerSize.FullWidth;
     //public GameObject _bannerOverlay;
     public int _bannerReloadCount = 0;
+    //public Transform _backgroundAd;
 #if UNITY_ANDROID
     public string _adUnitBannerId = "";
 #elif UNITY_IPHONE
@@ -236,14 +261,14 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         int bannerHeight = 50;
         int h = Screen.height / 2 - bannerHeight / 2;
 
-        AdSize adaptiveSize = _status == AdBannerSize.FullWidth ? AdSize.GetLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth) : AdSize.Banner;
+        AdSize adaptiveSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
         Debug.Log($"[{this.GetType().ToString()}] adaptiveSize " + adaptiveSize);
         // Create a 320x50 banner at top of the screen
-        _bannerView = new BannerView(_adUnitBannerId, adaptiveSize, AdPosition.BottomLeft);
+        _bannerView = new BannerView(_adUnitBannerId, adaptiveSize, AdPosition.Bottom);
         ListenToBannerAdEvents();
     }
 
-    public void LoadBannerAd(bool IsHide = true)
+    public void LoadBannerAd()
     {
         if (RuntimeStorageData.Player.IsAds)
             return;
@@ -263,8 +288,6 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         // send the request to load the ad.
         Debug.Log($"[{this.GetType().ToString()}] Loading banner ad.");
         _bannerView.LoadAd(adRequest);
-        if (IsBanner) ShowBannerAd();
-        else HideBannerAd();
     }
 
     /// <summary>
@@ -291,6 +314,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         {
             _bannerReloadCount = 0;
             BannerAdState = AdState.Ready;
+            ShowBannerAd();
             Debug.Log($"[{this.GetType().ToString()}] Banner view loaded an ad with response : "
                 + _bannerView.GetResponseInfo());
             Debug.Log(string.Format("[AdManager] Ad Height: {0}, width: {1}", _bannerView.GetHeightInPixels(), _bannerView.GetWidthInPixels()));
@@ -335,23 +359,149 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
     public void ShowBannerAd()
     {
-        IsBanner = true;
         if (RuntimeStorageData.Player.IsAds)
             return;
-        //if (_bannerOverlay != null)
-        //    _bannerOverlay.SetActive(true);
-        //if (_bannerView != null)
-        //    _bannerView.Show();
+        if (_bannerView != null)
+        {
+            //_backgroundAd.SetActive(true);
+            _bannerView.Show();
+        }    
     }
 
     public void HideBannerAd()
     {
-        IsBanner = false;
-        //if (_bannerOverlay != null)
-        //    _bannerOverlay.SetActive(false);
-        //if (_bannerView != null)
-        //    _bannerView.Hide();
+        if (_bannerView != null)
+        {
+            //_backgroundAd.SetActive(false);
+            _bannerView.Hide();
+        }    
     }
+
+    [Header("Banner MERC")]
+    public bool IsPreloadBannerMERC = true;
+    public AdState BannerMERCAdState = AdState.NotAvailable;
+    public int _bannerMERCReloadCount = 0;
+    public Transform _backgroundMERCAd;
+
+#if UNITY_ANDROID
+    public string _adUnitBannerMERCId = "";
+#elif UNITY_IPHONE
+    public string _adUnitBannerMERCId = "";
+#else
+    public string _adUnitBannerMERCId = "unused";
+#endif
+
+    BannerView _bannerMERCView;
+
+    public void LoadBannerMERCAd()
+    {
+        if (RuntimeStorageData.Player.IsAds)
+            return;
+        if (BannerMERCAdState == AdState.Loading)
+            return;
+        BannerMERCAdState = AdState.Loading;
+
+        // create an instance of a banner view first.
+        if (_bannerMERCView == null)
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Creating banner merc view");
+
+            // If we already have a banner, destroy the old one.
+            if (_bannerMERCView != null)
+            {
+                BannerMERCAdState = AdState.NotAvailable;
+                Debug.Log($"[{this.GetType().ToString()}] Destroying banner merc view.");
+                _bannerMERCView.Destroy();
+                _bannerMERCView = null;
+            }
+            int w = 0;
+            int bannerHeight = 50;
+            int h = Screen.height / 2 - bannerHeight / 2;
+
+            //AdSize adaptiveSize = _statusMERC == AdBannerSize.FullWidth ? AdSize.GetLandscapeAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth) : AdSize.Banner;
+            AdSize adaptiveSize = AdSize.MediumRectangle;
+            Debug.Log($"[{this.GetType().ToString()}] adaptiveSize " + adaptiveSize);
+            // Create a 320x50 banner at top of the screen
+            _bannerMERCView = new BannerView(_adUnitBannerMERCId, adaptiveSize, AdPosition.Bottom);
+            // Raised when an ad is loaded into the banner view.
+            _bannerMERCView.OnBannerAdLoaded += () =>
+            {
+                _bannerMERCReloadCount = 0;
+                BannerMERCAdState = AdState.Ready;
+                Debug.Log($"[{this.GetType().ToString()}] Banner view loaded an ad with response : "
+                    + _bannerMERCView.GetResponseInfo());
+                Debug.Log(string.Format("[AdManager] Ad Height: {0}, width: {1}", _bannerMERCView.GetHeightInPixels(), _bannerMERCView.GetWidthInPixels()));
+            };
+            // Raised when an ad fails to load into the banner view.
+            _bannerMERCView.OnBannerAdLoadFailed += (LoadAdError error) =>
+            {
+                _bannerMERCReloadCount += 1;
+                BannerMERCAdState = AdState.NotAvailable;
+                Debug.Log($"[{this.GetType().ToString()}] Banner view failed to load an ad with error : "
+                    + error);
+            };
+            // Raised when the ad is estimated to have earned money.
+            _bannerMERCView.OnAdPaid += (AdValue adValue) =>
+            {
+                //AppflyerEventSender.Instance.logAdRevenue(adValue);
+                Debug.Log(String.Format("Banner view paid {0} {1}.",
+                    adValue.Value,
+                    adValue.CurrencyCode));
+            };
+            // Raised when an impression is recorded for an ad.
+            _bannerMERCView.OnAdImpressionRecorded += () =>
+            {
+                Debug.Log($"[{this.GetType().ToString()}] Banner view recorded an impression.");
+            };
+            // Raised when a click is recorded for an ad.
+            _bannerMERCView.OnAdClicked += () =>
+            {
+                Debug.Log($"[{this.GetType().ToString()}] Banner view was clicked.");
+            };
+            // Raised when an ad opened full screen content.
+            _bannerMERCView.OnAdFullScreenContentOpened += () =>
+            {
+                Debug.Log($"[{this.GetType().ToString()}] Banner view full screen content opened.");
+            };
+            // Raised when the ad closed full screen content.
+            _bannerMERCView.OnAdFullScreenContentClosed += () =>
+            {
+                Debug.Log($"[{this.GetType().ToString()}] Banner view full screen content closed.");
+            };
+        }
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        Debug.Log($"[{this.GetType().ToString()}] Loading banner MERC ad.");
+        _bannerMERCView.LoadAd(adRequest);
+        HideBannerMERCAd();
+    }
+
+    public void ShowBannerMERCAd()
+    {
+        if (_bannerMERCView != null)
+        {
+            _backgroundMERCAd.SetActive(true);
+            _bannerMERCView.Show();
+        }    
+    }
+
+    public void HideBannerMERCAd()
+    {
+        if (_bannerMERCView != null)
+        {
+            _backgroundMERCAd.SetActive(false);
+            _bannerMERCView.Hide();
+        }    
+    }
+
+    public void BtnCloseMERCAd()
+    {
+        HideBannerMERCAd();
+        ShowBannerAd();
+    }    
 
 
     public UnityAction ActionOnAfterInterstitalAd;
@@ -379,7 +529,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public int _interstitalReloadCount = 0;
 
     public float InterAdSpaceTimeAutoCounter = 0;
-    public float InterAdSpaceTimeAuto = 60.0f;
+    //public float InterAdSpaceTimeAuto = 60.0f;
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
     public string _adUnitInterId = "ca-app-pub-5904408074441373/8357882100";
@@ -527,7 +677,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public int _interstitialHomeAdReloadCount = 0;
 
     public float InterHomeAdSpaceTimeAutoCounter = 0;
-    public float InterHomeAdSpaceTimeAuto = 30.0f;
+    //public float InterHomeAdSpaceTimeAuto = 30.0f;
 
 #if UNITY_ANDROID
     public string _adUnitInterHomeId = "ca-app-pub-5904408074441373/8357882100";
@@ -584,7 +734,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     {
         if (InterHomeAdShowState == AdShowState.Pending)
             return;
-        if (InterHomeAdSpaceTimeAutoCounter < InterHomeAdSpaceTimeAuto)
+        if (InterHomeAdSpaceTimeAutoCounter < Manager.Instance.InterHomeReloadTimer)
         {
             if (Callback != null)
                 Callback?.Invoke();
@@ -742,7 +892,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         if (Manager.Instance.IsIngame == true && Manager.Instance.IngameScreenID == "GameUICanvas")
         {
             InterAdSpaceTimeAutoCounter += Time.deltaTime;
-            if (InterAdSpaceTimeAutoCounter > InterAdSpaceTimeAuto)
+            if (InterAdSpaceTimeAutoCounter > Manager.Instance.InterAutoReloadTimer)
             {
                 InterAdSpaceTimeAutoCounter = 0;
                 ShowInterstitialAd(null);

@@ -14,6 +14,7 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
 #if FIREBASE
     public bool IsInitialized = false;
     Firebase.FirebaseApp app;
+
     private void Start()
     {
         StartCoroutine(LoadFirebase());
@@ -127,7 +128,10 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
           .ContinueWithOnMainThread(
             task =>
             {
-
+                Manager.Instance.BannerReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("banner_reload_timer").DoubleValue;
+                Manager.Instance.IsPopupUnlock = FirebaseRemoteConfig.DefaultInstance.GetValue("button_unlock_all_character").StringValue == "0" ? false : true;
+                Manager.Instance.InterHomeReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("inter_home").DoubleValue;
+                Manager.Instance.InterAutoReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("inter_auto").DoubleValue;
             });
     }
 #else

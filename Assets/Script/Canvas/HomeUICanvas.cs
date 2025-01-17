@@ -18,6 +18,8 @@ public class HomeUICanvas : MonoBehaviour
             CanvasSystem.Instance.ChooseScreen("GameUICanvas");
             CanvasSystem.Instance._gameUICanvas.CreateGame();
             SoundSpawn.Instance.Reload();
+            AdManager.Instance.HideBannerAd();
+            AdManager.Instance.ShowBannerMERCAd();
         }   
         else
         {
@@ -26,7 +28,9 @@ public class HomeUICanvas : MonoBehaviour
                 CanvasSystem.Instance.ChooseScreen("GameUICanvas");
                 CanvasSystem.Instance._gameUICanvas.CreateGame();
                 SoundSpawn.Instance.Reload();
+                AdManager.Instance.HideBannerAd();
+                AdManager.Instance.ShowBannerMERCAd();
             });
-        }    
+        }       
     }    
 }
