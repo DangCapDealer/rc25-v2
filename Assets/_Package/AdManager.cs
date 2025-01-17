@@ -52,11 +52,6 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             Debug.Log($"[{this.GetType().ToString()}] Admob Initialized");
             Manager.Instance.IsAds = true;
             IsInitalized = true;
-            //#if UNITY_EDITOR
-            //            PromiseShowInterstitialAd(() => { Manager.Instance.CompleteOpenAd(); }, null);
-            //#else
-            //            PromiseShowInterstitialAd(null, () => { Manager.Instance.CompleteOpenAd(); });
-            //#endif
             PromiseShowInterstitialAd(null, () => { Manager.Instance.CompleteOpenAd(); });
             Dictionary<string, AdapterStatus> map = initStatus.getAdapterStatusMap();
             foreach (KeyValuePair<string, AdapterStatus> keyValuePair in map)
@@ -81,6 +76,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         if (UseReward == true)
         {
             LoadRewardedAd();
+            LoadRewardedSecondAd();
+            LoadRewardedThridAd();
         }    
         if (UseBanner == true)
         {
@@ -102,6 +99,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     private float TimerInterstitialAdReload = 0.0f;
     private float TimerInterstitialHomeAdReload = 0.0f;
     private float TimerRewardedAdReload = 0.0f;
+    private float TimerRewardedSecondAdReload = 0.0f;
+    private float TimerRewardedThirdAdReload = 0.0f;
     private float TimerOpenAdReload = 0.0f;
 
 
@@ -162,6 +161,28 @@ public class AdManager : MonoSingletonGlobal<AdManager>
                 TimerRewardedAdReload = 0;
                 if (RewardAdState == AdState.NotAvailable /*&& _rewardReloadCount <= 10*/)
                     LoadRewardedAd();
+            }
+        }
+
+        if (IsPreloadRewardSecond)
+        {
+            TimerRewardedSecondAdReload += Time.deltaTime;
+            if (TimerRewardedSecondAdReload > AfterAdReload)
+            {
+                TimerRewardedSecondAdReload = 0;
+                if (RewardSecondAdState == AdState.NotAvailable /*&& _rewardReloadCount <= 10*/)
+                    LoadRewardedSecondAd();
+            }
+        }
+
+        if (IsPreloadRewardThrid)
+        {
+            TimerRewardedThirdAdReload += Time.deltaTime;
+            if (TimerRewardedThirdAdReload > AfterAdReload)
+            {
+                TimerRewardedThirdAdReload = 0;
+                if (RewardThridAdState == AdState.NotAvailable /*&& _rewardReloadCount <= 10*/)
+                    LoadRewardedThridAd();
             }
         }
 
@@ -849,6 +870,229 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             Debug.Log($"[{this.GetType().ToString()}] Rewarded ad failed to open full screen content " +
                            "with error : " + error);
             RewardAdState = AdState.NotAvailable;
+        };
+    }
+
+    [Header("Ad reward second")]
+    public bool IsPreloadRewardSecond = true;
+    public AdState RewardSecondAdState = AdState.NotAvailable;
+    public int _rewardSecondLoadCount = 0;
+
+#if UNITY_ANDROID
+    public string _adUnitRewardSecondId = "ca-app-pub-5904408074441373/5867450136";
+#elif UNITY_IPHONE
+    public string _adUnitRewardSecondId = "ca-app-pub-5904408074441373/4291067011";
+#else
+    public string _adUnitRewardSecondId = "unused";
+#endif
+
+    private RewardedAd _rewardedSecondAd;
+    public void LoadRewardedSecondAd()
+    {
+        if (RewardSecondAdState == AdState.Loading)
+            return;
+        RewardSecondAdState = AdState.Loading;
+
+        // Clean up the old ad before loading a new one.
+        if (_rewardedSecondAd != null)
+        {
+            _rewardedSecondAd.Destroy();
+            _rewardedSecondAd = null;
+        }
+
+        Debug.Log($"[{this.GetType().ToString()}] Loading the rewarded ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        RewardedAd.Load(_adUnitRewardSecondId, adRequest, (RewardedAd ad, LoadAdError error) =>
+        {
+            // if error is not null, the load request failed.
+            if (error != null || ad == null)
+            {
+                RewardSecondAdState = AdState.NotAvailable;
+                _rewardSecondLoadCount += 1;
+                Debug.Log($"[{this.GetType().ToString()}] Rewarded ad failed to load an ad " +
+                               "with error : " + error);
+                return;
+            }
+
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad loaded with response : "
+                      + ad.GetResponseInfo());
+
+            _rewardedSecondAd = ad;
+            ListenToRewardSecondAdEvents();
+            RewardSecondAdState = AdState.Ready;
+            _rewardSecondLoadCount = 0;
+        });
+    }
+
+    public void ShowRewardedSecondAd(UnityAction Callback)
+    {
+        const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
+
+        if (_rewardedSecondAd != null && _rewardedSecondAd.CanShowAd())
+        {
+            OpenAdSpaceTimeCounter = 0;
+            _rewardedSecondAd.Show((Reward reward) =>
+            {
+                Callback?.Invoke();
+                // TODO: Reward the user.
+                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
+            });
+        }
+    }
+
+    private void ListenToRewardSecondAdEvents()
+    {
+        // Raised when the ad is estimated to have earned money.
+        _rewardedSecondAd.OnAdPaid += (AdValue adValue) =>
+        {
+            //AppflyerEventSender.Instance.logAdRevenue(adValue);
+            Debug.Log(String.Format("Rewarded ad paid {0} {1}.",
+                adValue.Value,
+                adValue.CurrencyCode));
+        };
+        // Raised when an impression is recorded for an ad.
+        _rewardedSecondAd.OnAdImpressionRecorded += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad recorded an impression.");
+        };
+        // Raised when a click is recorded for an ad.
+        _rewardedSecondAd.OnAdClicked += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad was clicked.");
+        };
+        // Raised when an ad opened full screen content.
+        _rewardedSecondAd.OnAdFullScreenContentOpened += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad full screen content opened.");
+        };
+        // Raised when the ad closed full screen content.
+        _rewardedSecondAd.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad full screen content closed.");
+            RewardSecondAdState = AdState.NotAvailable;
+        };
+        // Raised when the ad failed to open full screen content.
+        _rewardedSecondAd.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad failed to open full screen content " +
+                           "with error : " + error);
+            RewardSecondAdState = AdState.NotAvailable;
+        };
+    }
+
+    [Header("Ad reward third")]
+    public bool IsPreloadRewardThrid = true;
+    public AdState RewardThridAdState = AdState.NotAvailable;
+    public int _rewardThridLoadCount = 0;
+
+#if UNITY_ANDROID
+    public string _adUnitRewardThriddId = "ca-app-pub-5904408074441373/5867450136";
+#elif UNITY_IPHONE
+    public string _adUnitRewardThriddId = "ca-app-pub-5904408074441373/4291067011";
+#else
+    public string _adUnitRewardThriddId = "unused";
+#endif
+
+    private RewardedAd _rewardedThridAd;
+
+    public void LoadRewardedThridAd()
+    {
+        if (RewardThridAdState == AdState.Loading)
+            return;
+        RewardThridAdState = AdState.Loading;
+
+        // Clean up the old ad before loading a new one.
+        if (_rewardedThridAd != null)
+        {
+            _rewardedThridAd.Destroy();
+            _rewardedThridAd = null;
+        }
+
+        Debug.Log($"[{this.GetType().ToString()}] Loading the rewarded ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        RewardedAd.Load(_adUnitRewardThriddId, adRequest, (RewardedAd ad, LoadAdError error) =>
+        {
+            // if error is not null, the load request failed.
+            if (error != null || ad == null)
+            {
+                RewardThridAdState = AdState.NotAvailable;
+                _rewardThridLoadCount += 1;
+                Debug.Log($"[{this.GetType().ToString()}] Rewarded ad failed to load an ad " +
+                               "with error : " + error);
+                return;
+            }
+
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad loaded with response : "
+                      + ad.GetResponseInfo());
+
+            _rewardedThridAd = ad;
+            ListenToRewardThridAdEvents();
+            RewardThridAdState = AdState.Ready;
+            _rewardThridLoadCount = 0;
+        });
+    }
+
+    public void ShowRewardedThridAd(UnityAction Callback)
+    {
+        const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
+
+        if (_rewardedThridAd != null && _rewardedThridAd.CanShowAd())
+        {
+            OpenAdSpaceTimeCounter = 0;
+            _rewardedThridAd.Show((Reward reward) =>
+            {
+                Callback?.Invoke();
+                // TODO: Reward the user.
+                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
+            });
+        }
+    }
+
+    private void ListenToRewardThridAdEvents()
+    {
+        // Raised when the ad is estimated to have earned money.
+        _rewardedThridAd.OnAdPaid += (AdValue adValue) =>
+        {
+            //AppflyerEventSender.Instance.logAdRevenue(adValue);
+            Debug.Log(String.Format("Rewarded ad paid {0} {1}.",
+                adValue.Value,
+                adValue.CurrencyCode));
+        };
+        // Raised when an impression is recorded for an ad.
+        _rewardedThridAd.OnAdImpressionRecorded += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad recorded an impression.");
+        };
+        // Raised when a click is recorded for an ad.
+        _rewardedThridAd.OnAdClicked += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad was clicked.");
+        };
+        // Raised when an ad opened full screen content.
+        _rewardedThridAd.OnAdFullScreenContentOpened += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad full screen content opened.");
+        };
+        // Raised when the ad closed full screen content.
+        _rewardedThridAd.OnAdFullScreenContentClosed += () =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad full screen content closed.");
+            RewardThridAdState = AdState.NotAvailable;
+        };
+        // Raised when the ad failed to open full screen content.
+        _rewardedThridAd.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.Log($"[{this.GetType().ToString()}] Rewarded ad failed to open full screen content " +
+                           "with error : " + error);
+            RewardThridAdState = AdState.NotAvailable;
         };
     }
 

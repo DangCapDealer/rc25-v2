@@ -62,7 +62,5 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
     {
         if (_OnBeatDetection != null)
             _OnBeatDetection?.Invoke(eventInfo);
-
-        Debug.Log(eventInfo.messageInfo);
     }
 }

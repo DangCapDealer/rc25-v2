@@ -1,9 +1,5 @@
 ﻿using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using static GameEvent;
-using static UnityEngine.GraphicsBuffer;
 
 public class GameUICanvas : MonoBehaviour
 {
@@ -27,30 +23,8 @@ public class GameUICanvas : MonoBehaviour
             GameObject _child = null;
             if(i >= _childCount) _child = PoolByID.Instance.GetPrefab(CharacterUIPrefab, Content);
             else _child = Content.GetChild(i).gameObject;
-            //_child.SetActive(true);
-            //_child.name = dataCharacterSO[i].ID;
             var _script = _child.GetComponent<CharacterUIHandle>();
-            _script.Create(dataCharacterSO[i]);
-            //if(dataCharacterSO[i].PayType == CharacterDataSO.PayType.Ads)
-            //{
-            //    _child.name = $"{_child.name}_ads";
-            //    var lockedUI = _child.FindChildByParent("Locked");
-            //    lockedUI.SetActive(true);
-            //}    
-            //else
-            //{
-            //    var lockedUI = _child.FindChildByParent("Locked");
-            //    lockedUI.SetActive(false);
-            //}    
-            //for(int j = 0; j < _child.transform.childCount; j++)
-            //{
-            //    var x = _child.transform.GetChild(j);
-            //    if (x.name.StartsWith("Icon") == false)
-            //        continue;
-            //    var img = _child.transform.GetChild(j).GetComponent<Image>();
-            //    img.sprite = dataCharacterSO[i].Icon;
-            //    img.preserveAspect = true;
-            //}    
+            _script.Create(dataCharacterSO[i]);   
         }
     }
 
@@ -59,8 +33,23 @@ public class GameUICanvas : MonoBehaviour
         if (GameManager.Instance.NumberOfCharacter >= 10)
             return;
 
-        GameManager.Instance.NumberOfCharacter += 1;
-        GameSpawn.Instance.CreateNewPositionCharacter();
+        AdManager.Instance.ShowRewardedThridAd(() =>
+        {
+            GameManager.Instance.NumberOfCharacter += 1;
+            GameSpawn.Instance.CreateNewPositionCharacter();
+        });
+    }
+
+    public void UnlockAllCharacter()
+    {
+        for (int i = 0; i < Content.childCount; i++)
+        {
+            var _child = Content.GetChild(i);
+            if (_child.name.EndsWith("ads") == false)
+                continue;
+            var _script = _child.GetComponent<CharacterUIHandle>();
+            _script.Unlock();
+        }
     }
 
     private void OnEnable()

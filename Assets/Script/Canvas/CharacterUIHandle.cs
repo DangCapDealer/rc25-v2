@@ -67,17 +67,20 @@ public class CharacterUIHandle : MonoBehaviour
         locked.SetActive(active);
     }    
 
-    public void BtnUnlock()
-    {
-        
-    }    
-
-    public void BtnUnlockWithAds()
+    public void Unlock()
     {
         var ID = this.gameObject.name.Split('_')[0];
         Debug.Log($"Unlock character {ID}");
         RuntimeStorageData.Player.AddCharacterUnlockData(ID);
         this.gameObject.name = ID;
         locked.SetActive(false);
+    }    
+
+    public void BtnUnlockWithAds()
+    {
+        AdManager.Instance.ShowRewardedAd(() =>
+        {
+            Unlock();
+        });
     }    
 }
