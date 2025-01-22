@@ -46,6 +46,7 @@ public class GameUICanvas : MonoBehaviour
 
     public void UnlockAllCharacter()
     {
+        BtnUnlockTransform.SetActive(false);
         for (int i = 0; i < Content.childCount; i++)
         {
             var _child = Content.GetChild(i);
@@ -203,24 +204,36 @@ public class GameUICanvas : MonoBehaviour
 
     public void BtnAuto()
     {
-        Transform target = null;
-        for (int i = 0; i < Content.childCount; i++)
-        {
-            var child = Content.GetChild(i);
-            if (child.GetChild(0).IsActive() == true)
-            {
-                target = child.GetChild(0);
-                break;
-            }
-            else if (child.GetChild(1).IsActive() == true)
-            {
-                target = child.GetChild(1);
-                break;
-            }
-        }
-
         var targetObject = GameSpawn.Instance.GetOncePositionInPool();
         if (targetObject == null)
+            return;
+
+        Transform target = null;
+        int counter = 0;
+        while (counter < 15)
+        {
+            var child  = Content.GetChild(Random.Range(0, Content.childCount));
+            if (child.name.EndsWith("_ads") == true)
+                continue;
+            if(GameManager.Instance.Style == GameManager.GameStyle.Normal)
+            {
+                if (child.GetChild(0).IsActive() == true)
+                {
+                    target = child.GetChild(0);
+                    break;
+                }
+            }
+            else if(GameManager.Instance.Style == GameManager.GameStyle.Horror)
+            {
+                if (child.GetChild(1).IsActive() == true)
+                {
+                    target = child.GetChild(1);
+                    break;
+                }
+            }
+            counter++;
+        }
+        if (target == null)
             return;
         target.SetActive(false);
         GameSpawn.Instance.SpawnCharacterIntoPosition(target.parent.name, targetObject);

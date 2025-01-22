@@ -1,0 +1,21 @@
+skeleton.png
+size:424,424
+filter:Linear,Linear
+pma:true
+1
+bounds:329,59,84,84
+2
+bounds:271,145,59,59
+dau
+bounds:2,20,222,205
+long may trai
+bounds:332,191,41,13
+tai nghe
+bounds:2,227,277,195
+tai tren
+bounds:226,48,101,94
+than
+bounds:281,206,141,216
+toc
+bounds:226,144,81,43
+rotate:90

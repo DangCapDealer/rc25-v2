@@ -100,21 +100,26 @@ public class GameSpawn : MonoSingleton<GameSpawn>
     {
         NumberofCharacter = 0;
         RemoveAllCharacter();
+        Debug.Log($"{msg}");
         for (int i = 0; i < GameManager.Instance.NumberOfCharacter; i++)
         {
             var position = GridInCamera.Instance.GetPosition(i).WithZ(0);
-            if (msg == "Normal")
+            GameObject sponky = null;
+            switch (GameManager.Instance.Style)
             {
-                var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, position, Quaternion.identity, this.transform);
+                case GameManager.GameStyle.Normal:
+                    sponky = PoolByID.Instance.GetPrefab(WhitePrefab, position, Quaternion.identity, this.transform);
+                    break;
+                case GameManager.GameStyle.Horror:
+                    sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
+                    break;
+            }
+
+            if(sponky != null)
+            {
                 BaseObjects.Add(sponky);
                 RuntimeDataObjects.Add(sponky);
-            }
-            else if (msg == "Horror")
-            {
-                var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
-                BaseObjects.Add(sponky);
-                RuntimeDataObjects.Add(sponky);
-            }
+            }    
         }
     }
 

@@ -14,6 +14,7 @@ public enum Scene
     MiniGame
 }
 
+[DefaultExecutionOrder(-10)]
 public class Manager : MonoSingletonGlobal<Manager>
 {
     public Scene Scene = Scene.Loading;
@@ -28,6 +29,8 @@ public class Manager : MonoSingletonGlobal<Manager>
 
     [Header("Firebase Data")]
     public double BannerReloadTimer = 30;
+    public bool IsBanner = false;
+    public bool IsMREC = false;
     public bool IsPopupUnlock = false;
     public double InterHomeReloadTimer = 30;
     public double InterAutoReloadTimer = 40;
@@ -89,9 +92,9 @@ public class Manager : MonoSingletonGlobal<Manager>
 
     public void OnApplicationPause(bool pause)
     {
-        Debug.Log("Application Pause");
+        Debug.Log($"Application Pause {pause}");
         RuntimeStorageData.SaveAllData();
-        if (pause == true)
+        if (pause == false)
             AdManager.Instance.CheckingOpenAd();
     }
 

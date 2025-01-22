@@ -1,0 +1,112 @@
+{ "skeleton": { "images": "C:/Users/ACER/Desktop/New folder/green/images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "than", "bone": "root", "attachment": "than" },
+	{ "name": "1321", "bone": "root", "attachment": "1321" },
+	{ "name": "dau", "bone": "root", "attachment": "dau" },
+	{ "name": "2312", "bone": "root", "attachment": "2312" },
+	{ "name": "Shape 25", "bone": "root", "attachment": "Shape 25" },
+	{ "name": "Ellipse 1 copy 7", "bone": "root" },
+	{ "name": "Ellipse 1 copy 2", "bone": "root", "attachment": "Ellipse 1 copy 2" },
+	{ "name": "Ellipse 1 copy 4", "bone": "root" },
+	{ "name": "4", "bone": "root" },
+	{ "name": "1411", "bone": "root" },
+	{ "name": "9", "bone": "root", "attachment": "9" },
+	{ "name": "8", "bone": "root", "attachment": "8" },
+	{ "name": "7", "bone": "root", "attachment": "7" },
+	{ "name": "6", "bone": "root", "attachment": "6" },
+	{ "name": "21313245", "bone": "root", "attachment": "21313245" },
+	{ "name": "3", "bone": "root", "attachment": "3" },
+	{ "name": "4525", "bone": "root", "attachment": "4525" },
+	{ "name": "1", "bone": "root", "attachment": "1" },
+	{ "name": "mieng", "bone": "root", "attachment": "mieng" },
+	{ "name": "5", "bone": "root", "attachment": "5" },
+	{ "name": "Ellipse 1 copy 11", "bone": "root", "attachment": "Ellipse 1 copy 11" },
+	{ "name": "Ellipse 1 copy 10", "bone": "root", "attachment": "Ellipse 1 copy 10" },
+	{ "name": "4564326", "bone": "root", "attachment": "4564326" },
+	{ "name": "5645", "bone": "root", "attachment": "5645" },
+	{ "name": "2", "bone": "root", "attachment": "2" }
+],
+"skins": {
+	"default": {
+		"than": {
+			"than": { "x": 134, "y": -354, "width": 148, "height": 218 }
+		},
+		"1321": {
+			"1321": { "x": 121, "y": -264, "width": 242, "height": 136 }
+		},
+		"dau": {
+			"dau": { "x": 133.5, "y": -187, "width": 215, "height": 206 }
+		},
+		"2312": {
+			"2312": { "x": 182, "y": -193, "width": 92, "height": 86 }
+		},
+		"Shape 25": {
+			"Shape 25": { "x": 47, "y": -190, "width": 14, "height": 10 }
+		},
+		"Ellipse 1 copy 7": {
+			"Ellipse 1 copy 7": { "x": 179.5, "y": -193.5, "width": 61, "height": 61 }
+		},
+		"Ellipse 1 copy 2": {
+			"Ellipse 1 copy 2": { "x": 87, "y": -193, "width": 86, "height": 86 }
+		},
+		"Ellipse 1 copy 4": {
+			"Ellipse 1 copy 4": { "x": 87.5, "y": -193.5, "width": 61, "height": 61 }
+		},
+		"4": {
+			"4": { "x": 87, "y": -193, "width": 86, "height": 86 }
+		},
+		"1411": {
+			"1411": { "x": 182, "y": -173, "width": 92, "height": 46 }
+		},
+		"9": {
+			"9": { "x": 131, "y": -88, "width": 66, "height": 26 }
+		},
+		"8": {
+			"8": { "x": 57, "y": -146, "width": 106, "height": 132 }
+		},
+		"7": {
+			"7": { "x": 68, "y": -151.5, "width": 106, "height": 145 }
+		},
+		"6": {
+			"6": { "x": 68, "y": -170, "width": 106, "height": 180 }
+		},
+		"21313245": {
+			"21313245": { "x": 82, "y": -173, "width": 102, "height": 178 }
+		},
+		"3": {
+			"3": { "x": 143, "y": -134, "width": 20, "height": 56 }
+		},
+		"4525": {
+			"4525": { "x": 195, "y": -160, "width": 124, "height": 150 }
+		},
+		"1": {
+			"1": { "x": 110, "y": -153, "width": 74, "height": 134 }
+		},
+		"mieng": {
+			"mieng": { "x": 132, "y": -252.5, "width": 48, "height": 63 }
+		},
+		"5": {
+			"5": { "x": 189.5, "y": -154.5, "width": 81, "height": 161 }
+		},
+		"Ellipse 1 copy 11": {
+			"Ellipse 1 copy 11": { "x": 222, "y": -43, "width": 86, "height": 86 }
+		},
+		"Ellipse 1 copy 10": {
+			"Ellipse 1 copy 10": { "x": 222.5, "y": -42.5, "width": 61, "height": 61 }
+		},
+		"4564326": {
+			"4564326": { "x": 76.5, "y": -154.5, "width": 81, "height": 161 }
+		},
+		"5645": {
+			"5645": { "x": 44, "y": -43, "width": 86, "height": 86 }
+		},
+		"2": {
+			"2": { "x": 43.5, "y": -42.5, "width": 61, "height": 61 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

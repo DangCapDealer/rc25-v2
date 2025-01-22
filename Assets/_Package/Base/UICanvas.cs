@@ -5,7 +5,9 @@ using UnityEngine;
 public enum Popup
 {
     None,
-    Unlock
+    Unlock,
+    Setting,
+    Checkin,
 }
 
 public enum PopupAnimation

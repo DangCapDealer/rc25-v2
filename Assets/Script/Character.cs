@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,13 @@ using UnityEngine.UI;
 public class Character : MonoBehaviour
 {
     private SoundPrefab _soundPrefab;
+    public Transform _normal;
+    public Transform _horror;
 
     public void CreateCharacter(Camera gameCamera)
     {
-        _soundPrefab = SoundSpawn.Instance.Find(transform.name);
+        var soundId = $"{transform.name}_{GameManager.Instance.Style}";
+        _soundPrefab = SoundSpawn.Instance.Find(soundId);
         _soundPrefab.Mute = false;
 
         RegisterCameraCanvas(gameCamera);
@@ -17,6 +21,18 @@ public class Character : MonoBehaviour
 
         SetAnimationCanvas("Mute", "Stop");
         SetAnimationCanvas("Headphone", "Stop");
+
+        switch(GameManager.Instance.Style)
+        {
+            case GameManager.GameStyle.Normal:
+                _normal.SetActive(true);
+                _horror.SetActive(false);
+                break;
+            case GameManager.GameStyle.Horror:
+                _normal.SetActive(false);
+                _horror.SetActive(true);
+                break;
+        }    
     }
 
     private void RegisterCameraCanvas(Camera gameCamera)
@@ -89,21 +105,14 @@ public class Character : MonoBehaviour
         if(target == this.transform)
         {
             _soundPrefab.Mute = !_soundPrefab.Mute;
-            if (_soundPrefab.Mute == true)
-            {
-                SetAnimationCanvas("Mute", "Play");
-                SetAnimationCanvas("Headphone", "Stop");
-            }
-            else
-            {
-                SetAnimationCanvas("Mute", "Stop");
-                SetAnimationCanvas("Headphone", "Stop");
-            }
         }
         else
         {
-            SetAnimationCanvas("Headphone", "Stop");
+            _soundPrefab.Mute = false;
         }
+        SetAnimationCanvas("Mute", _soundPrefab.Mute == true ? "Play" : "Stop");
+        SetAnimationCanvas("Headphone", "Stop");
+        _soundPrefab.IsHeadphone = false;
     }
 
     private void CaculateHeadphone(Transform target)
@@ -111,13 +120,16 @@ public class Character : MonoBehaviour
         if (target == this.transform)
         {
             _soundPrefab.Mute = false;
-            SetAnimationCanvas("Mute", "Stop");
-            SetAnimationCanvas("Headphone", "Play");
+            SetAnimationCanvas("Headphone", _soundPrefab.IsHeadphone == true ? "Stop" : "Play");
+            DOVirtual.DelayedCall(0.1f, () => { _soundPrefab.IsHeadphone = !_soundPrefab.IsHeadphone; });
         }   
         else
         {
-            _soundPrefab.Mute = true;
-            SetAnimationCanvas("Mute", "Play");
+            var scriptTarget = target.GetComponent<Character>();
+            var IsHeadphone = scriptTarget._soundPrefab.IsHeadphone;
+            Debug.Log(IsHeadphone);
+            _soundPrefab.Mute = !IsHeadphone;
+            SetAnimationCanvas("Mute", _soundPrefab.Mute == true ? "Play" : "Stop");
             SetAnimationCanvas("Headphone", "Stop");
         }
     }    

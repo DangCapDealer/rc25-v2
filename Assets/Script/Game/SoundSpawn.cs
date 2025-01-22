@@ -5,7 +5,27 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
 {
     public GameObject SoundPrefab;
 
-    void Start()
+    //void Start()
+    //{
+    //    var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
+    //    for (int i = 0; i < totalCharacter.Length; i++)
+    //    {
+    //        if (totalCharacter[i].AudioClip == null)
+    //        {
+    //            Debug.LogError($"Audio clip missing {totalCharacter[i].ID}");
+    //            continue;
+    //        }
+
+    //        var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
+    //        soundObject.name = totalCharacter[i].ID;
+    //        var script = soundObject.GetComponent<SoundPrefab>();
+    //        script.Create(totalCharacter[i].AudioClip);
+    //        var eventSound = soundObject.GetComponent<BeatDetection>();
+    //        eventSound.CallBackFunction += CallBackFunction;
+    //    }
+    //}
+
+    public void CreateSound()
     {
         var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
         for (int i = 0; i < totalCharacter.Length; i++)
@@ -16,10 +36,22 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
                 continue;
             }
 
+            var soundName = $"{totalCharacter[i].ID}_{GameManager.Instance.Style}";
+            if (this.transform.FindChildByParent(soundName))
+                continue;
             var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
-            soundObject.name = totalCharacter[i].ID;
+            soundObject.name = soundName;
             var script = soundObject.GetComponent<SoundPrefab>();
-            script.Create(totalCharacter[i].AudioClip);
+            switch(GameManager.Instance.Style)
+            {
+                case GameManager.GameStyle.Normal:
+                    script.Create(totalCharacter[i].AudioClip);
+                    break;
+                case GameManager.GameStyle.Horror:
+                    script.Create(totalCharacter[i].AudioClipHorror);
+                    break;
+            }    
+
             var eventSound = soundObject.GetComponent<BeatDetection>();
             eventSound.CallBackFunction += CallBackFunction;
         }

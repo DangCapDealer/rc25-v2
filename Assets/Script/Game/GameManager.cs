@@ -26,7 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameReset()
     {
-        Style = GameStyle.Normal;
-        NumberOfCharacter = 7;
+        //Style = GameStyle.Normal;
+        //NumberOfCharacter = 7;
     }    
 }

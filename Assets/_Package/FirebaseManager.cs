@@ -9,6 +9,7 @@ using Firebase.RemoteConfig;
 using System;
 using System.Threading.Tasks;
 
+[DefaultExecutionOrder(-9)]
 public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
 {
 #if FIREBASE
@@ -128,10 +129,12 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
           .ContinueWithOnMainThread(
             task =>
             {
-                Manager.Instance.BannerReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("banner_reload_timer").DoubleValue;
+                //Manager.Instance.BannerReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("banner_reload_timer").DoubleValue;
                 Manager.Instance.IsPopupUnlock = FirebaseRemoteConfig.DefaultInstance.GetValue("button_unlock_all_character").StringValue == "0" ? false : true;
                 Manager.Instance.InterHomeReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("inter_home").DoubleValue;
                 Manager.Instance.InterAutoReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("inter_auto").DoubleValue;
+                Manager.Instance.IsBanner = FirebaseRemoteConfig.DefaultInstance.GetValue("banner_normal_active").StringValue == "0" ? false : true;
+                Manager.Instance.IsMREC = FirebaseRemoteConfig.DefaultInstance.GetValue("banner_mrec_active").StringValue == "0" ? false : true;
             });
     }
 #else

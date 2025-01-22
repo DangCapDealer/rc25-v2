@@ -19,6 +19,7 @@ public class CharacterDataSO : ScriptableObject
         public Sprite Icon;
         public GameObject Prefab;
         public AudioClip AudioClip;
+        public AudioClip AudioClipHorror;
         public PayType PayType;
     }
 

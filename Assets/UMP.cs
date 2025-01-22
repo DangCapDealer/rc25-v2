@@ -11,6 +11,7 @@ using GoogleMobileAds.Ump.Api;
 
 namespace Bacon
 {
+    [DefaultExecutionOrder(-8)]
     public class UMP : MonoBehaviour
     {
         public static UMP Instance = null;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1610497180116847087}
   - component: {fileID: 2423189599029064682}
   m_Layer: 0
-  m_Name: Spine GameObject (skeleton)
+  m_Name: Horror
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

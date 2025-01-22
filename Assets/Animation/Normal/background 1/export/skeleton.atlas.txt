@@ -1,0 +1,16 @@
+skeleton.png
+size:1000,1000
+filter:Linear,Linear
+pma:true
+beat
+bounds:891,585,10,10
+loa main
+bounds:597,130,334,171
+offsets:0,0,335,171
+mang loa nho
+bounds:597,303,292,292
+mang loa to
+bounds:597,597,400,400
+thung loa
+bounds:2,96,593,901
+offsets:0,0,593,902

@@ -1,0 +1,17 @@
+skeleton.png
+size:360,360
+filter:Linear,Linear
+pma:true
+Ellipse 594
+bounds:220,65,84,84
+Ellipse 594 copy
+bounds:220,8,55,55
+THAN
+bounds:2,2,116,216
+rotate:90
+dau
+bounds:2,120,172,236
+dau1
+bounds:176,151,127,205
+jaw
+bounds:277,36,64,27

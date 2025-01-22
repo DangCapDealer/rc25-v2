@@ -24,6 +24,8 @@ public class SoundPrefab : MonoBehaviour
         set {  AudioSource.mute = value; }
     }
 
+    public bool IsHeadphone = false;
+
     public void Reload()
     {
         if (AudioSource != null)
