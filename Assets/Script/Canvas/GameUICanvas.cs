@@ -179,27 +179,17 @@ public class GameUICanvas : MonoBehaviour
 
     public void BtnHome()
     {
-        if(AdManager.Instance != null)
-        {
-            AdManager.Instance.ShowInterstitialHomeAd(() =>
-            {
-                CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
-                GameManager.Instance.GameReset();
-                GameSpawn.Instance.RemoveAllCharacter();
-                SoundSpawn.Instance.MuteAll();
-                AdManager.Instance.HideBannerAd();
-                AdManager.Instance.ShowBannerMERCAd();
-            });
-        }    
-        else
+        AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
             GameManager.Instance.GameReset();
             GameSpawn.Instance.RemoveAllCharacter();
             SoundSpawn.Instance.MuteAll();
-            AdManager.Instance.HideBannerAd();
-            AdManager.Instance.ShowBannerMERCAd();
-        }    
+            CanvasSystem.Instance.ShowNativeCollapse();
+        }, () =>
+        {
+            CanvasSystem.Instance.ShowNativeIntertitial();
+        });
     }
 
     public void BtnAuto()

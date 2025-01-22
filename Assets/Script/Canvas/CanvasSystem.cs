@@ -10,6 +10,19 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
 
     public GameObject[] _screenUICanvas;
 
+    public Transform _bannerCollapse;
+    public void ShowNativeCollapse()
+    {
+        _bannerCollapse.SetActive(true);
+    }
+
+    public Transform _nativeInter;
+    public void ShowNativeIntertitial()
+    {
+        _nativeInter.SetActive(true);
+    }    
+    
+
     private void Start()
     {
         ChooseScreen("HomeUICanvas");

@@ -13,7 +13,7 @@ public class HomeUICanvas : MonoBehaviour
 
     public void BtnSingle()
     {
-        if(AdManager.Instance == null)
+        AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             GameManager.Instance.Style = GameManager.GameStyle.Normal;
             GameManager.Instance.NumberOfCharacter = 7;
@@ -21,28 +21,16 @@ public class HomeUICanvas : MonoBehaviour
             SoundSpawn.Instance.Reload();
             CanvasSystem.Instance.ChooseScreen("GameUICanvas");
             CanvasSystem.Instance._gameUICanvas.CreateGame();
-            AdManager.Instance.HideBannerAd();
-            AdManager.Instance.ShowBannerMERCAd();
-        }   
-        else
+            CanvasSystem.Instance.ShowNativeCollapse();
+        }, () =>
         {
-            AdManager.Instance.ShowInterstitialHomeAd(() =>
-            {
-                GameManager.Instance.Style = GameManager.GameStyle.Normal;
-                GameManager.Instance.NumberOfCharacter = 7;
-                SoundSpawn.Instance.CreateSound();
-                SoundSpawn.Instance.Reload();
-                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-                CanvasSystem.Instance._gameUICanvas.CreateGame();
-                AdManager.Instance.HideBannerAd();
-                AdManager.Instance.ShowBannerMERCAd();
-            });
-        }       
+            CanvasSystem.Instance.ShowNativeIntertitial();
+        });
     }   
 
     public void BtnSingleHorror()
     {
-        if (AdManager.Instance == null)
+        AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             GameManager.Instance.Style = GameManager.GameStyle.Horror;
             GameManager.Instance.NumberOfCharacter = 7;
@@ -50,24 +38,27 @@ public class HomeUICanvas : MonoBehaviour
             SoundSpawn.Instance.Reload();
             CanvasSystem.Instance.ChooseScreen("GameUICanvas");
             CanvasSystem.Instance._gameUICanvas.CreateGame();
-            AdManager.Instance.HideBannerAd();
-            AdManager.Instance.ShowBannerMERCAd();
-        }
-        else
+            CanvasSystem.Instance.ShowNativeCollapse();
+        }, () =>
         {
-            AdManager.Instance.ShowInterstitialHomeAd(() =>
-            {
-                GameManager.Instance.Style = GameManager.GameStyle.Horror;
-                GameManager.Instance.NumberOfCharacter = 7;
-                SoundSpawn.Instance.CreateSound();
-                SoundSpawn.Instance.Reload();
-                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-                CanvasSystem.Instance._gameUICanvas.CreateGame();
-                AdManager.Instance.HideBannerAd();
-                AdManager.Instance.ShowBannerMERCAd();
-            });
-        }
+            CanvasSystem.Instance.ShowNativeIntertitial();
+        });
     }    
+
+    public void BtnSetting()
+    {
+        CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting);
+    }    
+
+    public void BtnCheckin()
+    {
+        CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Checkin);
+    }    
+
+    public void BtnNoAds()
+    {
+        CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.NoAds);
+    }
     
     public void BtnRate()
     {
