@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RequestNativeAd : MonoBehaviour
-{  
+{
 #if ADMOB
     [Header("Native Ad Item")]
     public NativeAdPosition Position;
@@ -19,6 +19,8 @@ public class RequestNativeAd : MonoBehaviour
     public bool nativeAdLoaded = false;
     public NativeAd nativeAd;
 
+    public float TimeAfterReload = 30.0f;
+
     private float CaculateTime = 0.0f;
 
     public event Action OnChangeNativeAd;
@@ -27,7 +29,14 @@ public class RequestNativeAd : MonoBehaviour
     {
         if (AdManager.Instance.IsInitalized == false)
             return;
-
+        if (RuntimeStorageData.Player.IsLoadAds == false)
+            return;
+        if (Position == NativeAdPosition.Banner && Manager.Instance.IsNativeBanner == false)
+            return;
+        if (Position == NativeAdPosition.BannerCollapse && Manager.Instance.IsNativeMREC == false)
+            return;
+        if (Position == NativeAdPosition.Interstitial && Manager.Instance.IsNativeInter == false)
+            return;
         if (NativeAdState == AdManager.AdState.NotAvailable)
             RequestAd();
         else if (NativeAdState == AdManager.AdState.Ready)
@@ -38,7 +47,7 @@ public class RequestNativeAd : MonoBehaviour
             if(IsReloadNativeAd == true)
             {
                 CaculateTime += Time.deltaTime;
-                if (CaculateTime > 30.0f)
+                if (CaculateTime > TimeAfterReload)
                 {
                     CaculateTime = 0.0f;
                     NativeAdState = AdManager.AdState.NotAvailable;
@@ -105,5 +114,8 @@ public class RequestNativeAd : MonoBehaviour
         Debug.Log($"[{this.GetType().ToString()}] Native ad failed to load: " + e.ToString());
         NativeAdState = AdManager.AdState.NotAvailable;
     }
+#else
+    [Header("Native Ad Item")]
+    public NativeAdPosition Position;
 #endif
 }

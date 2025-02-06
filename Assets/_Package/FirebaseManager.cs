@@ -135,6 +135,9 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
                 Manager.Instance.InterAutoReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("inter_auto").DoubleValue;
                 Manager.Instance.IsBanner = FirebaseRemoteConfig.DefaultInstance.GetValue("banner_normal_active").StringValue == "0" ? false : true;
                 Manager.Instance.IsMREC = FirebaseRemoteConfig.DefaultInstance.GetValue("banner_mrec_active").StringValue == "0" ? false : true;
+                Manager.Instance.IsNativeBanner = FirebaseRemoteConfig.DefaultInstance.GetValue("native_banner").StringValue == "0" ? false : true;
+                Manager.Instance.IsNativeMREC = FirebaseRemoteConfig.DefaultInstance.GetValue("native_mrec").StringValue == "0" ? false : true;
+                Manager.Instance.IsNativeInter = FirebaseRemoteConfig.DefaultInstance.GetValue("native_inter").StringValue == "0" ? false : true;
             });
     }
 #else

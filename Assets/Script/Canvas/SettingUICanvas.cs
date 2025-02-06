@@ -12,9 +12,11 @@ public class SettingUICanvas : PopupCanvas
     {
         var _childMusic = Music.FindChildByParent(Music.name);
         _childMusic.SetActive(RuntimeStorageData.Sound.isMusic);
+        MusicManager.Instance.Turn(RuntimeStorageData.Sound.isMusic);
 
         var _childSound = Sound.FindChildByParent(Sound.name);
         _childSound.SetActive(RuntimeStorageData.Sound.isSound);
+        SoundManager.Instance.Turn(RuntimeStorageData.Sound.isSound);
 
         var _childVibration = Vibration.FindChildByParent(Vibration.name);
         _childVibration.SetActive(RuntimeStorageData.Sound.isVibrate);
@@ -26,6 +28,8 @@ public class SettingUICanvas : PopupCanvas
 
         var _child = Music.FindChildByParent(Music.name);
         _child.SetActive(RuntimeStorageData.Sound.isMusic);
+
+        MusicManager.Instance.Turn(RuntimeStorageData.Sound.isMusic);
     }
 
     public void BtnSound()
@@ -34,6 +38,8 @@ public class SettingUICanvas : PopupCanvas
 
         var _child = Sound.FindChildByParent(Sound.name);
         _child.SetActive(RuntimeStorageData.Sound.isSound);
+
+        SoundManager.Instance.Turn(RuntimeStorageData.Sound.isSound);
     }
 
     public void BtnVibration()

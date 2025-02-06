@@ -19,6 +19,7 @@ public class UnlockUICanvas : PopupCanvas
         base.Show(p);
         if(p == Popup.Unlock)
         {
+            NumberOfAds = RuntimeStorageData.Player.NumberOfAd;
             LoadTMPNumberOfAds();
         }
     }
@@ -35,6 +36,7 @@ public class UnlockUICanvas : PopupCanvas
             }
             LoadTMP = true;
             cd = 4;
+            RuntimeStorageData.Player.NumberOfAd = NumberOfAds;
         });
     }
 

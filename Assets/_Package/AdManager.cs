@@ -6,6 +6,9 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using EditorCools;
 using DG.Tweening;
+using GoogleMobileAds.Api;
+using PimDeWitte.UnityMainThreadDispatcher;
+
 
 
 #if ADMOB
@@ -48,6 +51,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
     private IEnumerator LoadAds()
     {
+        yield return new WaitUntil(() => Manager.IsReady);
+        yield return new WaitUntil(() => RuntimeStorageData.IsReady);
         yield return new WaitUntil(() => Bacon.UMP.Instance.IsUMPReady);
         MobileAds.RaiseAdEventsOnUnityMainThread = true;
         MobileAds.Initialize(initStatus =>
@@ -55,7 +60,12 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             Debug.Log($"[{this.GetType().ToString()}] Admob Initialized");
             Manager.Instance.IsAds = true;
             IsInitalized = true;
-            PromiseShowInterstitialAd(null, () => { Manager.Instance.CompleteOpenAd(); });
+            PromiseShowInterstitialAd(null, () => {
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    Manager.Instance.CompleteOpenAd();
+                });
+            });
             Dictionary<string, AdapterStatus> map = initStatus.getAdapterStatusMap();
             foreach (KeyValuePair<string, AdapterStatus> keyValuePair in map)
             {
@@ -120,43 +130,10 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         if (IsInitalized == false)
             return;
 
-        //TimerBannerAutoReload += Time.deltaTime;
-        //if(TimerBannerAutoReload >= Manager.Instance.BannerReloadTimer)
-        //{
-        //    if (BannerAdState == AdState.Ready)
-        //        BannerAdState = AdState.NotAvailable;
-        //    //if (BannerMERCAdState == AdState.Ready)
-        //    //    BannerMERCAdState = AdState.NotAvailable;
-        //}    
-
-        //if (IsPreloadBanner)
-        //{
-        //    TimerBannerAdReload += Time.deltaTime;
-        //    if (TimerBannerAdReload > AfterAdReload)
-        //    {
-        //        if (BannerAdState == AdState.NotAvailable /*&& _interstitalReloadCount <= 10*/)
-        //        {
-        //            TimerBannerAdReload = 0;
-        //            LoadBannerAd();
-        //        }
-        //    }
-        //}
-
-        //if (IsPreloadBannerMERC)
-        //{
-        //    TimerBannerMERCAdReload += Time.deltaTime;
-        //    if (TimerBannerMERCAdReload > AfterAdReload)
-        //    {
-        //        if (BannerMERCAdState == AdState.NotAvailable /*&& _interstitalReloadCount <= 10*/)
-        //        {
-        //            TimerBannerMERCAdReload = 0;
-        //            LoadBannerMERCAd();
-        //        }
-        //    }
-        //}
-
         if (IsPreloadInterstitial)
         {
+            if (RuntimeStorageData.Player.IsLoadAds == false)
+                return;
             TimerInterstitialAdReload += Time.deltaTime;
             if (TimerInterstitialAdReload > AfterAdReload)
             {
@@ -170,6 +147,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
         if (IsPreloadinterstitialHome)
         {
+            if (RuntimeStorageData.Player.IsLoadAds == false)
+                return;
             TimerInterstitialHomeAdReload += Time.deltaTime;
             if (TimerInterstitialHomeAdReload > AfterAdReload)
             {
@@ -186,44 +165,26 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
         if (IsPreloadReward)
         {
-            //TimerRewardedAdReload += Time.deltaTime;
-            //if (TimerRewardedAdReload > AfterAdReload)
-            //{
-            //    TimerRewardedAdReload = 0;
-
-            //}
             if (RewardAdState == AdState.NotAvailable /*&& _rewardReloadCount <= 10*/)
                 LoadRewardedAd();
         }
 
         if (IsPreloadRewardSecond)
         {
-            //TimerRewardedSecondAdReload += Time.deltaTime;
-            //if (TimerRewardedSecondAdReload > AfterAdReload)
-            //{
-            //    TimerRewardedSecondAdReload = 0;
-            //    if (RewardSecondAdState == AdState.NotAvailable /*&& _rewardReloadCount <= 10*/)
-            //        LoadRewardedSecondAd();
-            //}
             if (RewardSecondAdState == AdState.NotAvailable /*&& _rewardReloadCount <= 10*/)
                 LoadRewardedSecondAd();
         }
 
         if (IsPreloadRewardThrid)
         {
-            //TimerRewardedThirdAdReload += Time.deltaTime;
-            //if (TimerRewardedThirdAdReload > AfterAdReload)
-            //{
-            //    TimerRewardedThirdAdReload = 0;
-            //    if (RewardThridAdState == AdState.NotAvailable /*&& _rewardReloadCount <= 10*/)
-            //        LoadRewardedThridAd();
-            //}
             if (RewardThridAdState == AdState.NotAvailable /*&& _rewardReloadCount <= 10*/)
                 LoadRewardedThridAd();
         }
 
         if (IsPreloadOpen)
         {
+            if (RuntimeStorageData.Player.IsLoadAds == false)
+                return;
             TimerOpenAdReload += Time.deltaTime;
             if (TimerOpenAdReload > AfterAdReload)
             {
@@ -569,7 +530,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     /// </summary>
     public void LoadInterstitialAd()
     {
-        if (RuntimeStorageData.Player.IsAds)
+        if (RuntimeStorageData.Player.IsLoadAds == false)
             return;
         if (InterAdState == AdState.Loading)
             return;
@@ -710,7 +671,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
     public void LoadInterstitialHomeAd()
     {
-        if (RuntimeStorageData.Player.IsAds)
+        if (RuntimeStorageData.Player.IsLoadAds == false)
             return;
         if (InterHomeAdState == AdState.Loading)
             return;
@@ -844,6 +805,12 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
     public void PromiseShowInterstitialAd(UnityAction showAd, UnityAction afterAd)
     {
+        if (RuntimeStorageData.Player.IsLoadAds == false)
+        {
+            showAd?.Invoke();
+            afterAd?.Invoke();
+            return;
+        }
         Debug.Log($"[{this.GetType().ToString()}] Promise show interstitial open Ad");
         // create our request used to load the ad.
         var adRequest = new AdRequest();
@@ -918,7 +885,13 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             if (InterAdSpaceTimeAutoCounter > Manager.Instance.InterAutoReloadTimer)
             {
                 InterAdSpaceTimeAutoCounter = 0;
-                ShowInterstitialAd(() => CanvasSystem.Instance.ShowNativeIntertitial());
+                ShowInterstitialAd(() =>
+                {
+                    UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                    {
+                        CanvasSystem.Instance.ShowNativeIntertitial();
+                    });
+                });
             }
         }
 
@@ -990,18 +963,17 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         });
     }
 
-    public void ShowRewardedAd(UnityAction Callback)
+    public void ShowRewardedAd(UnityAction RewardComplete)
     {
-        const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
-
         if (_rewardedAd != null && _rewardedAd.CanShowAd())
         {
             OpenAdSpaceTimeCounter = 0;
             _rewardedAd.Show((Reward reward) =>
             {
-                Callback?.Invoke();
-                // TODO: Reward the user.
-                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    RewardComplete?.Invoke();
+                });
             });
         }
     }
@@ -1101,18 +1073,17 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         });
     }
 
-    public void ShowRewardedSecondAd(UnityAction Callback)
+    public void ShowRewardedSecondAd(UnityAction RewardComplete)
     {
-        const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
-
         if (_rewardedSecondAd != null && _rewardedSecondAd.CanShowAd())
         {
             OpenAdSpaceTimeCounter = 0;
             _rewardedSecondAd.Show((Reward reward) =>
             {
-                Callback?.Invoke();
-                // TODO: Reward the user.
-                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    RewardComplete?.Invoke();
+                });
             });
         }
     }
@@ -1213,18 +1184,17 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         });
     }
 
-    public void ShowRewardedThridAd(UnityAction Callback)
+    public void ShowRewardedThridAd(UnityAction RewardComplete)
     {
-        const string rewardMsg = "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
-
         if (_rewardedThridAd != null && _rewardedThridAd.CanShowAd())
         {
             OpenAdSpaceTimeCounter = 0;
             _rewardedThridAd.Show((Reward reward) =>
             {
-                Callback?.Invoke();
-                // TODO: Reward the user.
-                Debug.Log(String.Format(rewardMsg, reward.Type, reward.Amount));
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    RewardComplete?.Invoke();
+                });
             });
         }
     }
@@ -1289,6 +1259,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
     public void CaculaterCounterOpenAd()
     {
+        if (RuntimeStorageData.Player.IsLoadAds == false)
+            return;
         OpenAdSpaceTimeCounter += Time.deltaTime;
     }    
 
@@ -1297,7 +1269,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     /// </summary>
     public void LoadAppOpenAd()
     {
-        if (RuntimeStorageData.Player.IsAds)
+        if (RuntimeStorageData.Player.IsLoadAds == false)
             return;
         if (OpenAdState == AdState.Loading)
             return;
@@ -1386,7 +1358,10 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             return;
         Debug.Log($"[{this.GetType().ToString()}] Checking Open Ad");
         OpenAdSpaceTimeCounter = 0;
-        ShowAppOpenAd();
+        UnityMainThreadDispatcher.Instance().Enqueue(() =>
+        {
+            ShowAppOpenAd();
+        });
     }
 
     public bool IsAdAvailable
@@ -1414,14 +1389,26 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
 #else
 
+    public float InterAdSpaceTimeAutoCounter = 0;
+
     private void Start()
     {
-        Manager.Instance.ShowLoading();
+        Manager.Instance.CompleteOpenAd();
     }
 
     public void ShowRewardedAd(UnityAction Callback)
     {
         Debug.Log($"[{this.GetType().ToString()}] Show Rewarded Ad.");
+        Callback?.Invoke();
+    }
+
+    public void ShowRewardedSecondAd(UnityAction Callback)
+    {
+        Callback?.Invoke();
+    }
+
+    public void ShowRewardedThridAd(UnityAction Callback)
+    {
         Callback?.Invoke();
     }
 
@@ -1435,6 +1422,12 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     {
         Debug.Log($"[{this.GetType().ToString()}] Show Interstitial Ad.");
         Callback?.Invoke();
+    }
+
+    public void ShowInterstitialHomeAd(UnityAction Callback, UnityAction CallbackAfterInter)
+    {
+        if (Callback != null)
+            Callback?.Invoke();
     }
 
     public void CheckingOpenAd()

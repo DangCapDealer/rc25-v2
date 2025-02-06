@@ -19,6 +19,23 @@ public class Manager : MonoSingletonGlobal<Manager>
 {
     public Scene Scene = Scene.Loading;
 
+    public static bool IsReady
+    {
+        get
+        {
+            if (Instance == null)
+                return false;
+            return true;
+        }
+    } 
+        
+
+    public void SetGameState(string msg)
+    {
+#if UNITY_EDITOR
+#endif
+    }
+
     [Header("Loading")]
     public bool IsAds = false;
     public bool IsFirebase = false;
@@ -34,6 +51,9 @@ public class Manager : MonoSingletonGlobal<Manager>
     public bool IsPopupUnlock = false;
     public double InterHomeReloadTimer = 30;
     public double InterAutoReloadTimer = 40;
+    public bool IsNativeBanner = true;
+    public bool IsNativeMREC = true;
+    public bool IsNativeInter = true;
 
     protected override void Awake()
     {
@@ -50,7 +70,7 @@ public class Manager : MonoSingletonGlobal<Manager>
 
     public void Start()
     {
-        loadingCanvas.Show(null, 0.0f, 0.9f);
+        loadingCanvas.Show(null, 0.0f, 0.9f, 1.0f, 7.0f);
     }
 
     public void CompleteOpenAd()

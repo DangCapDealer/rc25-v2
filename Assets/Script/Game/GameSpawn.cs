@@ -12,7 +12,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
     public Camera GameCamera;
 
     public CharacterDataSO CharacterData;
-    public GameObject WhitePrefab;
+    //public GameObject WhitePrefab;
     public GameObject GrayPrefab;
 
     public int NumberofCharacter = 0;
@@ -104,18 +104,9 @@ public class GameSpawn : MonoSingleton<GameSpawn>
         for (int i = 0; i < GameManager.Instance.NumberOfCharacter; i++)
         {
             var position = GridInCamera.Instance.GetPosition(i).WithZ(0);
-            GameObject sponky = null;
-            switch (GameManager.Instance.Style)
-            {
-                case GameManager.GameStyle.Normal:
-                    sponky = PoolByID.Instance.GetPrefab(WhitePrefab, position, Quaternion.identity, this.transform);
-                    break;
-                case GameManager.GameStyle.Horror:
-                    sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
-                    break;
-            }
+            GameObject sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
 
-            if(sponky != null)
+            if (sponky != null)
             {
                 BaseObjects.Add(sponky);
                 RuntimeDataObjects.Add(sponky);
@@ -148,45 +139,49 @@ public class GameSpawn : MonoSingleton<GameSpawn>
         PoolByID.Instance.PushToPool(character);
 
         CanvasSystem.Instance._gameUICanvas.ReloadCharacterUIButton(character.name);
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal)
-        {
-            var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, character.transform.position, Quaternion.identity, this.transform);
-            BaseObjects.Add(sponky);
+        //if (GameManager.Instance.Style == GameManager.GameStyle.Normal)
+        //{
+        //    var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, character.transform.position, Quaternion.identity, this.transform);
+        //    BaseObjects.Add(sponky);
 
-            ChangeRuntimeObject(character.transform, sponky.transform);
+        //    ChangeRuntimeObject(character.transform, sponky.transform);
 
-            NumberofCharacter -= 1;
-        }
-        else if (GameManager.Instance.Style == GameManager.GameStyle.Horror)
-        {
-            var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, character.transform.position, Quaternion.identity, this.transform);
-            BaseObjects.Add(sponky);
+        //    NumberofCharacter -= 1;
+        //}
+        //else if (GameManager.Instance.Style == GameManager.GameStyle.Horror)
+        //{
+        //    var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, character.transform.position, Quaternion.identity, this.transform);
+        //    BaseObjects.Add(sponky);
 
-            ChangeRuntimeObject(character.transform, sponky.transform);
+        //    ChangeRuntimeObject(character.transform, sponky.transform);
 
-            NumberofCharacter -= 1;
-        }
+        //    NumberofCharacter -= 1;
+        //}
+        var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, character.transform.position, Quaternion.identity, this.transform);
+        BaseObjects.Add(sponky);
+
+        ChangeRuntimeObject(character.transform, sponky.transform);
+
+        NumberofCharacter -= 1;
     }   
-    
-    //public void CreateBaseCharacter(Transform character)
-    //{
-    //    CreateBaseCharacter(character.position);
-    //} 
     
     public void CreateBaseCharacter(Vector3 position)
     {
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal)
-        {
-            var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, position, Quaternion.identity, this.transform);
-            BaseObjects.Add(sponky);
-            RuntimeDataObjects.Add(sponky);
-        }
-        else if (GameManager.Instance.Style == GameManager.GameStyle.Horror)
-        {
-            var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
-            BaseObjects.Add(sponky);
-            RuntimeDataObjects.Add(sponky);
-        }
+        //if (GameManager.Instance.Style == GameManager.GameStyle.Normal)
+        //{
+        //    var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, position, Quaternion.identity, this.transform);
+        //    BaseObjects.Add(sponky);
+        //    RuntimeDataObjects.Add(sponky);
+        //}
+        //else if (GameManager.Instance.Style == GameManager.GameStyle.Horror)
+        //{
+        //    var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
+        //    BaseObjects.Add(sponky);
+        //    RuntimeDataObjects.Add(sponky);
+        //}
+        var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
+        BaseObjects.Add(sponky);
+        RuntimeDataObjects.Add(sponky);
     }
 
     private void ChangeRuntimeObject(Transform _fromObject, Transform _toObject)
@@ -199,4 +194,14 @@ public class GameSpawn : MonoSingleton<GameSpawn>
             }
         }
     }
+
+    private GameObject GetPrefabs(GameObject _prefab)
+    {
+        return null;
+    }    
+
+    private void RemovePrefabs()
+    {
+
+    }    
 }

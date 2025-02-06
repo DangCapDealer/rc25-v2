@@ -20,24 +20,26 @@ public class PlayerSerializable
     }
 
     public string Id = "hihidochoo";
-    public bool IsAds = false;
+    public bool IsLoadAds = true;
     public int Gold;
     public string Language;
     public List<string> Packages;
     public List<CharacterUnlockData> CharacterUnlocks;
     public int DayCheckIn = 0;
     public int NumberOfCheckIn = 0;
+    public int NumberOfAd = 0;
 
     public PlayerSerializable()
     {
         Id = SystemInfo.deviceUniqueIdentifier;
-        IsAds = false;
+        IsLoadAds = true;
         Gold = 0;
         Language = "English";
         Packages = new List<string>();
         CharacterUnlocks = new List<CharacterUnlockData>();
         NumberOfCheckIn = 0;
         DayCheckIn = 0;
+        NumberOfAd = 0;
     }
 
     public bool IsProductId(string productId)

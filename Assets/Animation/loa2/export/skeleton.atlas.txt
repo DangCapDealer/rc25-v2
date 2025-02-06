@@ -1,0 +1,10 @@
+skeleton.png
+size:412,412
+filter:Linear,Linear
+pma:true
+mang loa nho
+bounds:128,69,66,68
+mang loa to_
+bounds:2,2,124,135
+than loa
+bounds:2,139,194,268

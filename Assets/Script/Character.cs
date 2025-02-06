@@ -32,7 +32,9 @@ public class Character : MonoBehaviour
                 _normal.SetActive(false);
                 _horror.SetActive(true);
                 break;
-        }    
+        }
+
+        SoundManager.Instance.PlayOnShot(Sound.CharacterDrop);
     }
 
     private void RegisterCameraCanvas(Camera gameCamera)

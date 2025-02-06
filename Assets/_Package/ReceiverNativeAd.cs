@@ -1,4 +1,5 @@
 using GoogleMobileAds.Api;
+using PimDeWitte.UnityMainThreadDispatcher;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,16 +29,24 @@ public class ReceiverNativeAd : MonoBehaviour
     public RequestNativeAd NativeAdHandle;
 
     private bool IsNativeImport = false;
+    private float timer = 0;
 
     private void OnEnable()
     {
-        _content.SetActive(false);
+        UnityMainThreadDispatcher.Instance().Enqueue(() =>
+        {
+            _content.SetActive(false);
+        });
+        timer = 0;
         NativeAdHandle = AdNativeManager.Instance.GetNativeAd(adPosition);
         NativeAdHandle.IsReloadNativeAd = IsReloadNativeAd;
         NativeAdHandle.OnChangeNativeAd += NativeAdHandle_OnChangeNativeAd;
         IsNativeImport = false;
 #if UNITY_EDITOR
-        _content.SetActive(true);
+        UnityMainThreadDispatcher.Instance().Enqueue(() =>
+        {
+            _content.SetActive(true);
+        });
 #endif
     }
 
@@ -53,7 +62,9 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private void Update()
     {
-        if (RuntimeStorageData.Player.IsAds == true)
+        if (RuntimeStorageData.IsReady == false)
+            return;
+        if (RuntimeStorageData.Player.IsLoadAds == false)
             return;
         if (NativeAdHandle == null)
             return;
@@ -91,6 +102,23 @@ public class ReceiverNativeAd : MonoBehaviour
             }
             adImage.texture = ImageTextures[0];
         }
+        else
+        {
+#if !UNITY_EDITOR
+            timer += Time.deltaTime;
+            if(timer >= 1.0f)
+            {
+                timer = 0;
+                this.gameObject.SetActive(false);
+            } 
+#endif
+        }    
+    }
+#else
+    private void Update()
+    {
+        if (this.transform.IsActive() == true)
+            this.transform.SetActive(false);
     }
 #endif
 

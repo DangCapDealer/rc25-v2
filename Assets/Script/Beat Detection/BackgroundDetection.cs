@@ -1,9 +1,10 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class BackgroundDetection : MonoBehaviour
+public class BackgroundDetection : MonoSingleton<BackgroundDetection>
 {
     public SpriteRenderer BackgroundEffect;
     public Animation LightAnimation;
@@ -12,6 +13,48 @@ public class BackgroundDetection : MonoBehaviour
     public int numberOfHitHat = 0;
     public int numberOfKick = 0;
     public int numberOfSnare = 0;
+
+    [System.Serializable]
+    public class BackgroundData
+    {
+        public GameManager.GameStyle Style;
+        public Sprite Normal;
+        public Sprite Kick;
+    }
+
+    public BackgroundData[] backgroundDatas;
+    public SpriteRenderer backgroudBase;
+    public SpriteRenderer backgroudEffect;
+
+    [System.Serializable]
+    public class LightData
+    {
+        public GameManager.GameStyle Style;
+        public Transform Light;
+    }
+
+    public LightData[] lightDatas;
+    public Transform lightRay2D;
+
+    public void SettingBackground()
+    {
+        for (int i = 0; i < backgroundDatas.Length; i++)
+        {
+            if (backgroundDatas[i].Style == GameManager.Instance.Style)
+            {
+                backgroudBase.sprite = backgroundDatas[i].Normal;
+                backgroudEffect.sprite = backgroundDatas[i].Kick;
+            }
+        }
+
+        for (int i = 0; i < lightDatas.Length; i++)
+        {
+            if (lightDatas[i].Style == GameManager.Instance.Style)
+                lightDatas[i].Light.SetActive(true);
+            else
+                lightDatas[i].Light.SetActive(false);
+        }
+    }
 
 
     public void Start()

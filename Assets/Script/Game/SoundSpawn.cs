@@ -27,34 +27,37 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
 
     public void CreateSound()
     {
-        var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
-        for (int i = 0; i < totalCharacter.Length; i++)
+        CoroutineUtils.PlayCoroutineHaftSecond(() =>
         {
-            if (totalCharacter[i].AudioClip == null)
+            var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
+            for (int i = 0; i < totalCharacter.Length; i++)
             {
-                Debug.LogError($"Audio clip missing {totalCharacter[i].ID}");
-                continue;
+                if (totalCharacter[i].AudioClip == null)
+                {
+                    Debug.LogError($"Audio clip missing {totalCharacter[i].ID}");
+                    continue;
+                }
+
+                var soundName = $"{totalCharacter[i].ID}_{GameManager.Instance.Style}";
+                if (this.transform.FindChildByParent(soundName))
+                    continue;
+                var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
+                soundObject.name = soundName;
+                var script = soundObject.GetComponent<SoundPrefab>();
+                switch (GameManager.Instance.Style)
+                {
+                    case GameManager.GameStyle.Normal:
+                        script.Create(totalCharacter[i].AudioClip);
+                        break;
+                    case GameManager.GameStyle.Horror:
+                        script.Create(totalCharacter[i].AudioClipHorror);
+                        break;
+                }
+
+                var eventSound = soundObject.GetComponent<BeatDetection>();
+                eventSound.CallBackFunction += CallBackFunction;
             }
-
-            var soundName = $"{totalCharacter[i].ID}_{GameManager.Instance.Style}";
-            if (this.transform.FindChildByParent(soundName))
-                continue;
-            var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
-            soundObject.name = soundName;
-            var script = soundObject.GetComponent<SoundPrefab>();
-            switch(GameManager.Instance.Style)
-            {
-                case GameManager.GameStyle.Normal:
-                    script.Create(totalCharacter[i].AudioClip);
-                    break;
-                case GameManager.GameStyle.Horror:
-                    script.Create(totalCharacter[i].AudioClipHorror);
-                    break;
-            }    
-
-            var eventSound = soundObject.GetComponent<BeatDetection>();
-            eventSound.CallBackFunction += CallBackFunction;
-        }
+        });
     }
 
     public SoundPrefab Find(string name)

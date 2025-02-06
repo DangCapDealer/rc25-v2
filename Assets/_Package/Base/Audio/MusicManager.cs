@@ -5,9 +5,8 @@ using UnityEngine;
 
 public enum Music
 {
-    Login,
-    Main,
-    Flutter
+    None,
+    Main
 }
 
 public class MusicManager : MonoSingletonGlobal<MusicManager>
@@ -38,8 +37,6 @@ public class MusicManager : MonoSingletonGlobal<MusicManager>
     {
         if (musics.Length == 0)
             yield break;
-
-        PlaySound(Music.Login, 0.08f);
     }
 
     public void PlaySound(Music sound, float _volume = 1.0f)

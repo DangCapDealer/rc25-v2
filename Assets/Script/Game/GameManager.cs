@@ -22,6 +22,8 @@ public class GameManager : MonoSingleton<GameManager>
             Manager.Instance.IsIngame = true;
         }
         yield return null;
+
+        MusicManager.Instance.PlaySound(Music.Main);
     }
 
     public void GameReset()

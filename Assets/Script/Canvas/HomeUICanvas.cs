@@ -1,9 +1,17 @@
-﻿using System.Collections;
+﻿using PimDeWitte.UnityMainThreadDispatcher;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HomeUICanvas : MonoBehaviour
 {
+    //public Transform _banner;
+
+    private void Start()
+    {
+        //_banner.SetActive(RuntimeStorageData.Player.IsLoadAds);
+    }
+
     private void OnEnable()
     {
         if (Manager.Instance != null)
@@ -13,37 +21,92 @@ public class HomeUICanvas : MonoBehaviour
 
     public void BtnSingle()
     {
+        MusicManager.Instance.PauseSound();
+        GameManager.Instance.Style = GameManager.GameStyle.Normal;
+        BackgroundDetection.Instance.SettingBackground();
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
-            GameManager.Instance.Style = GameManager.GameStyle.Normal;
-            GameManager.Instance.NumberOfCharacter = 7;
-            SoundSpawn.Instance.CreateSound();
-            SoundSpawn.Instance.Reload();
-            CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-            CanvasSystem.Instance._gameUICanvas.CreateGame();
-            CanvasSystem.Instance.ShowNativeCollapse();
+            //GameManager.Instance.NumberOfCharacter = 7;
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                GameManager.Instance.NumberOfCharacter = 7;
+                SoundSpawn.Instance.CreateSound();
+                SoundSpawn.Instance.Reload();
+                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+                CanvasSystem.Instance._gameUICanvas.CreateGame();
+                CanvasSystem.Instance.ShowNativeCollapse();
+            });
+            //IsGotoGameAfterIntertitialAd = true;
         }, () =>
         {
-            CanvasSystem.Instance.ShowNativeIntertitial();
+            //IsShowNativeIntertitialAd = true; 
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                CanvasSystem.Instance.ShowNativeIntertitial();
+            });
         });
     }   
 
     public void BtnSingleHorror()
     {
+        MusicManager.Instance.PauseSound();
+        GameManager.Instance.Style = GameManager.GameStyle.Horror;
+        BackgroundDetection.Instance.SettingBackground();
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
-            GameManager.Instance.Style = GameManager.GameStyle.Horror;
-            GameManager.Instance.NumberOfCharacter = 7;
-            SoundSpawn.Instance.CreateSound();
-            SoundSpawn.Instance.Reload();
-            CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-            CanvasSystem.Instance._gameUICanvas.CreateGame();
-            CanvasSystem.Instance.ShowNativeCollapse();
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                GameManager.Instance.NumberOfCharacter = 7;
+                //IsGotoGameAfterIntertitialAd = true;
+                SoundSpawn.Instance.CreateSound();
+                SoundSpawn.Instance.Reload();
+                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+                CanvasSystem.Instance._gameUICanvas.CreateGame();
+                CanvasSystem.Instance.ShowNativeCollapse();
+            });
+            //GameManager.Instance.NumberOfCharacter = 7;
+            ////IsGotoGameAfterIntertitialAd = true;
+            //SoundSpawn.Instance.CreateSound();
+            //SoundSpawn.Instance.Reload();
+            //CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+            //CanvasSystem.Instance._gameUICanvas.CreateGame();
+            //CanvasSystem.Instance.ShowNativeCollapse();
         }, () =>
         {
-            CanvasSystem.Instance.ShowNativeIntertitial();
+            //IsShowNativeIntertitialAd = true;
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                CanvasSystem.Instance.ShowNativeIntertitial();
+            });
         });
-    }    
+    }
+
+    //private bool IsGotoGameAfterIntertitialAd = false;
+    //private bool IsShowNativeIntertitialAd = false;
+
+    //private void AsyncIntertitialEvent()
+    //{
+    //    //if(IsGotoGameAfterIntertitialAd == true)
+    //    //{
+    //    //    IsGotoGameAfterIntertitialAd = false;
+    //    //    SoundSpawn.Instance.CreateSound();
+    //    //    SoundSpawn.Instance.Reload();
+    //    //    CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+    //    //    CanvasSystem.Instance._gameUICanvas.CreateGame();
+    //    //    CanvasSystem.Instance.ShowNativeCollapse();
+    //    //}    
+
+    //    //if(IsShowNativeIntertitialAd == true)
+    //    //{
+    //    //    IsShowNativeIntertitialAd = false;
+    //    //    CanvasSystem.Instance.ShowNativeIntertitial();
+    //    //}    
+    //}    
+
+    //private void Update()
+    //{
+    //    AsyncIntertitialEvent();
+    //}
 
     public void BtnSetting()
     {
