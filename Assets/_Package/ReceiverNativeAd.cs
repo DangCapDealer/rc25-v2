@@ -62,8 +62,8 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private void Update()
     {
-        if (RuntimeStorageData.IsReady == false)
-            return;
+        //if (RuntimeStorageData.IsReady == false)
+        //    return;
         if (RuntimeStorageData.Player.IsLoadAds == false)
             return;
         if (NativeAdHandle == null)

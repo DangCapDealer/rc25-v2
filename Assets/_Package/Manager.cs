@@ -19,15 +19,15 @@ public class Manager : MonoSingletonGlobal<Manager>
 {
     public Scene Scene = Scene.Loading;
 
-    public static bool IsReady
-    {
-        get
-        {
-            if (Instance == null)
-                return false;
-            return true;
-        }
-    } 
+    //public static bool IsReady
+    //{
+    //    get
+    //    {
+    //        if (Instance == null)
+    //            return false;
+    //        return true;
+    //    }
+    //} 
         
 
     public void SetGameState(string msg)

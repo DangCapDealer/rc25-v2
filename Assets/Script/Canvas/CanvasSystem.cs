@@ -37,7 +37,7 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
     {
         ChooseScreen("HomeUICanvas");
 
-        yield return new WaitUntil(() => Manager.IsReady);
+        //yield return new WaitUntil(() => Manager.IsReady);
         yield return new WaitUntil(() => RuntimeStorageData.IsReady);
         yield return new WaitUntil(() => FirebaseManager.Instance.IsInitialized);
         yield return WaitForSecondCache.WAIT_TIME_ONE;
