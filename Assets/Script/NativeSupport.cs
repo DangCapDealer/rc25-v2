@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class NativeSupport : MonoBehaviour
 {
-    public Image cricleOutline;
     public Text numberOfText;
     public Transform btnClose;
     private float timer = 0;
@@ -14,9 +13,9 @@ public class NativeSupport : MonoBehaviour
     private void OnEnable()
     {
         timer = 5;
-        cricleOutline.fillAmount = 1;
         btnClose.SetActive(false);
         numberOfText.transform.SetActive(true);
+        numberOfText.text = $"Skip ad in 3";
     }
 
     private void Update()
@@ -24,16 +23,15 @@ public class NativeSupport : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
-            cricleOutline.fillAmount = timer / 5;
             var timeInt = (int)timer;
             if (timeInt >= 3)
                 timeInt = 3;
-            numberOfText.text = timeInt.ToString(); 
-            if(timer < 0)
+            numberOfText.text = $"Skip ad in {timeInt.ToString()}";
+            if (timer < 0)
             {
-                btnClose.SetActive (true);
+                btnClose.SetActive(true);
                 numberOfText.transform.SetActive(false);
-            }    
-        }    
+            }
+        }
     }
 }
