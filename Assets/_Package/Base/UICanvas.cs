@@ -8,7 +8,8 @@ public enum Popup
     Unlock,
     Setting,
     Checkin,
-    NoAds
+    NoAdsEvent,
+    NoAdsVipMember
 }
 
 public enum PopupAnimation

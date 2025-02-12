@@ -9,6 +9,7 @@ public class GameUICanvas : MonoBehaviour
     //public Transform Pointer;
 
     public Transform BtnUnlockTransform;
+    public Transform BtnAddTransform;
 
     //public Transform _banner;
 
@@ -20,6 +21,13 @@ public class GameUICanvas : MonoBehaviour
 
     public void CreateGame()
     {
+        if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) ||
+            RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
+        {
+            GameManager.Instance.NumberOfCharacter = 10;
+            BtnAddTransform.SetActive(false);
+        }
+
         CreateUIGame();
         GridInCamera.Instance.CreatePosition();
         GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
@@ -27,6 +35,7 @@ public class GameUICanvas : MonoBehaviour
 
     private void CreateUIGame()
     {
+        Debug.Log("[GameUICanvas] Create UI Game");
         bool IsCharacterAds = false;
         var dataCharacterSO = GameSpawn.Instance.GetAllCharacter();
         for (int i = 0; i < dataCharacterSO.Length; i++)
@@ -41,8 +50,6 @@ public class GameUICanvas : MonoBehaviour
             if(_child.name.EndsWith("_ads") == true)
                 IsCharacterAds = true;
         }
-
-        Debug.Log($"----------- {IsCharacterAds}");
         BtnUnlockTransform.SetActive(Manager.Instance.IsPopupUnlock == false ? false : IsCharacterAds);
     }
 
@@ -55,9 +62,6 @@ public class GameUICanvas : MonoBehaviour
 
         AdManager.Instance.ShowRewardedThridAd(() =>
         {
-            //IsCharacterAds = true;
-            //GameManager.Instance.NumberOfCharacter += 1;
-            //GameSpawn.Instance.CreateNewPositionCharacter();
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 GameManager.Instance.NumberOfCharacter += 1;
@@ -84,6 +88,7 @@ public class GameUICanvas : MonoBehaviour
     {
         GameEvent.OnUIDragDown += OnUIDragDown;
         GameEvent.OnUIDragUp += OnUIDragUp;
+        GameEvent.OnUIDrag += OnUIDrag;
         GameEvent.OnUITheme += OnUITheme;
 
 
@@ -97,6 +102,7 @@ public class GameUICanvas : MonoBehaviour
     {
         GameEvent.OnUIDragDown -= OnUIDragDown;
         GameEvent.OnUIDragUp -= OnUIDragUp;
+        GameEvent.OnUIDrag -= OnUIDrag;
         GameEvent.OnUITheme -= OnUITheme;
     }
 
@@ -112,10 +118,52 @@ public class GameUICanvas : MonoBehaviour
         _targetMsg.SetParent(this.transform);
     }
 
+    private Transform _lastTargetObjectFromDrag;
+    private void OnUIDrag(string msg)
+    {
+        if (_targetMsg == null || _contentParent == null)
+            return;
+
+        var local = _targetMsg.position.AddX(-30.0f).AddY(1.0f).WithZ(0);
+        var targetObject = GameSpawn.Instance.CheckingNearPositionInPool(local);
+        if (targetObject != null)
+        {
+            if(_lastTargetObjectFromDrag == null)
+            {
+                _lastTargetObjectFromDrag = targetObject;
+                changeStateBaseCharacter(targetObject, true, false);
+            }   
+            else if(_lastTargetObjectFromDrag != targetObject)
+            {
+                changeStateBaseCharacter(_lastTargetObjectFromDrag, false, true);
+                changeStateBaseCharacter(targetObject, true, false);
+                _lastTargetObjectFromDrag = targetObject;
+            }
+        }    
+        else
+        {
+            if (_lastTargetObjectFromDrag != null)
+            {
+                changeStateBaseCharacter(_lastTargetObjectFromDrag, false, true);
+                _lastTargetObjectFromDrag = null;
+            }    
+        }    
+    }
+
+    private void changeStateBaseCharacter(Transform _targetObject, params bool[] actives)
+    {
+        var _target = _targetObject.FindChildByParent("Normal");
+        if (_target != null) _target.SetActive(actives[0]);
+        var _untarget = _targetObject.FindChildByParent("Horror");
+        if (_untarget != null) _untarget.SetActive(actives[1]);
+    }    
+
     private void OnUIDragUp(string msg)
     {
         if (_targetMsg == null || _contentParent == null)
             return;
+
+        _lastTargetObjectFromDrag = null;
 
         var local = _targetMsg.position.AddX(-30.0f).AddY(1.0f).WithZ(0);
         var targetObject = GameSpawn.Instance.CheckingNearPositionInPool(local);
@@ -208,6 +256,7 @@ public class GameUICanvas : MonoBehaviour
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
+                CanvasSystem.Instance.AutoNoAd();
                 GameManager.Instance.GameReset();
                 GameSpawn.Instance.RemoveAllCharacter();
                 SoundSpawn.Instance.MuteAll();
@@ -238,13 +287,13 @@ public class GameUICanvas : MonoBehaviour
     //    //    CanvasSystem.Instance.ShowNativeCollapse();
     //    //    MusicManager.Instance.PlaySound(Music.Main);
     //    //}   
-        
+
     //    //if(IsShowNativeIntertitialAd == true)
     //    //{
     //    //    IsShowNativeIntertitialAd = false;
     //    //    CanvasSystem.Instance.ShowNativeIntertitial();
     //    //}  
-        
+
     //    //if(IsCharacterAds == true)
     //    //{
     //    //    IsCharacterAds = false;
@@ -292,6 +341,7 @@ public class GameUICanvas : MonoBehaviour
         if (target == null)
             return;
         target.SetActive(false);
+        Debug.Log(target);
         GameSpawn.Instance.SpawnCharacterIntoPosition(target.parent.name, targetObject);
     }
 

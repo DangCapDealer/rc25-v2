@@ -1,21 +1,59 @@
+using PimDeWitte.UnityMainThreadDispatcher;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NoAdsUICanvas : PopupCanvas
 {
+    public int productIndex = 0;
     public void BtnBuyProduct()
     {
-        InappController.Instance.BuyProductID("remove_ads_subscription", (_purchaseComplete) =>
+        if(RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(productIndex)) == false)
+        {
+            BuyProduct(InappController.Instance.GetProductIdByIndex(productIndex));
+        }
+        else
+        {
+            Debug.Log("Out of Product");
+        }
+
+    }
+
+    private void BuyProduct(string productName)
+    {
+        InappController.Instance.BuyProductID(productName, (_purchaseComplete) =>
         {
             if (_purchaseComplete == true)
             {
-                RuntimeStorageData.Player.IsLoadAds = false;
-                GameEvent.OnIAPurchaseMethod("remove_ads_subscription");
-                base.Hide();
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    RuntimeStorageData.Player.IsLoadAds = false;
+                    RuntimeStorageData.Player.AddProductId(productName);
+                    GameEvent.OnIAPurchaseMethod(productName);
+                    base.Hide();
+                });
             }
         });
+    }
+
+    [Header("Info")]
+    public Text _infoText;
+    public Text _policyText;
+
+    private void Start()
+    {
+        var productPrice = InappController.Instance.GetProductInfo(InappController.Instance.GetProductIdByIndex(productIndex));
+        _infoText.text = $"Only {productPrice}/week";
+        var productName = InappController.Instance.GetProductName(InappController.Instance.GetProductIdByIndex(productIndex));
+        _policyText.text = string.Format(_policyText.text, productName, productPrice);
+    }
+
+    public void BtnRealPolicy()
+    {
+        Application.OpenURL("https://support.google.com/googleplay/answer/7018481?hl=en&co=GENIE.Platform%3DAndroid");
     }
 
     public void BtnRestorePurchase()

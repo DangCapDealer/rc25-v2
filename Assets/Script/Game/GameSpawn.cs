@@ -1,3 +1,5 @@
+using DG.Tweening;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +37,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     public Transform CheckingNearPositionInPool(Vector2 target)
     {
-        float min = 2.0f;
+        float min = 1.3f;
         Transform targetObject = null;
         for (int i = 0; i < BaseObjects.Count; i++)
         {
@@ -55,7 +57,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
     {
         for (int i = 0; i < BaseObjects.Count; i++)
         {
-            if (BaseObjects[i].IsActive() == false)
+            if (BaseObjects[i].IsActive() == false || BaseObjects[i].name.EndsWith("_animation"))
                 continue;
             return BaseObjects[i].transform;
         }
@@ -71,18 +73,29 @@ public class GameSpawn : MonoSingleton<GameSpawn>
             return;
         }
 
-        PoolByID.Instance.PushToPool(target.gameObject);
         var character = PoolByID.Instance.GetPrefab(dataFromSO.Prefab, target.position, Quaternion.identity, this.transform);
-        CreateObjects.Add(character);
-        character.name = msg;
-        var script = character.GetComponent<Character>();
-        script.CreateCharacter(GameCamera);
-
-        NumberofCharacter += 1;
-        if (NumberofCharacter == 1)
-            SoundSpawn.Instance.Reload();
-
-        ChangeRuntimeObject(target, character.transform);
+        if (character != null)
+        {
+            target.name = $"{target.name}_animation";
+            character.SetActive(false);
+            character.name = msg;
+            NumberofCharacter += 1;
+            if (NumberofCharacter == 1)
+                SoundSpawn.Instance.Reload();
+            CreateObjects.Add(character);
+            ChangeRuntimeObject(target, character.transform);
+        }
+        var _characterBase = target.FindChildByParent("Horror");
+        _characterBase.DOKill();
+        _characterBase.DOScaleY(0, 0.3f).OnComplete(() =>
+        {
+            PoolByID.Instance.PushToPool(target.gameObject);
+            target.name = target.name.Split("_")[0];
+            _characterBase.localScale = _characterBase.localScale.WithY(_characterBase.localScale.x);
+            character.SetActive(true);
+            var script = character.GetComponent<Character>();
+            script.CreateCharacter(GameCamera);
+        });
     }    
 
 
@@ -100,7 +113,6 @@ public class GameSpawn : MonoSingleton<GameSpawn>
     {
         NumberofCharacter = 0;
         RemoveAllCharacter();
-        Debug.Log($"{msg}");
         for (int i = 0; i < GameManager.Instance.NumberOfCharacter; i++)
         {
             var position = GridInCamera.Instance.GetPosition(i).WithZ(0);
@@ -110,7 +122,16 @@ public class GameSpawn : MonoSingleton<GameSpawn>
             {
                 BaseObjects.Add(sponky);
                 RuntimeDataObjects.Add(sponky);
-            }    
+
+                var _target = sponky.FindChildByParent("Normal");
+                if (_target != null) _target.SetActive(false);
+                var _untarget = sponky.FindChildByParent("Horror");
+                if (_untarget != null) _untarget.SetActive(true);
+
+                _untarget.localScale = _untarget.localScale.WithY(0);
+                _untarget.DOKill();
+                _untarget.DOScaleY(_untarget.localScale.x, 0.3f);
+            }
         }
     }
 
@@ -139,49 +160,36 @@ public class GameSpawn : MonoSingleton<GameSpawn>
         PoolByID.Instance.PushToPool(character);
 
         CanvasSystem.Instance._gameUICanvas.ReloadCharacterUIButton(character.name);
-        //if (GameManager.Instance.Style == GameManager.GameStyle.Normal)
-        //{
-        //    var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, character.transform.position, Quaternion.identity, this.transform);
-        //    BaseObjects.Add(sponky);
-
-        //    ChangeRuntimeObject(character.transform, sponky.transform);
-
-        //    NumberofCharacter -= 1;
-        //}
-        //else if (GameManager.Instance.Style == GameManager.GameStyle.Horror)
-        //{
-        //    var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, character.transform.position, Quaternion.identity, this.transform);
-        //    BaseObjects.Add(sponky);
-
-        //    ChangeRuntimeObject(character.transform, sponky.transform);
-
-        //    NumberofCharacter -= 1;
-        //}
         var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, character.transform.position, Quaternion.identity, this.transform);
         BaseObjects.Add(sponky);
 
-        ChangeRuntimeObject(character.transform, sponky.transform);
+        var _target = sponky.FindChildByParent("Normal");
+        if (_target != null) _target.SetActive(false);
+        var _untarget = sponky.FindChildByParent("Horror");
+        if (_untarget != null) _untarget.SetActive(true);
 
+        _untarget.localScale = _untarget.localScale.WithY(0);
+        _untarget.DOKill();
+        _untarget.DOScaleY(_untarget.localScale.x, 0.3f);
+
+        ChangeRuntimeObject(character.transform, sponky.transform);
         NumberofCharacter -= 1;
     }   
     
     public void CreateBaseCharacter(Vector3 position)
     {
-        //if (GameManager.Instance.Style == GameManager.GameStyle.Normal)
-        //{
-        //    var sponky = PoolByID.Instance.GetPrefab(WhitePrefab, position, Quaternion.identity, this.transform);
-        //    BaseObjects.Add(sponky);
-        //    RuntimeDataObjects.Add(sponky);
-        //}
-        //else if (GameManager.Instance.Style == GameManager.GameStyle.Horror)
-        //{
-        //    var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
-        //    BaseObjects.Add(sponky);
-        //    RuntimeDataObjects.Add(sponky);
-        //}
         var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
         BaseObjects.Add(sponky);
         RuntimeDataObjects.Add(sponky);
+
+        var _target = sponky.FindChildByParent("Normal");
+        if (_target != null) _target.SetActive(false);
+        var _untarget = sponky.FindChildByParent("Horror");
+        if (_untarget != null) _untarget.SetActive(true);
+
+        _untarget.localScale = _untarget.localScale.WithY(0);
+        _untarget.DOKill();
+        _untarget.DOScaleY(_untarget.localScale.x, 0.3f);
     }
 
     private void ChangeRuntimeObject(Transform _fromObject, Transform _toObject)

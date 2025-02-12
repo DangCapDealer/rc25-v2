@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterCanvasHandle : MonoBehaviour
 {
+    public float Delay = 5.0f;
     public Transform MuteParent;
     public void SetMuteCharacterUI(int index)
     {
@@ -22,5 +23,21 @@ public class CharacterCanvasHandle : MonoBehaviour
             if (i == index) HeadphoneParent.GetChild(i).SetActive(true);
             else HeadphoneParent.GetChild(i).SetActive(false);
         }
-    }    
+    }
+
+    private void OnEnable()
+    {
+        BtnReset();
+    }
+
+    public void BtnReset()
+    {
+        Delay = 5.0f;
+    }
+
+    private void Update()
+    {
+        Delay -= Time.deltaTime;
+        if(Delay < 0 ) this.transform.Hide();
+    }
 }

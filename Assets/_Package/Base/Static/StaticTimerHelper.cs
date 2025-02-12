@@ -9,6 +9,16 @@ public static class StaticTimerHelper
         return (int)(DateTime.Now - new DateTime(1970, 1, 1)).TotalSeconds;
     }
 
+    public static int CurrentTimeInMillisecond()
+    {
+        return (int)(DateTime.Now - new DateTime(1970, 1, 1)).Milliseconds;
+    }
+
+    public static long CurrentTimeStamp()
+    {
+        return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    }
+
     public static int CurrentNextTimeInSecond(int minute)
     {
         DateTime today = DateTime.Now;

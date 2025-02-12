@@ -460,6 +460,9 @@ MonoBehaviour:
   IsPopupUnlock: 0
   InterHomeReloadTimer: 30
   InterAutoReloadTimer: 40
+  IsNativeBanner: 1
+  IsNativeMREC: 1
+  IsNativeInter: 1
 --- !u!1 &788117793
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,12 +923,6 @@ MonoBehaviour:
   IsBannerShow: 0
   IsBannerMREC: 0
   _adUnitId: ca-app-pub-5904408074441373~4518678593
-  UseBanner: 0
-  IsPreloadBanner: 0
-  BannerAdState: 2
-  _bannerReloadCount: 0
-  _adUnitBannerId: ca-app-pub-5904408074441373/6896326270
-  _backgroundMERCAd: {fileID: 0}
   UseInterstitial: 1
   _loadingInterstitalAd: {fileID: 12750472}
   IsPreloadInterstitial: 1

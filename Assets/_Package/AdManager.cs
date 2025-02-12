@@ -70,12 +70,18 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         }      
         if (UseInterstitial == true)
         {
-            LoadInterstitialAd();
-            LoadInterstitialHomeAd();
+            if (RuntimeStorageData.Player.IsLoadAds == true)
+            {
+                LoadInterstitialAd();
+                LoadInterstitialHomeAd();
+            }
         }
         if (UseOpen == true)
         {
-            LoadAppOpenAd();
+            if (RuntimeStorageData.Player.IsLoadAds == true)
+            {
+                LoadAppOpenAd();
+            }
         }    
     }
 
@@ -236,6 +242,11 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
     public void ShowInterstitialAd(UnityAction Callback)
     {
+        if (RuntimeStorageData.Player.IsLoadAds == false)
+        {
+            Callback?.Invoke();
+            return;
+        }
         if (InterAdShowState == AdShowState.Pending)
             return;
 
@@ -325,6 +336,12 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
     public void ShowInterstitialHomeAd(UnityAction Callback, UnityAction CallbackAfterInter)
     {
+        if (RuntimeStorageData.Player.IsLoadAds == false)
+        {
+            Callback?.Invoke();
+            CallbackAfterInter?.Invoke();
+            return;
+        }    
         if (InterHomeAdShowState == AdShowState.Pending)
             return;
         if (InterHomeAdSpaceTimeAutoCounter < Manager.Instance.InterHomeReloadTimer)
@@ -707,6 +724,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         OpenAdSpaceTimeCounter = 0;
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {
+            if (RuntimeStorageData.Player.IsLoadAds == false)
+                return;
             ShowAppOpenAd();
         });
     }

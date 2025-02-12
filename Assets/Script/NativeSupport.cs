@@ -24,8 +24,6 @@ public class NativeSupport : MonoBehaviour
         {
             timer -= Time.deltaTime;
             var timeInt = (int)timer;
-            if (timeInt >= 3)
-                timeInt = 3;
             numberOfText.text = $"Skip ad in {timeInt.ToString()}";
             if (timer < 0)
             {

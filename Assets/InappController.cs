@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Cryptography;
 using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,42 +30,15 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
         DontDestroyOnLoad(gameObject);
     }
 
-    public string GetProductInfo(string productId)
+    private void Start()
     {
-        if (IsInitialized() == false)
-            return "";
-        var product = m_StoreController.products.WithID(productId);
-        if(product != null)
+        if (logDebug)
+            Debug.Log("[InappPurchase] initializing");
+        if (m_StoreController == null)
         {
-            return product.metadata.localizedPriceString;
-        }
-        return "";
-    }
-
-    async void Start()
-    {
-        try
-        {
+            InitializePurchasing();
             if (logDebug)
-                Debug.Log("[InappPurchase] initializing");
-
-            //if (!Debug.isDebugBuild) logDebug = false;
-            await UnityServices.InitializeAsync();
-
-            if (logDebug)
-                Debug.Log("[InappPurchase] UnityServices.InitializeAsync");
-            if (m_StoreController == null)
-            {
-                InitializePurchasing();
-                if (logDebug)
-                    Debug.Log("[InappPurchase] initialized");
-            }
-        }
-        catch (Exception e)
-        {
-            // An error occurred during initialization.
-            if (logDebug)
-                Debug.Log("[InappPurchase] initial fail: " + e.Message);
+                Debug.Log("[InappPurchase] initialized");
         }
     }
 
@@ -84,6 +58,9 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
         }
 
         UnityPurchasing.Initialize(this, builder);
+
+        if (logDebug)
+            Debug.Log("[InappPurchase] Initialize Purchasing");
     }
 
 
@@ -107,7 +84,30 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
         }
 
         return -1;
-    }    
+    }
+
+    public string GetProductInfo(string productId)
+    {
+        if (IsInitialized() == false)
+            return "";
+        var product = m_StoreController.products.WithID(productId);
+        if (product != null)
+        {
+            return product.metadata.localizedPriceString;
+        }
+        return "";
+    }
+
+    public string GetProductName(string productId)
+    {
+        for (int i = 0; i < products.Count; i++)
+        {
+            if (products[i].productId == productId)
+                return products[i].productName;
+        }
+
+        return "";
+    }
 
     public ProductType GetProductType(string _id)
     {
@@ -159,9 +159,9 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
 
                     string isSubscription = product.definition.type == ProductType.Subscription ? "true" : "false";
 
-                    Debug.Log("Product price: " + price);
-                    Debug.Log("Currency symbol: " + currencySymbol);
-                    Debug.Log("Currency code: " + currencyCode);
+                    Debug.Log("[InappPurchase] Product price: " + price);
+                    Debug.Log("[InappPurchase] Currency symbol: " + currencySymbol);
+                    Debug.Log("[InappPurchase] Currency code: " + currencyCode);
 
                     _OnPurchaseComplete?.Invoke(complete);
                 };
@@ -236,7 +236,7 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
         }
         else
         {
-            Debug.Log("RestoreProductID FAIL. Not initialized.");
+            Debug.Log("[InappPurchase] RestoreProductID FAIL. Not initialized.");
             InitializePurchasing();
         }
     }
@@ -260,16 +260,16 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
         m_StoreController = controller;
         m_StoreExtensionProvider = extensions;
 
-        //Debug.Log("[InappPurchase] OnInitialized: Restorepurchase");
-        //foreach (InappProduct data in products)
-        //{
-        //    Product product = m_StoreController.products.WithID(data.productId);
-        //    if (product != null && product.hasReceipt)
-        //    {
-        //        GameEvent.OnIAPurchaseMethod(data.productId);
-        //    }
-        //    Debug.Log($"[InappPurchase] {product.hasReceipt} | {data.productId}");
-        //}
+        Debug.Log("[InappPurchase] OnInitialized: Restorepurchase");
+        foreach (InappProduct data in products)
+        {
+            Product product = m_StoreController.products.WithID(data.productId);
+            if (product != null && product.hasReceipt)
+            {
+                //GameEvent.OnIAPurchaseMethod(data.productId);
+            }
+            Debug.Log($"[InappPurchase] {product.hasReceipt} | {data.productId}");
+        }
     }
 
 

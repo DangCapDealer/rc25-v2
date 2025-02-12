@@ -5,17 +5,38 @@ using UnityEngine;
 
 public class HomeUICanvas : MonoBehaviour
 {
-    //public Transform _banner;
+    public Transform _btnProductRemoveAd;
 
     private void Start()
     {
-        //_banner.SetActive(RuntimeStorageData.Player.IsLoadAds);
+        OnIAPurechase();
     }
 
     private void OnEnable()
     {
         if (Manager.Instance != null)
             Manager.Instance.IngameScreenID = "HomeUICanvas";
+
+        GameEvent.OnIAPurchase += OnIAPurechase;
+    }
+
+    private void OnDisable()
+    {
+        GameEvent.OnIAPurchase -= OnIAPurechase;
+    }
+
+    private void OnIAPurechase(string productID = "")
+    {
+        Debug.Log($"Purchse complete ID: {productID}");
+        if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) &&
+            RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
+        {
+            _btnProductRemoveAd.SetActive(false);
+        }
+        else
+        {
+            _btnProductRemoveAd.SetActive(true);
+        }
     }
 
 
@@ -120,7 +141,7 @@ public class HomeUICanvas : MonoBehaviour
 
     public void BtnNoAds()
     {
-        CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.NoAds);
+        CanvasSystem.Instance.ShowNoAd();
     }
     
     public void BtnRate()

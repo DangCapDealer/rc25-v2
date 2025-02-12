@@ -26,27 +26,21 @@ public class ReceiverNativeAd : MonoBehaviour
 
     public Color adColor = Color.white;
     public bool IsReloadNativeAd = true;
-    public RequestNativeAd NativeAdHandle;
+    [HideInInspector] public RequestNativeAd NativeAdHandle;
 
     private bool IsNativeImport = false;
     private float timer = 0;
 
     private void OnEnable()
     {
-        UnityMainThreadDispatcher.Instance().Enqueue(() =>
-        {
-            _content.SetActive(false);
-        });
+        UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
         timer = 0;
         NativeAdHandle = AdNativeManager.Instance.GetNativeAd(adPosition);
         NativeAdHandle.IsReloadNativeAd = IsReloadNativeAd;
         NativeAdHandle.OnChangeNativeAd += NativeAdHandle_OnChangeNativeAd;
         IsNativeImport = false;
 #if UNITY_EDITOR
-        UnityMainThreadDispatcher.Instance().Enqueue(() =>
-        {
-            _content.SetActive(true);
-        });
+        UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(true));
 #endif
     }
 
@@ -62,8 +56,6 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private void Update()
     {
-        //if (RuntimeStorageData.IsReady == false)
-        //    return;
         if (RuntimeStorageData.Player.IsLoadAds == false)
             return;
         if (NativeAdHandle == null)
@@ -106,13 +98,13 @@ public class ReceiverNativeAd : MonoBehaviour
         {
 #if !UNITY_EDITOR
             timer += Time.deltaTime;
-            if(timer >= 1.0f)
+            if(timer >= 0.5f)
             {
                 timer = 0;
-                this.gameObject.SetActive(false);
+               _content.SetActive(false);
             } 
 #endif
-        }    
+        }
     }
 #else
     private void Update()

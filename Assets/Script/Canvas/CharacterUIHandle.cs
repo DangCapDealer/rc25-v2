@@ -9,6 +9,25 @@ public class CharacterUIHandle : MonoBehaviour
     public Transform[] icons;
     public Transform locked;
 
+    private void OnEnable()
+    {
+        GameEvent.OnIAPurchase += OnIAPurechase;
+    }
+
+    private void OnDisable()
+    {
+        GameEvent.OnIAPurchase -= OnIAPurechase;
+    }
+
+    private void OnIAPurechase(string productID = "")
+    {
+        if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) ||
+            RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
+        {
+            Unlock();
+        }
+    }
+
     public void Create(CharacterDataSO.CharacterSO data)
     {
         this.gameObject.SetActive(true);
@@ -20,31 +39,42 @@ public class CharacterUIHandle : MonoBehaviour
 
         if (data.PayType == CharacterDataSO.PayType.Ads)
         {
-            var dataCharacterLocal = RuntimeStorageData.Player.GetCharacterUnlockData(data.ID);
-            if (dataCharacterLocal == null)
+            if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) ||
+                RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
             {
-                this.gameObject.name = $"{this.gameObject.name}_ads";
-                locked.SetActive(true);
-            }    
+                locked.SetActive(false);
+            }
             else
             {
-                var dateString = dataCharacterLocal.Time;
-                DateTime dateTime = DateTime.Parse(dateString);
-                if(dateTime.AddHours(12) < DateTime.Now)
+                var dataCharacterLocal = RuntimeStorageData.Player.GetCharacterUnlockData(data.ID);
+                if (dataCharacterLocal == null)
                 {
                     this.gameObject.name = $"{this.gameObject.name}_ads";
                     locked.SetActive(true);
-                }  
+                }
                 else
                 {
-                    locked.SetActive(false);
-                }    
-            }    
+                    var dateString = dataCharacterLocal.Time;
+                    DateTime dateTime = DateTime.Parse(dateString);
+                    if (dateTime.AddHours(12) < DateTime.Now)
+                    {
+                        this.gameObject.name = $"{this.gameObject.name}_ads";
+                        locked.SetActive(true);
+                    }
+                    else
+                    {
+                        locked.SetActive(false);
+                    }
+                }
+            }
         }
         else
         {
             locked.SetActive(false);
         }
+
+        Debug.Log(this.gameObject.name);
+
         for (int j = 0; j < icons.Length; j++)
         {
             var img = icons[j].GetComponent<Image>();
