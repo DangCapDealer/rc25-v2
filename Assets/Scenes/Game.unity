@@ -856,7 +856,7 @@ GameObject:
   - component: {fileID: 34206899}
   - component: {fileID: 34206898}
   m_Layer: 5
-  m_Name: Icon.Horror (1)
+  m_Name: Icon.Battle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16375,6 +16375,7 @@ MonoBehaviour:
   icons:
   - {fileID: 920509097}
   - {fileID: 1910182979}
+  - {fileID: 34206897}
   locked: {fileID: 1366913391}
 --- !u!1 &1892395291
 GameObject:

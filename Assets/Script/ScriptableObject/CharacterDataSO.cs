@@ -30,6 +30,7 @@ public class CharacterDataSO : ScriptableObject
     [Button]    
     private void LoadAudio()
     {
+#if UNITY_EDITOR
         //Debug.Log("LoadAudio");
         for (int i = 0; i < Characters.Length; i++)
         {
@@ -61,6 +62,7 @@ public class CharacterDataSO : ScriptableObject
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log("Saved " + this.name);
+#endif
     }    
 
 
