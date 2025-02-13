@@ -6,17 +6,12 @@ public class GameUICanvas : MonoBehaviour
 {
     public Transform Content;
     public GameObject CharacterUIPrefab;
-    //public Transform Pointer;
 
     public Transform BtnUnlockTransform;
     public Transform BtnAddTransform;
 
-    //public Transform _banner;
-
-    private void Start()
-    {
-        //_banner.SetActive(RuntimeStorageData.Player.IsLoadAds);
-    }
+    private float LastClickAutoTime = 0;
+    public float SpaceTimeButton = 0.6f;
 
 
     public void CreateGame()
@@ -250,9 +245,10 @@ public class GameUICanvas : MonoBehaviour
 
     public void BtnHome()
     {
+        if (Time.time - LastClickAutoTime < SpaceTimeButton)
+            return;
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
-            //IsGotoHomeAfterIntertitialAd = true;
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
@@ -265,47 +261,12 @@ public class GameUICanvas : MonoBehaviour
             });
         }, () =>
         {
-            //IsShowNativeIntertitialAd = true;
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 CanvasSystem.Instance.ShowNativeIntertitial();
             });
         });
     }
-
-    //private bool IsGotoHomeAfterIntertitialAd = false;
-    //private bool IsShowNativeIntertitialAd = false;
-    //private void AsyncIntertitialEvent()
-    //{
-    //    //if(IsGotoHomeAfterIntertitialAd == true)
-    //    //{
-    //    //    IsGotoHomeAfterIntertitialAd = false;
-    //    //    CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
-    //    //    GameManager.Instance.GameReset();
-    //    //    GameSpawn.Instance.RemoveAllCharacter();
-    //    //    SoundSpawn.Instance.MuteAll();
-    //    //    CanvasSystem.Instance.ShowNativeCollapse();
-    //    //    MusicManager.Instance.PlaySound(Music.Main);
-    //    //}   
-
-    //    //if(IsShowNativeIntertitialAd == true)
-    //    //{
-    //    //    IsShowNativeIntertitialAd = false;
-    //    //    CanvasSystem.Instance.ShowNativeIntertitial();
-    //    //}  
-
-    //    //if(IsCharacterAds == true)
-    //    //{
-    //    //    IsCharacterAds = false;
-    //    //    GameManager.Instance.NumberOfCharacter += 1;
-    //    //    GameSpawn.Instance.CreateNewPositionCharacter();
-    //    //}
-    //}    
-
-    //private void Update()
-    //{
-    //    AsyncIntertitialEvent();
-    //}
 
     public void BtnAuto()
     {
@@ -341,7 +302,7 @@ public class GameUICanvas : MonoBehaviour
         if (target == null)
             return;
         target.SetActive(false);
-        Debug.Log(target);
+        LastClickAutoTime = Time.time;
         GameSpawn.Instance.SpawnCharacterIntoPosition(target.parent.name, targetObject);
     }
 
@@ -352,6 +313,8 @@ public class GameUICanvas : MonoBehaviour
     
     public void BtnReset()
     {
+        if (Time.time - LastClickAutoTime < SpaceTimeButton)
+            return;
         GameSpawn.Instance.RemoveAllCharacter();
         SoundSpawn.Instance.MuteAll();
         GameManager.Instance.GameReset();

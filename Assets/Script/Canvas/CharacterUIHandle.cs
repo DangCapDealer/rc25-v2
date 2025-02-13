@@ -19,7 +19,7 @@ public class CharacterUIHandle : MonoBehaviour
         GameEvent.OnIAPurchase -= OnIAPurechase;
     }
 
-    private void OnIAPurechase(string productID = "")
+    private void OnIAPurechase(string productID, string action)
     {
         if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) ||
             RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))

@@ -40,12 +40,7 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
         yield return new WaitUntil(() => RuntimeStorageData.IsReady);
         yield return new WaitUntil(() => FirebaseManager.Instance.IsInitialized);
         yield return WaitForSecondCache.WAIT_TIME_ZERO_POINT_ONE;
-        _nativeBanner.SetActive(RuntimeStorageData.Player.IsLoadAds);
-        if (RuntimeStorageData.Player.IsLoadAds == true)
-        {
-            _nativeBanner.SetActive(Manager.Instance.IsNativeBanner);
-        }
-
+        OnIAPurchase("", "");
         AutoNoAd();
     }
 
@@ -91,7 +86,6 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
             numerOfRandom += 1;
         }
         while (RuntimeStorageData.Player.Packages.Contains(randomproductID));
-        Debug.Log(randomproductID);
         var numberOfProduct = InappController.Instance.GetProductIndexById(randomproductID);
         switch(numberOfProduct)
         {
@@ -114,8 +108,21 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
         GameEvent.OnIAPurchase -= OnIAPurchase;
     }
 
-    private void OnIAPurchase(string productId)
+    private void OnIAPurchase(string productId, string action)
     {
+        if (RuntimeStorageData.Player.Packages.Contains(InappController.Instance.GetProductIdByIndex(0)) == false &&
+            RuntimeStorageData.Player.Packages.Contains(InappController.Instance.GetProductIdByIndex(1)) == false)
+        {
+            RuntimeStorageData.Player.IsLoadAds = true;
+        }
+        else
+        {
+            RuntimeStorageData.Player.IsLoadAds = false;
+        }
         _nativeBanner.SetActive(RuntimeStorageData.Player.IsLoadAds);
+        if (RuntimeStorageData.Player.IsLoadAds == true)
+        {
+            _nativeBanner.SetActive(Manager.Instance.IsNativeBanner);
+        }
     }
 }

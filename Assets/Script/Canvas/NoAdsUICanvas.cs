@@ -30,9 +30,8 @@ public class NoAdsUICanvas : PopupCanvas
             {
                 UnityMainThreadDispatcher.Instance().Enqueue(() =>
                 {
-                    RuntimeStorageData.Player.IsLoadAds = false;
                     RuntimeStorageData.Player.AddProductId(productName);
-                    GameEvent.OnIAPurchaseMethod(productName);
+                    GameEvent.OnIAPurchaseMethod(productName, "add");
                     base.Hide();
                 });
             }

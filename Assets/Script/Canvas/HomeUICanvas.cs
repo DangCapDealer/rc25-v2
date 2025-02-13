@@ -9,7 +9,7 @@ public class HomeUICanvas : MonoBehaviour
 
     private void Start()
     {
-        OnIAPurechase();
+        OnIAPurechase("", "");
     }
 
     private void OnEnable()
@@ -25,9 +25,10 @@ public class HomeUICanvas : MonoBehaviour
         GameEvent.OnIAPurchase -= OnIAPurechase;
     }
 
-    private void OnIAPurechase(string productID = "")
+    private void OnIAPurechase(string productID, string action)
     {
         Debug.Log($"Purchse complete ID: {productID}");
+
         if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) &&
             RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
         {
@@ -47,7 +48,6 @@ public class HomeUICanvas : MonoBehaviour
         BackgroundDetection.Instance.SettingBackground();
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
-            //GameManager.Instance.NumberOfCharacter = 7;
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 GameManager.Instance.NumberOfCharacter = 7;
@@ -57,10 +57,8 @@ public class HomeUICanvas : MonoBehaviour
                 CanvasSystem.Instance._gameUICanvas.CreateGame();
                 CanvasSystem.Instance.ShowNativeCollapse();
             });
-            //IsGotoGameAfterIntertitialAd = true;
         }, () =>
         {
-            //IsShowNativeIntertitialAd = true; 
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 CanvasSystem.Instance.ShowNativeIntertitial();
@@ -78,56 +76,20 @@ public class HomeUICanvas : MonoBehaviour
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 GameManager.Instance.NumberOfCharacter = 7;
-                //IsGotoGameAfterIntertitialAd = true;
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
                 CanvasSystem.Instance.ChooseScreen("GameUICanvas");
                 CanvasSystem.Instance._gameUICanvas.CreateGame();
                 CanvasSystem.Instance.ShowNativeCollapse();
             });
-            //GameManager.Instance.NumberOfCharacter = 7;
-            ////IsGotoGameAfterIntertitialAd = true;
-            //SoundSpawn.Instance.CreateSound();
-            //SoundSpawn.Instance.Reload();
-            //CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-            //CanvasSystem.Instance._gameUICanvas.CreateGame();
-            //CanvasSystem.Instance.ShowNativeCollapse();
         }, () =>
         {
-            //IsShowNativeIntertitialAd = true;
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 CanvasSystem.Instance.ShowNativeIntertitial();
             });
         });
     }
-
-    //private bool IsGotoGameAfterIntertitialAd = false;
-    //private bool IsShowNativeIntertitialAd = false;
-
-    //private void AsyncIntertitialEvent()
-    //{
-    //    //if(IsGotoGameAfterIntertitialAd == true)
-    //    //{
-    //    //    IsGotoGameAfterIntertitialAd = false;
-    //    //    SoundSpawn.Instance.CreateSound();
-    //    //    SoundSpawn.Instance.Reload();
-    //    //    CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-    //    //    CanvasSystem.Instance._gameUICanvas.CreateGame();
-    //    //    CanvasSystem.Instance.ShowNativeCollapse();
-    //    //}    
-
-    //    //if(IsShowNativeIntertitialAd == true)
-    //    //{
-    //    //    IsShowNativeIntertitialAd = false;
-    //    //    CanvasSystem.Instance.ShowNativeIntertitial();
-    //    //}    
-    //}    
-
-    //private void Update()
-    //{
-    //    AsyncIntertitialEvent();
-    //}
 
     public void BtnSetting()
     {
@@ -146,7 +108,6 @@ public class HomeUICanvas : MonoBehaviour
     
     public void BtnRate()
     {
-        // Thay bằng đường dẫn ứng dụng của bạn trên App Store hoặc Google Play
 #if UNITY_ANDROID
         Application.OpenURL("https://play.google.com/store/apps/details?id=com.sprank.horror.beats.studio.battle");
 #elif UNITY_IOS

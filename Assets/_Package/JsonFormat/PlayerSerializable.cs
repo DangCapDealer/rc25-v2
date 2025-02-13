@@ -54,6 +54,12 @@ public class PlayerSerializable
             Packages.Add(productId);
     }
 
+    public void RemoveProductId(string productId)
+    {
+        if (Packages.Contains(productId) == true)
+            Packages.Remove(productId);
+    }
+
     public CharacterUnlockData GetCharacterUnlockData(string productId)
     {
         for(int i = 0; i < CharacterUnlocks.Count; i++)

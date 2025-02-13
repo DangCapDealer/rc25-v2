@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EditorCools;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -89,13 +90,13 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
     public string GetProductInfo(string productId)
     {
         if (IsInitialized() == false)
-            return "";
+            return getProductLocalPrice(productId);
         var product = m_StoreController.products.WithID(productId);
         if (product != null)
         {
             return product.metadata.localizedPriceString;
         }
-        return "";
+        return getProductLocalPrice(productId);
     }
 
     public string GetProductName(string productId)
@@ -108,6 +109,16 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
 
         return "";
     }
+
+    private string getProductLocalPrice(string productId)
+    {
+        for (int i = 0; i < products.Count; i++)
+        {
+            if (products[i].productId == productId)
+                return products[i].productPrice;
+        }
+        return "";
+    }    
 
     public ProductType GetProductType(string _id)
     {
@@ -230,7 +241,7 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
                 if (product != null)
                 {
                     if (product.hasReceipt)
-                        GameEvent.OnIAPurchaseMethod(data.productId);
+                        GameEvent.OnIAPurchaseMethod(data.productId, "add");
                 }
             }
         }
@@ -264,13 +275,46 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
         foreach (InappProduct data in products)
         {
             Product product = m_StoreController.products.WithID(data.productId);
-            if (product != null && product.hasReceipt)
+            if (product != null)
             {
-                //GameEvent.OnIAPurchaseMethod(data.productId);
+                //if (RuntimeStorageData.Player.Packages.Contains(data.productId) && product.hasReceipt == false)
+                //{
+                //    if(product.has)
+                //    RuntimeStorageData.Player.Packages.Remove(data.productId);
+                //    //GameEvent.OnIAPurchaseMethod()
+                //}
+                if(product.hasReceipt == true)
+                {
+                    if(RuntimeStorageData.Player.IsProductId(data.productId) == false)
+                    {
+                        RuntimeStorageData.Player.AddProductId(data.productId);
+                        GameEvent.OnIAPurchaseMethod(data.productId, "add");
+                    }    
+                }    
+                else
+                {
+                    if(RuntimeStorageData.Player.IsProductId(data.productId) == true)
+                    {
+                        RuntimeStorageData.Player.RemoveProductId(data.productId);
+                        GameEvent.OnIAPurchaseMethod(data.productId, "remove");
+                    }    
+                }    
             }
             Debug.Log($"[InappPurchase] {product.hasReceipt} | {data.productId}");
         }
     }
+
+
+    [Button]    
+    private void removeProduct()
+    {
+        var productId = GetProductIdByIndex(UnityEngine.Random.Range(0, products.Count));
+        if (RuntimeStorageData.Player.IsProductId(productId) == true)
+        {
+            RuntimeStorageData.Player.RemoveProductId(productId);
+            GameEvent.OnIAPurchaseMethod(productId, "remove");
+        }
+    }    
 
 
     public void OnInitializeFailed(InitializationFailureReason error)
@@ -311,5 +355,6 @@ public class InappProduct
     public int ID;
     public string productId;
     public string productName;
+    public string productPrice;
     public ProductType type;
 }

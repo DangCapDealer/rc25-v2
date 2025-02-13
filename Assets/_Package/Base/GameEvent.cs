@@ -85,12 +85,12 @@ public class GameEvent
             OnTouchEndPauseState(vector);
     }
 
-    public delegate void IAPurchase(string productId);
+    public delegate void IAPurchase(string productId, string action);
     public static IAPurchase OnIAPurchase;
-    public static void OnIAPurchaseMethod(string productId)
+    public static void OnIAPurchaseMethod(string productId, string action)
     {
         if (OnIAPurchase != null)
-            OnIAPurchase?.Invoke(productId);
+            OnIAPurchase?.Invoke(productId, action);
     }
 
 

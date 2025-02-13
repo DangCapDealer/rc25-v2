@@ -59,6 +59,7 @@ public class Manager : MonoSingletonGlobal<Manager>
     {
         QualitySettings.vSyncCount = 1;
         Application.targetFrameRate = 60;
+        Input.multiTouchEnabled = false;
 
         base.Awake();
 

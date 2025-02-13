@@ -13,6 +13,9 @@ public class NativeSupport : MonoBehaviour
     private void OnEnable()
     {
         timer = 5;
+#if UNITY_EDITOR
+        timer = 0.5f;
+#endif
         btnClose.SetActive(false);
         numberOfText.transform.SetActive(true);
         numberOfText.text = $"Skip ad in 3";

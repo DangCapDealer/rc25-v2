@@ -598,7 +598,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 33501729}
-  m_Father: {fileID: 112103820}
+  m_Father: {fileID: 260016187}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1318,8 +1318,6 @@ RectTransform:
   - {fileID: 2096783947}
   - {fileID: 1178413661}
   - {fileID: 260016187}
-  - {fileID: 198338176}
-  - {fileID: 31988914}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2014,7 +2012,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 497545229}
-  m_Father: {fileID: 112103820}
+  m_Father: {fileID: 260016187}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2435,6 +2433,8 @@ RectTransform:
   m_Children:
   - {fileID: 1707237843}
   - {fileID: 184320687}
+  - {fileID: 198338176}
+  - {fileID: 31988914}
   - {fileID: 1362678683}
   m_Father: {fileID: 112103820}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3602,9 +3602,9 @@ RectTransform:
   m_Father: {fileID: 914540681}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &422044951
 MonoBehaviour:
@@ -8452,7 +8452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &895134637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11156,7 +11156,7 @@ RectTransform:
   m_Father: {fileID: 369821270}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14134,10 +14134,12 @@ MonoBehaviour:
   - ID: 0
     productId: vipmembership
     productName: VIP Membership
+    productPrice: 29.99$
     type: 2
   - ID: 1
     productId: eventpass
     productName: Event Pass
+    productPrice: 29.99$
     type: 2
   logDebug: 1
   IsFreeIAP: 0
@@ -18424,7 +18426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2096783947
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18957,7 +18959,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 160}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2146174631
 MonoBehaviour:
