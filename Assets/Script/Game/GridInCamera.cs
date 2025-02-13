@@ -26,6 +26,11 @@ public class GridInCamera : MonoSingleton<GridInCamera>
                 createRowWithY(5, 0.5f);
                 createRowWithY(5, 3.5f);
                 break;
+            case 12:
+                createRowWithY(4, 4.2f);
+                createRowWithY(4, 1.5f);
+                createRowWithY(4, -1.2f);
+                break;
             default:
                 createRowWithY(4, 0.5f);
                 createRowWithY(3, 3.5f);
