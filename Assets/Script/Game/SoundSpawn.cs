@@ -5,26 +5,6 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
 {
     public GameObject SoundPrefab;
 
-    //void Start()
-    //{
-    //    var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
-    //    for (int i = 0; i < totalCharacter.Length; i++)
-    //    {
-    //        if (totalCharacter[i].AudioClip == null)
-    //        {
-    //            Debug.LogError($"Audio clip missing {totalCharacter[i].ID}");
-    //            continue;
-    //        }
-
-    //        var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
-    //        soundObject.name = totalCharacter[i].ID;
-    //        var script = soundObject.GetComponent<SoundPrefab>();
-    //        script.Create(totalCharacter[i].AudioClip);
-    //        var eventSound = soundObject.GetComponent<BeatDetection>();
-    //        eventSound.CallBackFunction += CallBackFunction;
-    //    }
-    //}
-
     public void CreateSound()
     {
         CoroutineUtils.PlayCoroutineHaftSecond(() =>
@@ -32,7 +12,7 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
             var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
             for (int i = 0; i < totalCharacter.Length; i++)
             {
-                if (totalCharacter[i].AudioClip == null)
+                if (totalCharacter[i].AudioClipNormal == null)
                 {
                     Debug.LogError($"Audio clip missing {totalCharacter[i].ID}");
                     continue;
@@ -47,10 +27,13 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
                 switch (GameManager.Instance.Style)
                 {
                     case GameManager.GameStyle.Normal:
-                        script.Create(totalCharacter[i].AudioClip);
+                        script.Create(totalCharacter[i].AudioClipNormal);
                         break;
                     case GameManager.GameStyle.Horror:
                         script.Create(totalCharacter[i].AudioClipHorror);
+                        break;
+                    case GameManager.GameStyle.Battle:
+                        script.Create(totalCharacter[i].AudioClipBattle);
                         break;
                 }
 

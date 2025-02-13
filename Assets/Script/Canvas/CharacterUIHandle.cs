@@ -73,8 +73,6 @@ public class CharacterUIHandle : MonoBehaviour
             locked.SetActive(false);
         }
 
-        Debug.Log(this.gameObject.name);
-
         for (int j = 0; j < icons.Length; j++)
         {
             var img = icons[j].GetComponent<Image>();

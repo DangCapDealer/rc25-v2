@@ -91,6 +91,31 @@ public class HomeUICanvas : MonoBehaviour
         });
     }
 
+    public void BtnBatteBeat()
+    {
+        MusicManager.Instance.PauseSound();
+        GameManager.Instance.Style = GameManager.GameStyle.Battle;
+        BackgroundDetection.Instance.SettingBackground();
+        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                GameManager.Instance.NumberOfCharacter = 7;
+                SoundSpawn.Instance.CreateSound();
+                SoundSpawn.Instance.Reload();
+                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+                CanvasSystem.Instance._gameUICanvas.CreateGame();
+                CanvasSystem.Instance.ShowNativeCollapse();
+            });
+        }, () =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                CanvasSystem.Instance.ShowNativeIntertitial();
+            });
+        });
+    }    
+
     public void BtnSetting()
     {
         CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting);

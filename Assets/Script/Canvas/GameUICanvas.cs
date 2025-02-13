@@ -159,7 +159,6 @@ public class GameUICanvas : MonoBehaviour
             return;
 
         _lastTargetObjectFromDrag = null;
-
         var local = _targetMsg.position.AddX(-30.0f).AddY(1.0f).WithZ(0);
         var targetObject = GameSpawn.Instance.CheckingNearPositionInPool(local);
         if (targetObject == null)
@@ -283,19 +282,15 @@ public class GameUICanvas : MonoBehaviour
                 continue;
             if(GameManager.Instance.Style == GameManager.GameStyle.Normal)
             {
-                if (child.GetChild(0).IsActive() == true)
-                {
-                    target = child.GetChild(0);
-                    break;
-                }
+                if (child.GetChild(0).IsActive() == true) { target = child.GetChild(0); break; }
             }
             else if(GameManager.Instance.Style == GameManager.GameStyle.Horror)
             {
-                if (child.GetChild(1).IsActive() == true)
-                {
-                    target = child.GetChild(1);
-                    break;
-                }
+                if (child.GetChild(1).IsActive() == true) { target = child.GetChild(1); break; }
+            }
+            else if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
+            {
+                if (child.GetChild(1).IsActive() == true) { target = child.GetChild(1); break; }
             }
             counter++;
         }

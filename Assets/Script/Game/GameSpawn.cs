@@ -42,7 +42,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
         Transform targetObject = null;
         for (int i = 0; i < BaseObjects.Count; i++)
         {
-            if (BaseObjects[i].IsActive() == false)
+            if (BaseObjects[i].IsActive() == false || BaseObjects[i].name.EndsWith("_animation"))
                 continue;
             var distance = Vector2.Distance(BaseObjects[i].position(), target);
             if (min > distance)
@@ -87,6 +87,8 @@ public class GameSpawn : MonoSingleton<GameSpawn>
             ChangeRuntimeObject(target, character.transform);
         }
         var _characterBase = target.FindChildByParent("Horror");
+        if (_characterBase.IsActive() == false)
+            _characterBase = target.FindChildByParent("Normal");
         _characterBase.DOKill();
         _characterBase.DOScaleY(0, 0.3f).OnComplete(() =>
         {

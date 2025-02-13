@@ -8,7 +8,8 @@ public class GameManager : MonoSingleton<GameManager>
     public enum GameStyle
     {
         Normal,
-        Horror
+        Horror,
+        Battle
     }
 
     public GameStyle Style = GameStyle.Normal;

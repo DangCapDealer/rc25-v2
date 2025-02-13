@@ -13,10 +13,6 @@ public class Character : MonoBehaviour
     private Color _activeColor = new Color(255f / 255f, 255f / 255f, 255f / 255f, 1f);
     private Color _inactiveColor = new Color(185f / 255f, 185f / 255f, 185f / 255f, 1f);
 
-    //private float lastClickTime = 0f; // Lưu thời điểm click trước
-    //private const float doubleClickThreshold = 0.3f; // Khoảng thời gian giữa 2 click để tính là double click
-
-
     public void CreateCharacter(Camera gameCamera)
     {
         var soundId = $"{transform.name}_{GameManager.Instance.Style}";
@@ -34,26 +30,29 @@ public class Character : MonoBehaviour
         switch(GameManager.Instance.Style)
         {
             case GameManager.GameStyle.Normal:
-                _normal.SetActive(true);
                 _horror.SetActive(false);
-                _normal.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_activeColor));
-
-                _normal.localScale = _normal.localScale.WithY(0);
-                _normal.DOKill();
-                _normal.DOScaleY(_normal.localScale.x, 0.3f);
+                onAnimationCharacter(_normal);
                 break;
             case GameManager.GameStyle.Horror:
                 _normal.SetActive(false);
-                _horror.SetActive(true);
-                _horror.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_activeColor));
-
-                _horror.localScale = _horror.localScale.WithY(0);
-                _horror.DOKill();
-                _horror.DOScaleY(_horror.localScale.x, 0.3f);
+                onAnimationCharacter(_horror);
                 break;
         }
 
+
         SoundManager.Instance.PlayOnShot(Sound.CharacterDrop);
+    }
+
+    private void onAnimationCharacter(Transform _targetObject)
+    {
+        if (_targetObject != null)
+        {
+            _targetObject.SetActive(true);
+            _targetObject.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_activeColor));
+            _targetObject.localScale = _horror.localScale.WithY(0);
+            _targetObject.DOKill();
+            _targetObject.DOScaleY(_horror.localScale.x, 0.3f);
+        }
     }
 
     private void RegisterCameraCanvas(Camera gameCamera)
