@@ -54,6 +54,7 @@ public class Manager : MonoSingletonGlobal<Manager>
     public bool IsNativeBanner = true;
     public bool IsNativeMREC = true;
     public bool IsNativeInter = true;
+    public bool IsVIPMember = false;
 
     protected override void Awake()
     {

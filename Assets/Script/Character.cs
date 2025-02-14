@@ -8,8 +8,9 @@ using UnityEngine.UI;
 public class Character : MonoBehaviour
 {
     private SoundPrefab _soundPrefab;
-    public Transform _normal;
-    public Transform _horror;
+    //public Transform _normal;
+    //public Transform _horror;
+    //public Transform _battle;
     private Color _activeColor = new Color(255f / 255f, 255f / 255f, 255f / 255f, 1f);
     private Color _inactiveColor = new Color(185f / 255f, 185f / 255f, 185f / 255f, 1f);
 
@@ -27,18 +28,36 @@ public class Character : MonoBehaviour
         SetAnimationCanvas("Mute", "Stop");
         SetAnimationCanvas("Headphone", "Stop");
 
-        switch(GameManager.Instance.Style)
+        var IsFound = false;
+        for(int i = 0; i < transform.childCount; i++)
         {
-            case GameManager.GameStyle.Normal:
-                _horror.SetActive(false);
-                onAnimationCharacter(_normal);
-                break;
-            case GameManager.GameStyle.Horror:
-                _normal.SetActive(false);
-                onAnimationCharacter(_horror);
-                break;
-        }
+            var _child = transform.GetChild(i);
+            if (_child.name == "CharacterCanvas")
+                continue;
+            if (_child.name == GameManager.Instance.Style.ToString())
+            {
+                IsFound = true;
+                _child.SetActive(true);
+                onAnimationCharacter(_child);
+            }    
+            else _child.SetActive(false);
+        }    
 
+        if (IsFound == false)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                var _child = transform.GetChild(i);
+                if (_child.name == "CharacterCanvas")
+                    continue;
+                if (IsFound == false)
+                {
+                    IsFound = true;
+                    _child.SetActive(true);
+                    onAnimationCharacter(_child);
+                }    
+            }
+        }    
 
         SoundManager.Instance.PlayOnShot(Sound.CharacterDrop);
     }
@@ -49,9 +68,9 @@ public class Character : MonoBehaviour
         {
             _targetObject.SetActive(true);
             _targetObject.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_activeColor));
-            _targetObject.localScale = _horror.localScale.WithY(0);
+            _targetObject.localScale = _targetObject.localScale.WithY(0);
             _targetObject.DOKill();
-            _targetObject.DOScaleY(_horror.localScale.x, 0.3f);
+            _targetObject.DOScaleY(_targetObject.localScale.x, 0.3f);
         }
     }
 
@@ -132,14 +151,16 @@ public class Character : MonoBehaviour
                 break;
         }
 
-        switch (GameManager.Instance.Style)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            case GameManager.GameStyle.Normal:
-                _normal.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_soundPrefab.Mute ? _inactiveColor : _activeColor));
-                break;
-            case GameManager.GameStyle.Horror:
-                _horror.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_soundPrefab.Mute ? _inactiveColor : _activeColor));
-                break;
+            var _child = transform.GetChild(i);
+            if (_child.name == "CharacterCanvas")
+                continue;
+            if (_child.IsActive())
+            {
+                var skeletonAnimation = _child.GetComponent<SkeletonAnimation>();
+                skeletonAnimation.skeleton.SetColor(_soundPrefab.Mute ? _inactiveColor : _activeColor);
+            }    
         }
     }
 

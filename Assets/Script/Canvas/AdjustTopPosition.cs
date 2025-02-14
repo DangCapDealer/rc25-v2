@@ -7,11 +7,10 @@ public class AdjustImagePosition : MonoBehaviour
 
     private void OnEnable()
     {
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
-            GameManager.Instance.Style == GameManager.GameStyle.Horror)
-            rate = 0.33f;
-        else if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
+        if (GameManager.Instance.NumberOfCharacter > 10)
             rate = 0.23f;
+        else
+            rate = 0.33f;
 
         onCaculateTabHeight();
     }

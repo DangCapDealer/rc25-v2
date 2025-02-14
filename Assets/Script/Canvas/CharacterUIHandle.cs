@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterUIHandle : MonoBehaviour
 {
-    public Transform[] icons;
+    public Image icon;
     public Transform locked;
 
     private void OnEnable()
@@ -39,6 +39,7 @@ public class CharacterUIHandle : MonoBehaviour
 
         if (data.PayType == CharacterDataSO.PayType.Ads)
         {
+#if ADMOB
             if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) ||
                 RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
             {
@@ -67,28 +68,24 @@ public class CharacterUIHandle : MonoBehaviour
                     }
                 }
             }
+#else
+            locked.SetActive(false);
+#endif
         }
         else
         {
             locked.SetActive(false);
         }
 
-        for (int j = 0; j < icons.Length; j++)
-        {
-            var img = icons[j].GetComponent<Image>();
-            img.sprite = data.Icon;
-            img.preserveAspect = true;
-        }
+        icon.sprite = data.Icon;
+        icon.preserveAspect = true;
     }
 
-    public void OnMode(GameManager.GameStyle mode)
+    public void Reload()
     {
-        for (int i = 0; i < icons.Length; i++)
-        {
-            if (i == (int)mode) icons[i].SetActive(true);
-            else icons[i].SetActive(false);
-        }
-    }   
+        icon.rectTransform.anchoredPosition = Vector2.zero;
+        icon.transform.SetActive(true);
+    }
     
     public void OnLocked(bool active)
     {

@@ -186,17 +186,10 @@ public class GameUICanvas : MonoBehaviour
     {
         Content.ForChild(_child =>
         {
-            for (int j = 0; j < _child.childCount; j++)
+            var characterUI = _child.GetComponent<CharacterUIHandle>();
+            if (characterUI != null)
             {
-                var x = _child.GetChild(j);
-                if (x.name.StartsWith("Icon") == false)
-                    continue;
-
-                x.localPosition = Vector2.zero;
-                if (x.name.EndsWith(GameManager.Instance.Style.ToString()) == true)
-                    x.SetActive(true);
-                else
-                    x.SetActive(false);
+                characterUI.Reload();
             }
         });
     }
@@ -221,25 +214,17 @@ public class GameUICanvas : MonoBehaviour
 
     public void ReloadCharacterUIButton(string name)
     {
-        for (int i = 0; i < Content.childCount; i++)
+        Content.ForChild(_child =>
         {
-            var child = Content.GetChild(i);
-            if (child.name != name)
-                continue;
-
-            for(int j = 0;j < child.childCount; j++)
+            if (_child.name == name)
             {
-                var x = child.GetChild(j);
-                if (x.name.StartsWith("Icon") == false)
-                    continue;
-
-                x.localPosition = Vector2.zero;
-                if (x.name.EndsWith(GameManager.Instance.Style.ToString()) == true)
-                    x.SetActive(true);
-                else
-                    x.SetActive(false);
-            }    
-        }
+                var characterUI = _child.GetComponent<CharacterUIHandle>();
+                if (characterUI != null)
+                {
+                    characterUI.Reload();
+                }
+            }
+        });
     }    
 
     public void BtnHome()
@@ -272,7 +257,6 @@ public class GameUICanvas : MonoBehaviour
         var targetObject = GameSpawn.Instance.GetOncePositionInPool();
         if (targetObject == null)
             return;
-
         Transform target = null;
         int counter = 0;
         while (counter < 15)
@@ -280,18 +264,7 @@ public class GameUICanvas : MonoBehaviour
             var child  = Content.GetChild(Random.Range(0, Content.childCount));
             if (child.name.EndsWith("_ads") == true)
                 continue;
-            if(GameManager.Instance.Style == GameManager.GameStyle.Normal)
-            {
-                if (child.GetChild(0).IsActive() == true) { target = child.GetChild(0); break; }
-            }
-            else if(GameManager.Instance.Style == GameManager.GameStyle.Horror)
-            {
-                if (child.GetChild(1).IsActive() == true) { target = child.GetChild(1); break; }
-            }
-            else if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
-            {
-                if (child.GetChild(1).IsActive() == true) { target = child.GetChild(1); break; }
-            }
+            if (child.GetChild(0).IsActive() == true) { target = child.GetChild(0); break; }
             counter++;
         }
         if (target == null)

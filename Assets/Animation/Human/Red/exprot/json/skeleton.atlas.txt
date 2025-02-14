@@ -1,0 +1,31 @@
+skeleton.png
+size:687,267
+filter:Linear,Linear
+pma:true
+DAU1
+bounds:2,14,304,251
+Ellipse 594
+bounds:601,95,84,84
+Ellipse 594 copy
+bounds:602,38,55,55
+Ellipse 594 copy 2
+bounds:556,9,84,44
+rotate:90
+Ellipse 594 copy 3
+bounds:601,181,84,84
+LONG MAY TRAI
+bounds:308,3,61,17
+MIENG
+bounds:58,6,48,6
+THAN1
+bounds:308,45,123,220
+h1
+bounds:433,120,145,166
+rotate:90
+h5
+bounds:433,22,96,121
+rotate:90
+mieng2
+bounds:2,2,54,10
+mieng3
+bounds:308,22,56,21

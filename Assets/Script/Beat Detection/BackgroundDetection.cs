@@ -20,40 +20,37 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
         public GameManager.GameStyle Style;
         public Sprite Normal;
         public Sprite Kick;
+        public Transform Light;
     }
 
     public BackgroundData[] backgroundDatas;
     public SpriteRenderer backgroudBase;
     public SpriteRenderer backgroudEffect;
-
-    [System.Serializable]
-    public class LightData
-    {
-        public GameManager.GameStyle Style;
-        public Transform Light;
-    }
-
-    public LightData[] lightDatas;
     public Transform lightRay2D;
+
+    [Header("Speaker")]
+    public Transform[] speakers;
 
     public void SettingBackground()
     {
-        for (int i = 0; i < backgroundDatas.Length; i++)
-        {
-            if (backgroundDatas[i].Style == GameManager.Instance.Style)
+        backgroundDatas.ForEach(background => {
+            if(background.Style == GameManager.Instance.Style)
             {
-                backgroudBase.sprite = backgroundDatas[i].Normal;
-                backgroudEffect.sprite = backgroundDatas[i].Kick;
+                backgroudBase.sprite = background.Normal;
+                backgroudEffect.sprite = background.Kick;
+                background.Light.SetActive(true);
             }
-        }
-
-        for (int i = 0; i < lightDatas.Length; i++)
-        {
-            if (lightDatas[i].Style == GameManager.Instance.Style)
-                lightDatas[i].Light.SetActive(true);
             else
-                lightDatas[i].Light.SetActive(false);
-        }
+            {
+                background.Light.SetActive(false);
+            }    
+        });
+
+        if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
+            GameManager.Instance.Style == GameManager.GameStyle.Horror)
+            speakers.ForEach(speaker => speaker.SetActive(true));
+        else if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
+            speakers.ForEach(speaker => speaker.SetActive(false));
     }
 
 

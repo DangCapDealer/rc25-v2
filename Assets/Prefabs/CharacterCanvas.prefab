@@ -344,6 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff590e4e40bf4094789065be9e3df8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Delay: 5
   MuteParent: {fileID: 7086213515946905034}
   HeadphoneParent: {fileID: 4475848913161085050}
 --- !u!1 &2721392281484387438

@@ -62,6 +62,7 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
 
     public void AutoNoAd()
     {
+#if INAPP
         if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) &&
             RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
         {
@@ -71,31 +72,43 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
         {
             ShowNoAd();
         }
+#endif
     }    
 
     public void ShowNoAd()
     {
-        int numerOfRandom = 0;
-        string randomproductID = "";
-        do
+        if(Manager.Instance.IsVIPMember == false)
         {
-            int randomNum = Random.Range(0, 2);
-            randomproductID = InappController.Instance.GetProductIdByIndex(randomNum);
-            if (numerOfRandom > 200)
-                break;
-            numerOfRandom += 1;
-        }
-        while (RuntimeStorageData.Player.Packages.Contains(randomproductID));
-        var numberOfProduct = InappController.Instance.GetProductIndexById(randomproductID);
-        switch(numberOfProduct)
-        {
-            case 0:
+            var isProduct = RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1));
+            if (isProduct == false)
+            {
                 _popupUICanvas.ShowPopup(Popup.NoAdsEvent);
-                break;
-            case 1:
-                _popupUICanvas.ShowPopup(Popup.NoAdsVipMember);
-                break;
-        }
+            }
+        }   
+        else
+        {
+            int numerOfRandom = 0;
+            string randomproductID = "";
+            do
+            {
+                int randomNum = Random.Range(0, 2);
+                randomproductID = InappController.Instance.GetProductIdByIndex(randomNum);
+                if (numerOfRandom > 200)
+                    break;
+                numerOfRandom += 1;
+            }
+            while (RuntimeStorageData.Player.Packages.Contains(randomproductID));
+            var numberOfProduct = InappController.Instance.GetProductIndexById(randomproductID);
+            switch (numberOfProduct)
+            {
+                case 0:
+                    _popupUICanvas.ShowPopup(Popup.NoAdsEvent);
+                    break;
+                case 1:
+                    _popupUICanvas.ShowPopup(Popup.NoAdsVipMember);
+                    break;
+            }
+        }    
     }
 
     private void OnEnable()

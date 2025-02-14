@@ -9,7 +9,9 @@ public class HomeUICanvas : MonoBehaviour
 
     private void Start()
     {
+#if INAPP
         OnIAPurechase("", "");
+#endif
     }
 
     private void OnEnable()
@@ -27,8 +29,6 @@ public class HomeUICanvas : MonoBehaviour
 
     private void OnIAPurechase(string productID, string action)
     {
-        Debug.Log($"Purchse complete ID: {productID}");
-
         if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) &&
             RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
         {
@@ -64,6 +64,8 @@ public class HomeUICanvas : MonoBehaviour
                 CanvasSystem.Instance.ShowNativeIntertitial();
             });
         });
+
+        FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
     }   
 
     public void BtnSingleHorror()
@@ -89,6 +91,8 @@ public class HomeUICanvas : MonoBehaviour
                 CanvasSystem.Instance.ShowNativeIntertitial();
             });
         });
+
+        FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
     }
 
     public void BtnBatteBeat()
@@ -100,7 +104,7 @@ public class HomeUICanvas : MonoBehaviour
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                GameManager.Instance.NumberOfCharacter = 12;
+                GameManager.Instance.NumberOfCharacter = 7;
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
                 CanvasSystem.Instance.ChooseScreen("GameUICanvas");
@@ -114,23 +118,14 @@ public class HomeUICanvas : MonoBehaviour
                 CanvasSystem.Instance.ShowNativeIntertitial();
             });
         });
+
+        FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
     }    
 
-    public void BtnSetting()
-    {
-        CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting);
-    }    
+    public void BtnSetting() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting); }    
+    public void BtnCheckin() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Checkin); }    
+    public void BtnNoAds() { CanvasSystem.Instance.ShowNoAd(); }
 
-    public void BtnCheckin()
-    {
-        CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Checkin);
-    }    
-
-    public void BtnNoAds()
-    {
-        CanvasSystem.Instance.ShowNoAd();
-    }
-    
     public void BtnRate()
     {
 #if UNITY_ANDROID

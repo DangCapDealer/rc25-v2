@@ -18,7 +18,7 @@ MonoBehaviour:
     Prefab: {fileID: 5594401520251053128, guid: 0f1885074e3fa7d4ea9f674050fdc002, type: 3}
     AudioClipNormal: {fileID: 8300000, guid: 98f37aa76d349de438283357b9b393b5, type: 3}
     AudioClipHorror: {fileID: 8300000, guid: 76e029ce967d3084bbe8e6cfc1ba25f4, type: 3}
-    AudioClipBattle: {fileID: 0}
+    AudioClipBattle: {fileID: 8300000, guid: b7e197f71b2c9b0448f6ed311155a880, type: 3}
     PayType: 0
   - ID: Aurelia
     Icon: {fileID: 21300000, guid: cd92c1f75b3621e40b70ecc686fd15b6, type: 3}

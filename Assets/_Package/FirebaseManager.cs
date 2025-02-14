@@ -28,16 +28,11 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
-           // Debug.Log($"[{this.GetType().ToString()}] Firebase Set Analytics Collection Enabled");
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
                 app = Firebase.FirebaseApp.DefaultInstance;
                 IsInitialized = true;
-               // Debug.Log($"[{this.GetType().ToString()}] Firebase Initialized");
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
                 RunAllMessage();
                 FetchDataAsync();
             }
@@ -45,7 +40,6 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
             {
                 UnityEngine.Debug.LogError(System.String.Format(
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
             }
         });
         yield return WaitForSecondCache.WAIT_TIME_ONE;
@@ -55,26 +49,14 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
 
     public void LogUMP(string message)
     {
-        if (IsInitialized == false)
-        {
-            AddMessage(() => LogMessage(message));
-        }   
-        else
-        {
-            LogMessage(message);
-        }    
+        if (IsInitialized == false) { AddMessage(() => LogMessage(message)); }   
+        else { LogMessage(message); }    
     }
 
     public void LogEvent(string message)
     {
-        if (IsInitialized == false)
-        {
-            AddMessage(() => LogMessage(message));
-        }
-        else
-        {
-            LogMessage(message);
-        }
+        if (IsInitialized == false) { AddMessage(() => LogMessage(message)); }
+        else { LogMessage(message); }
     }   
 
     private void LogMessage(string message)
@@ -112,7 +94,6 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
     {
         if (!fetchTask.IsCompleted)
         {
-            // Debug.LogError("Retrieval hasn't finished.");
             return;
         }
 
@@ -120,16 +101,13 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
         var info = remoteConfig.Info;
         if (info.LastFetchStatus != LastFetchStatus.Success)
         {
-            // Debug.LogError($"{nameof(FetchComplete)} was unsuccessful\n{nameof(info.LastFetchStatus)}: {info.LastFetchStatus}");
             return;
         }
 
-        // Fetch successful. Parameter values must be activated to use.
         remoteConfig.ActivateAsync()
           .ContinueWithOnMainThread(
             task =>
             {
-                //Manager.Instance.BannerReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("banner_reload_timer").DoubleValue;
                 Manager.Instance.IsPopupUnlock = FirebaseRemoteConfig.DefaultInstance.GetValue("button_unlock_all_character").StringValue == "0" ? false : true;
                 Manager.Instance.InterHomeReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("inter_home").DoubleValue;
                 Manager.Instance.InterAutoReloadTimer = FirebaseRemoteConfig.DefaultInstance.GetValue("inter_auto").DoubleValue;
@@ -138,6 +116,7 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
                 Manager.Instance.IsNativeBanner = FirebaseRemoteConfig.DefaultInstance.GetValue("native_banner").StringValue == "0" ? false : true;
                 Manager.Instance.IsNativeMREC = FirebaseRemoteConfig.DefaultInstance.GetValue("native_mrec").StringValue == "0" ? false : true;
                 Manager.Instance.IsNativeInter = FirebaseRemoteConfig.DefaultInstance.GetValue("native_inter").StringValue == "0" ? false : true;
+                Manager.Instance.IsVIPMember = FirebaseRemoteConfig.DefaultInstance.GetValue("inapp_membership").BooleanValue;
             });
     }
 #else
