@@ -333,7 +333,7 @@ MonoBehaviour:
   IsUsed: 1
   IsReloadNativeAd: 1
   nativeAdLoaded: 0
-  TimeAfterReload: 5
+  TimeAfterReload: 30
 --- !u!1 &21650585
 GameObject:
   m_ObjectHideFlags: 0
