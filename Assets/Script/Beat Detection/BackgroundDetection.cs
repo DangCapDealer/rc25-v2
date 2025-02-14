@@ -49,8 +49,8 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
         if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
             GameManager.Instance.Style == GameManager.GameStyle.Horror)
             speakers.ForEach(speaker => speaker.SetActive(true));
-        else if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
-            speakers.ForEach(speaker => speaker.SetActive(false));
+        else if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
+            speakers.ForEach(speaker => speaker.SetActive(true));
     }
 
 

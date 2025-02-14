@@ -158,8 +158,9 @@ public class Character : MonoBehaviour
                 continue;
             if (_child.IsActive())
             {
-                var skeletonAnimation = _child.GetComponent<SkeletonAnimation>();
-                skeletonAnimation.skeleton.SetColor(_soundPrefab.Mute ? _inactiveColor : _activeColor);
+                _child.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_soundPrefab.Mute ? _inactiveColor : _activeColor));
+                //var skeletonAnimation = _child.GetComponent<SkeletonAnimation>();
+                //skeletonAnimation.skeleton.SetColor(_soundPrefab.Mute ? _inactiveColor : _activeColor);
             }    
         }
     }
@@ -185,7 +186,7 @@ public class Character : MonoBehaviour
         {
             var scriptTarget = target.GetComponent<Character>();
             var IsHeadphone = scriptTarget._soundPrefab.IsHeadphone;
-            Debug.Log(IsHeadphone);
+            //Debug.Log(IsHeadphone);
             _soundPrefab.Mute = !IsHeadphone;
             SetAnimationCanvas("Mute", _soundPrefab.Mute == true ? "Play" : "Stop");
             SetAnimationCanvas("Headphone", "Stop");

@@ -277,12 +277,7 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
             Product product = m_StoreController.products.WithID(data.productId);
             if (product != null)
             {
-                //if (RuntimeStorageData.Player.Packages.Contains(data.productId) && product.hasReceipt == false)
-                //{
-                //    if(product.has)
-                //    RuntimeStorageData.Player.Packages.Remove(data.productId);
-                //    //GameEvent.OnIAPurchaseMethod()
-                //}
+#if !UNITY_EDITOR
                 if(product.hasReceipt == true)
                 {
                     if(RuntimeStorageData.Player.IsProductId(data.productId) == false)
@@ -298,7 +293,8 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
                         RuntimeStorageData.Player.RemoveProductId(data.productId);
                         GameEvent.OnIAPurchaseMethod(data.productId, "remove");
                     }    
-                }    
+                }
+#endif
             }
             Debug.Log($"[InappPurchase] {product.hasReceipt} | {data.productId}");
         }

@@ -99,13 +99,14 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
             }
             while (RuntimeStorageData.Player.Packages.Contains(randomproductID));
             var numberOfProduct = InappController.Instance.GetProductIndexById(randomproductID);
+            Debug.Log("--------------------- " + randomproductID);
             switch (numberOfProduct)
             {
                 case 0:
-                    _popupUICanvas.ShowPopup(Popup.NoAdsEvent);
+                    _popupUICanvas.ShowPopup(Popup.NoAdsVipMember);
                     break;
                 case 1:
-                    _popupUICanvas.ShowPopup(Popup.NoAdsVipMember);
+                    _popupUICanvas.ShowPopup(Popup.NoAdsEvent);
                     break;
             }
         }    

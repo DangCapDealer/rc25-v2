@@ -44,18 +44,21 @@ public class PlayerSerializable
 
     public bool IsProductId(string productId)
     {
+        LogSystem.LogWarning("check product id " + productId);
         if (Packages.Contains(productId)) return true;
         return false;
     }
 
     public void AddProductId(string productId)
     {
+        LogSystem.LogSuccess("add product id " + productId);
         if (Packages.Contains(productId) == false)
             Packages.Add(productId);
     }
 
     public void RemoveProductId(string productId)
     {
+        LogSystem.LogError("remove product id " + productId);
         if (Packages.Contains(productId) == true)
             Packages.Remove(productId);
     }
