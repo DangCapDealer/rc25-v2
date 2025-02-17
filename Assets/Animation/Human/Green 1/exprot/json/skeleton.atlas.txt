@@ -1,5 +1,5 @@
 skeleton.png
-size:1279,221
+size:1268,221
 filter:Linear,Linear
 pma:true
 1
@@ -13,23 +13,27 @@ rotate:90
 bounds:888,4,81,81
 Shape 27
 bounds:1140,21,23,75
+ts2
+bounds:1140,21,23,75
+Shape 27 copy
+bounds:1165,30,21,75
+ts4
+bounds:1165,30,21,75
 Shape 27 copy 2
 bounds:361,7,27,78
 rotate:90
 ts5
 bounds:361,7,27,78
 rotate:90
+Shape 27 copy 3
+bounds:1057,8,35,79
+ts7
+bounds:1057,8,35,79
 Shape 27 copy 5
 bounds:441,7,27,78
 rotate:90
 ts6
 bounds:441,7,27,78
-rotate:90
-Shape 27 copy 6
-bounds:1165,6,26,74
-rotate:90
-ts3
-bounds:1165,6,26,74
 rotate:90
 Shape 29
 bounds:954,89,104,130
@@ -42,11 +46,13 @@ bounds:880,87,72,132
 Shape 33
 bounds:361,36,85,183
 Shape 36
-bounds:1158,111,112,108
+bounds:1158,107,112,108
+rotate:90
 Shape 37
 bounds:656,73,116,146
 Shape 38
-bounds:1243,18,18,54
+bounds:1165,10,18,54
+rotate:90
 Shape 39
 bounds:747,17,54,139
 rotate:90
@@ -66,9 +72,11 @@ hoa 2
 bounds:521,2,37,36
 rotate:90
 hoa 3
-bounds:1241,74,36,35
+bounds:1221,18,36,35
+rotate:90
 hoa 4
-bounds:1188,61,49,48
+bounds:1188,56,49,48
+rotate:90
 mieng
 bounds:736,16,55,9
 rotate:90
@@ -79,10 +87,3 @@ mieng3
 bounds:656,65,52,6
 than1
 bounds:2,3,151,216
-ts4
-bounds:1165,34,21,75
-ts7
-bounds:1057,8,35,79
-ts8
-bounds:1188,37,22,53
-rotate:90
