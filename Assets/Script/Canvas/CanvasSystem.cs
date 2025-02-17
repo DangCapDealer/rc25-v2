@@ -126,17 +126,10 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
     {
         if (RuntimeStorageData.Player.Packages.Contains(InappController.Instance.GetProductIdByIndex(0)) == false &&
             RuntimeStorageData.Player.Packages.Contains(InappController.Instance.GetProductIdByIndex(1)) == false)
-        {
-            RuntimeStorageData.Player.IsLoadAds = true;
-        }
-        else
-        {
-            RuntimeStorageData.Player.IsLoadAds = false;
-        }
+        { RuntimeStorageData.Player.IsLoadAds = true; }
+        else { RuntimeStorageData.Player.IsLoadAds = false; }
         _nativeBanner.SetActive(RuntimeStorageData.Player.IsLoadAds);
-        if (RuntimeStorageData.Player.IsLoadAds == true)
-        {
-            _nativeBanner.SetActive(Manager.Instance.IsNativeBanner);
-        }
+        if (_bannerCollapse.IsActive() == true) _bannerCollapse.SetActive(RuntimeStorageData.Player.IsLoadAds);
+        if (RuntimeStorageData.Player.IsLoadAds == true) { _nativeBanner.SetActive(Manager.Instance.IsNativeBanner); }
     }
 }
