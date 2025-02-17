@@ -1,0 +1,37 @@
+skeleton.png
+size:379,515
+filter:Linear,Linear
+pma:true
+Ellipse 594
+bounds:88,8,84,84
+Ellipse 594 copy
+bounds:260,13,55,55
+Ellipse 594 copy 2
+bounds:174,48,84,44
+Ellipse 594 copy 3
+bounds:2,8,84,84
+dau
+bounds:2,291,222,205
+rotate:90
+h5
+bounds:281,173,96,121
+long may trai
+bounds:361,383,41,13
+rotate:90
+mieng
+bounds:361,426,46,13
+rotate:90
+mieng2
+bounds:361,474,39,14
+rotate:90
+mieng3
+bounds:317,32,26,36
+tai nghe
+bounds:2,94,277,195
+tai tren
+bounds:281,70,101,94
+rotate:90
+than 1
+bounds:209,296,150,217
+toc
+bounds:174,2,81,44

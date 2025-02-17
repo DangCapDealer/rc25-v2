@@ -1,0 +1,29 @@
+skeleton.png
+size:977,249
+filter:Linear,Linear
+pma:true
+1
+bounds:887,45,88,87
+rotate:90
+2
+bounds:860,135,88,89
+rotate:90
+3
+bounds:951,181,15,20
+rotate:90
+4
+bounds:951,198,21,25
+Bản sao của h5
+bounds:764,2,96,121
+rotate:90
+Bản sao của h6
+bounds:764,100,94,147
+arrow
+bounds:419,17,343,230
+mieng
+bounds:860,225,115,22
+mui
+bounds:860,102,25,31
+than1
+bounds:2,4,243,415
+rotate:90
