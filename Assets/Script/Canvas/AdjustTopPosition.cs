@@ -3,6 +3,7 @@
 public class AdjustImagePosition : MonoBehaviour
 {
     public float rate = 1.0f / 3.0f;
+    public float minHeight = 300.0f;
     public RectTransform rectTransform;
 
     private void OnEnable()
@@ -19,8 +20,11 @@ public class AdjustImagePosition : MonoBehaviour
     {
         if (rectTransform != null)
         {
+            Debug.Log(Screen.height);
             float screenHeight = Screen.height;
             float imageHeight = screenHeight * rate;
+            if (imageHeight < minHeight)
+                imageHeight = minHeight;
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.zero.WithX(1);
             rectTransform.pivot = Vector2.zero.WithX(0.5f).WithY(0.5f);
