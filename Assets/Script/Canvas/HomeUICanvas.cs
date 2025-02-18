@@ -43,6 +43,7 @@ public class HomeUICanvas : MonoBehaviour
 
     public void BtnSingle()
     {
+        StaticVariable.ClearLog();
         MusicManager.Instance.PauseSound();
         GameManager.Instance.Style = GameManager.GameStyle.Normal;
         BackgroundDetection.Instance.SettingBackground();
@@ -70,6 +71,7 @@ public class HomeUICanvas : MonoBehaviour
 
     public void BtnSingleHorror()
     {
+        StaticVariable.ClearLog();
         MusicManager.Instance.PauseSound();
         GameManager.Instance.Style = GameManager.GameStyle.Horror;
         BackgroundDetection.Instance.SettingBackground();
@@ -97,6 +99,7 @@ public class HomeUICanvas : MonoBehaviour
 
     public void BtnBatteBeat()
     {
+        StaticVariable.ClearLog();
         MusicManager.Instance.PauseSound();
         GameManager.Instance.Style = GameManager.GameStyle.Battle;
         BackgroundDetection.Instance.SettingBackground();

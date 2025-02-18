@@ -9,7 +9,8 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Normal,
         Horror,
-        Battle
+        Battle,
+        BattleTournament
     }
 
     public GameStyle Style = GameStyle.Normal;
