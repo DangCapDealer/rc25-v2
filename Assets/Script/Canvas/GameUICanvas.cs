@@ -240,7 +240,7 @@ public class GameUICanvas : MonoBehaviour
                 GameManager.Instance.GameReset();
                 GameSpawn.Instance.RemoveAllCharacter();
                 SoundSpawn.Instance.MuteAll();
-                CanvasSystem.Instance.ShowNativeCollapse();
+                //CanvasSystem.Instance.ShowNativeCollapse();
                 MusicManager.Instance.PlaySound(Music.Main);
             });
         }, () =>

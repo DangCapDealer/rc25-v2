@@ -152,10 +152,10 @@ namespace Bacon
         public void LogAllConsentInformation()
         {
             Time.timeScale = 1;
-            Debug.Log($"[{this.GetType().ToString()}] --------------------------------- Log All Consent Information ---------------------------------");
-            Debug.Log($"[{this.GetType().ToString()}] Is Consent Form Available : " + ConsentInformation.IsConsentFormAvailable());
-            Debug.Log($"[{this.GetType().ToString()}] Consent Status : " + ConsentInformation.ConsentStatus);
-            Debug.Log($"[{this.GetType().ToString()}] Can Request Ads : " + ConsentInformation.CanRequestAds());
+            //Debug.Log($"[{this.GetType().ToString()}] --------------------------------- Log All Consent Information ---------------------------------");
+            //Debug.Log($"[{this.GetType().ToString()}] Is Consent Form Available : " + ConsentInformation.IsConsentFormAvailable());
+            //Debug.Log($"[{this.GetType().ToString()}] Consent Status : " + ConsentInformation.ConsentStatus);
+            //Debug.Log($"[{this.GetType().ToString()}] Can Request Ads : " + ConsentInformation.CanRequestAds());
 
         }
 

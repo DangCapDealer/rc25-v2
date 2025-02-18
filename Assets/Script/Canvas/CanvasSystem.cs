@@ -99,7 +99,7 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
             }
             while (RuntimeStorageData.Player.Packages.Contains(randomproductID));
             var numberOfProduct = InappController.Instance.GetProductIndexById(randomproductID);
-            Debug.Log("--------------------- " + randomproductID);
+            //Debug.Log("--------------------- " + randomproductID);
             switch (numberOfProduct)
             {
                 case 0:

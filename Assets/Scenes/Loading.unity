@@ -463,6 +463,7 @@ MonoBehaviour:
   IsNativeBanner: 1
   IsNativeMREC: 1
   IsNativeInter: 1
+  IsVIPMember: 0
 --- !u!1 &788117793
 GameObject:
   m_ObjectHideFlags: 0

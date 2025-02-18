@@ -14,7 +14,7 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
             {
                 if (totalCharacter[i].AudioClipNormal == null)
                 {
-                    Debug.LogError($"Audio clip missing {totalCharacter[i].ID}");
+                    Debug.LogError($"[SoundSpawn] Audio Missing {totalCharacter[i].ID}");
                     continue;
                 }
 
