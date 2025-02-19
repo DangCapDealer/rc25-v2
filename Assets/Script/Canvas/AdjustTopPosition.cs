@@ -3,8 +3,11 @@
 public class AdjustImagePosition : MonoBehaviour
 {
     public float rate = 1.0f / 3.0f;
-    public float minHeight = 300.0f;
+    public float gameCameraPositionY = 0.85f;
     public RectTransform rectTransform;
+    public Transform _target;
+    //public RectTransform _targetPoint;
+    public RectTransform canvasRect;
 
     private void OnEnable()
     {
@@ -20,16 +23,13 @@ public class AdjustImagePosition : MonoBehaviour
     {
         if (rectTransform != null)
         {
-            Debug.Log(Screen.height);
-            float screenHeight = Screen.height;
-            float imageHeight = screenHeight * rate;
-            if (imageHeight < minHeight)
-                imageHeight = minHeight;
-            rectTransform.anchorMin = Vector2.zero;
-            rectTransform.anchorMax = Vector2.zero.WithX(1);
-            rectTransform.pivot = Vector2.zero.WithX(0.5f).WithY(0.5f);
-            rectTransform.sizeDelta = Vector2.zero.WithX(rectTransform.sizeDelta.x).WithY(imageHeight);
-            rectTransform.anchoredPosition = Vector2.zero.WithY(imageHeight / 2f);
+            var screenPos = Camera.main.WorldToScreenPoint(_target.position.AddY(-gameCameraPositionY));
+            Vector2 _targetUIPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, Camera.main, out _targetUIPoint);
+            _targetUIPoint = _targetUIPoint.WithX(0);
+            Vector2 bottomPosition = new Vector2(0, -canvasRect.sizeDelta.y / 2);
+            var distance = Vector2.Distance(bottomPosition, _targetUIPoint);
+            rectTransform.sizeDelta = Vector2.zero.WithX(rectTransform.sizeDelta.x).WithY(distance);
         }
         else
         {
