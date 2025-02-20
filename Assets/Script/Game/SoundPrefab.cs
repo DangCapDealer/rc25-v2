@@ -34,4 +34,6 @@ public class SoundPrefab : MonoBehaviour
             AudioSource.Play(); // Play the audio from the beginning }
         }
     }
+
+    public float GetClipLenght() => AudioClip.length;
 }

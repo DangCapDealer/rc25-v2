@@ -107,7 +107,7 @@ public class HomeUICanvas : MonoBehaviour
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                GameManager.Instance.NumberOfCharacter = 7;
+                GameManager.Instance.NumberOfCharacter = 12;
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
                 CanvasSystem.Instance.ChooseScreen("GameUICanvas");

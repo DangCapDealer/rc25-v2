@@ -80,6 +80,8 @@ public class GameSpawn : MonoSingleton<GameSpawn>
             target.name = $"{target.name}_animation";
             character.SetActive(false);
             character.name = msg;
+            var script = character.GetComponent<Character>();
+            script.CreateCharacter(GameCamera);
             NumberofCharacter += 1;
             if (NumberofCharacter == 1)
                 SoundSpawn.Instance.Reload();
@@ -96,8 +98,6 @@ public class GameSpawn : MonoSingleton<GameSpawn>
             target.name = target.name.Split("_")[0];
             _characterBase.localScale = _characterBase.localScale.WithY(_characterBase.localScale.x);
             character.SetActive(true);
-            var script = character.GetComponent<Character>();
-            script.CreateCharacter(GameCamera);
         });
     }    
 

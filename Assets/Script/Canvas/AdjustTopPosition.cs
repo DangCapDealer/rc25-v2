@@ -2,7 +2,7 @@
 
 public class AdjustImagePosition : MonoBehaviour
 {
-    public float rate = 1.0f / 3.0f;
+    //public float rate = 1.0f / 3.0f;
     public float gameCameraPositionY = 0.85f;
     public RectTransform rectTransform;
     public Transform _target;
@@ -12,9 +12,9 @@ public class AdjustImagePosition : MonoBehaviour
     private void OnEnable()
     {
         if (GameManager.Instance.NumberOfCharacter > 10)
-            rate = 0.23f;
+            _target.position = _target.position.WithY(-2.75f);
         else
-            rate = 0.33f;
+            _target.position = _target.position.WithY(-1.0f);
 
         onCaculateTabHeight();
     }

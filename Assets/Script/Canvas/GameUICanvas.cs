@@ -16,12 +16,19 @@ public class GameUICanvas : MonoBehaviour
 
     public void CreateGame()
     {
-        if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) ||
-            RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
+        if (GameManager.Instance.Style == GameManager.GameStyle.Normal || GameManager.Instance.Style == GameManager.GameStyle.Horror)
         {
-            GameManager.Instance.NumberOfCharacter = 10;
-            BtnAddTransform.SetActive(false);
+            if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) || RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
+            {
+                GameManager.Instance.NumberOfCharacter = 10;
+                BtnAddTransform.SetActive(false);
+            }
         }
+        else if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
+        {
+            BtnAddTransform.SetActive(false);
+        }    
+
 
         CreateUIGame();
         GridInCamera.Instance.CreatePosition();

@@ -8,11 +8,10 @@ using UnityEngine.UI;
 public class Character : MonoBehaviour
 {
     private SoundPrefab _soundPrefab;
-    //public Transform _normal;
-    //public Transform _horror;
-    //public Transform _battle;
-    private Color _activeColor = new Color(255f / 255f, 255f / 255f, 255f / 255f, 1f);
-    private Color _inactiveColor = new Color(185f / 255f, 185f / 255f, 185f / 255f, 1f);
+    public SoundPrefab GetSoundData() => _soundPrefab;
+
+    public Color _activeColor;
+    public Color _inactiveColor;
 
     public void CreateCharacter(Camera gameCamera)
     {
@@ -28,36 +27,55 @@ public class Character : MonoBehaviour
         SetAnimationCanvas("Mute", "Stop");
         SetAnimationCanvas("Headphone", "Stop");
 
-        var IsFound = false;
-        for(int i = 0; i < transform.childCount; i++)
+        var isFound = false;
+        for (int i = 0; i < transform.childCount; i++)
         {
-            var _child = transform.GetChild(i);
-            if (_child.name == "CharacterCanvas")
-                continue;
-            if (_child.name == GameManager.Instance.Style.ToString())
+            var child = transform.GetChild(i);
+            if (child.name == "CharacterCanvas") continue;
+            if (child.name == GameManager.Instance.Style.ToString())
             {
-                IsFound = true;
-                _child.SetActive(true);
-                onAnimationCharacter(_child);
-            }    
-            else _child.SetActive(false);
+                //Debug.Log(child.name);
+                isFound = true;
+                onAnimationCharacter(child);
+            }
+            else child.SetActive(false);
+        }
+
+        if (isFound == false)
+        {
+            LogSystem.LogError($"Not found {transform.name}");
         }    
 
-        if (IsFound == false)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                var _child = transform.GetChild(i);
-                if (_child.name == "CharacterCanvas")
-                    continue;
-                if (IsFound == false)
-                {
-                    IsFound = true;
-                    _child.SetActive(true);
-                    onAnimationCharacter(_child);
-                }    
-            }
-        }    
+        //var IsFound = false;
+        //for (int i = 0; i < transform.childCount; i++)
+        //{
+        //    var _child = transform.GetChild(i);
+        //    if (_child.name == "CharacterCanvas")
+        //        continue;
+        //    if (_child.name == GameManager.Instance.Style.ToString())
+        //    {
+        //        IsFound = true;
+        //        _child.SetActive(true);
+        //        onAnimationCharacter(_child);
+        //    }
+        //    else _child.SetActive(false);
+        //}
+
+        //if (IsFound == false)
+        //{
+        //    for (int i = 0; i < transform.childCount; i++)
+        //    {
+        //        var _child = transform.GetChild(i);
+        //        if (_child.name == "CharacterCanvas")
+        //            continue;
+        //        if (IsFound == false)
+        //        {
+        //            IsFound = true;
+        //            _child.SetActive(true);
+        //            onAnimationCharacter(_child);
+        //        }
+        //    }
+        //}
 
         SoundManager.Instance.PlayOnShot(Sound.CharacterDrop);
     }
@@ -67,7 +85,21 @@ public class Character : MonoBehaviour
         if (_targetObject != null)
         {
             _targetObject.SetActive(true);
-            _targetObject.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_activeColor));
+            var skeletonAnimation = _targetObject.GetComponentsInChildren<SkeletonAnimation>();
+            if (skeletonAnimation != null)
+            {
+                for (int i = 0; i < skeletonAnimation.Length; i++)
+                {
+                    var skeleton = skeletonAnimation[i];
+                    if (skeleton.skeleton == null)
+                    {
+                        Debug.LogError("Skeleton is null in SetColor()!");
+                        continue;
+                    }
+                    skeleton.skeleton.SetColor(_activeColor);
+                }
+            }
+            else LogSystem.LogError($"Skeleton not found {_targetObject.name}");
             _targetObject.localScale = _targetObject.localScale.WithY(0);
             _targetObject.DOKill();
             _targetObject.DOScaleY(_targetObject.localScale.x, 0.3f);
@@ -84,25 +116,25 @@ public class Character : MonoBehaviour
     private void RegisterCanvas()
     {
         var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
-        canvasObject.SetActive(false);
         var canvasScript = canvasObject.GetComponent<CharacterCanvasHandle>();
+        canvasScript.CreateCanvas();
         var characterSetting = canvasObject.GetChild(0);
 
-        var btnRemove = characterSetting.GetChild(0).GetComponent<Button>();
+        var btnRemove = characterSetting.GetChild(1).GetComponent<Button>();
         btnRemove.onClick.RemoveAllListeners();
         btnRemove.onClick.AddListener(() =>
         {
             BtnRemove();
             canvasScript.BtnReset();
         });
-        var btnSound = characterSetting.GetChild(1).GetComponent<Button>();
+        var btnSound = characterSetting.GetChild(2).GetComponent<Button>();
         btnSound.onClick.RemoveAllListeners();
         btnSound.onClick.AddListener(() =>
         {
             BtnSound();
             canvasScript.BtnReset();
         });
-        var btnHeadphone = characterSetting.GetChild(2).GetComponent<Button>();
+        var btnHeadphone = characterSetting.GetChild(3).GetComponent<Button>();
         btnHeadphone.onClick.RemoveAllListeners();
         btnHeadphone.onClick.AddListener(() =>
         {
@@ -159,8 +191,6 @@ public class Character : MonoBehaviour
             if (_child.IsActive())
             {
                 _child.GetComponentsInChildren<SkeletonAnimation>().SimpleForEach(_skeleton => _skeleton.skeleton.SetColor(_soundPrefab.Mute ? _inactiveColor : _activeColor));
-                //var skeletonAnimation = _child.GetComponent<SkeletonAnimation>();
-                //skeletonAnimation.skeleton.SetColor(_soundPrefab.Mute ? _inactiveColor : _activeColor);
             }    
         }
     }

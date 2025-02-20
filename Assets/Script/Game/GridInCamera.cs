@@ -35,7 +35,9 @@ public class GridInCamera : MonoSingleton<GridInCamera>
                 createRowWithY(4, 0.5f);
                 createRowWithY(3, 3.5f);
                 break;
-        }    
+        }
+
+        Debug.Log($"Number of character {GameManager.Instance.NumberOfCharacter}");
     }    
 
     public Vector3 GetPosition(int index)
