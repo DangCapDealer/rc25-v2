@@ -2,7 +2,7 @@
 using PimDeWitte.UnityMainThreadDispatcher;
 using UnityEngine;
 
-public class GameUICanvas : MonoBehaviour
+public partial class GameUICanvas : MonoBehaviour
 {
     public Transform Content;
     public GameObject CharacterUIPrefab;
@@ -13,6 +13,10 @@ public class GameUICanvas : MonoBehaviour
     private float LastClickAutoTime = 0;
     public float SpaceTimeButton = 0.6f;
 
+    private void Update()
+    {
+        Mode3Update();
+    }
 
     public void CreateGame()
     {
@@ -26,8 +30,10 @@ public class GameUICanvas : MonoBehaviour
         }
         else if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
         {
-            BtnAddTransform.SetActive(false);
-        }    
+            Mode3ScoreObject.SetActive(true);
+        }
+
+        Mode3Create();
 
 
         CreateUIGame();
@@ -245,6 +251,7 @@ public class GameUICanvas : MonoBehaviour
                 CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
                 CanvasSystem.Instance.AutoNoAd();
                 GameManager.Instance.GameReset();
+                GameManager.Instance.State = GameManager.GameState.Stop;
                 GameSpawn.Instance.RemoveAllCharacter();
                 SoundSpawn.Instance.MuteAll();
                 //CanvasSystem.Instance.ShowNativeCollapse();

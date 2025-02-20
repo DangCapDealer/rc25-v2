@@ -62,6 +62,13 @@ public class CharacterCanvasHandle : MonoBehaviour
             clipLenght = parentScript.GetSoundData().GetClipLenght();
             clipCaculate = clipLenght;
         }
+
+        var canvas = this.GetComponent<Canvas>();
+        if (canvas != null)
+        {
+            canvas.overrideSorting = true;
+            canvas.sortingLayerName = "Character";
+        }
     }    
 
     public void BtnReset()

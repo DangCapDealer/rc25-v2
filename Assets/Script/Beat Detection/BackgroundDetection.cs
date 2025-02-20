@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -31,6 +32,27 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
     [Header("Speaker")]
     public Transform[] speakers;
 
+    [Header("Mode")]
+    public Transform ModeObject;
+
+    [Header("Mode3")]
+    public Transform Mode3Object;
+    public Transform Mode3SplitObject;
+
+    public void Mode3Complete()
+    {
+        if(Mode3SplitObject.position.x > 0)
+        {
+            Mode3SplitObject.DOKill();
+            Mode3SplitObject.DOMoveX(5.0f, 0.5f);
+        }   
+        else if(Mode3SplitObject.position.x < 0)
+        {
+            Mode3SplitObject.DOKill();
+            Mode3SplitObject.DOMoveX(-5.0f, 0.5f);
+        }    
+    }    
+
     public void SettingBackground()
     {
         backgroundDatas.ForEach(background => {
@@ -48,15 +70,35 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
 
         if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
             GameManager.Instance.Style == GameManager.GameStyle.Horror)
+        {
             speakers.ForEach(speaker => speaker.SetActive(true));
+            ModeObject.SetActive(true);
+            Mode3Object.SetActive(false);
+        }    
         else if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
-            speakers.ForEach(speaker => speaker.SetActive(true));
+        {
+            speakers.ForEach(speaker => speaker.SetActive(false));
+            ModeObject.SetActive(false);
+            Mode3Object.SetActive(true);
+        }    
     }
 
 
-    public void Start()
+    private void Start()
     {
         SoundSpawn.Instance._OnBeatDetection += OnBeatDetection;
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.State != GameManager.GameState.Playing)
+            return;
+
+        if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
+        {
+            var targetPosition = CanvasSystem.Instance._gameUICanvas.Mode3GetTargetPosition();
+            Mode3SplitObject.position = targetPosition.WithY(Mode3SplitObject.position.y);
+        }
     }
 
     private void OnBeatDetection(BeatDetection.EventInfo eventInfo)

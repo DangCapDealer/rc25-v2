@@ -52,6 +52,7 @@ public class HomeUICanvas : MonoBehaviour
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 GameManager.Instance.NumberOfCharacter = 7;
+                GameManager.Instance.GameCreate();
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
                 CanvasSystem.Instance.ChooseScreen("GameUICanvas");
@@ -80,6 +81,7 @@ public class HomeUICanvas : MonoBehaviour
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 GameManager.Instance.NumberOfCharacter = 7;
+                GameManager.Instance.GameCreate();
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
                 CanvasSystem.Instance.ChooseScreen("GameUICanvas");
@@ -108,6 +110,7 @@ public class HomeUICanvas : MonoBehaviour
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 GameManager.Instance.NumberOfCharacter = 12;
+                GameManager.Instance.GameCreate();
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
                 CanvasSystem.Instance.ChooseScreen("GameUICanvas");

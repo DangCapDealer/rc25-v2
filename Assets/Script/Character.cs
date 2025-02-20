@@ -32,9 +32,30 @@ public class Character : MonoBehaviour
         {
             var child = transform.GetChild(i);
             if (child.name == "CharacterCanvas") continue;
+            if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
+            {
+                if (transform.position.x > 0)
+                {
+                    if(child.name == GameManager.GameStyle.Battle.ToString())
+                    {
+                        isFound = true;
+                        onAnimationCharacter(child);
+                    }
+                    else child.SetActive(false);
+                }
+                else if(transform.position.x < 0)
+                {
+                    if (child.name == GameManager.GameStyle.Normal.ToString())
+                    {
+                        isFound = true;
+                        onAnimationCharacter(child);
+                    }
+                    else child.SetActive(false);
+                }
+                continue;
+            }
             if (child.name == GameManager.Instance.Style.ToString())
             {
-                //Debug.Log(child.name);
                 isFound = true;
                 onAnimationCharacter(child);
             }
@@ -45,37 +66,6 @@ public class Character : MonoBehaviour
         {
             LogSystem.LogError($"Not found {transform.name}");
         }    
-
-        //var IsFound = false;
-        //for (int i = 0; i < transform.childCount; i++)
-        //{
-        //    var _child = transform.GetChild(i);
-        //    if (_child.name == "CharacterCanvas")
-        //        continue;
-        //    if (_child.name == GameManager.Instance.Style.ToString())
-        //    {
-        //        IsFound = true;
-        //        _child.SetActive(true);
-        //        onAnimationCharacter(_child);
-        //    }
-        //    else _child.SetActive(false);
-        //}
-
-        //if (IsFound == false)
-        //{
-        //    for (int i = 0; i < transform.childCount; i++)
-        //    {
-        //        var _child = transform.GetChild(i);
-        //        if (_child.name == "CharacterCanvas")
-        //            continue;
-        //        if (IsFound == false)
-        //        {
-        //            IsFound = true;
-        //            _child.SetActive(true);
-        //            onAnimationCharacter(_child);
-        //        }
-        //    }
-        //}
 
         SoundManager.Instance.PlayOnShot(Sound.CharacterDrop);
     }
@@ -93,7 +83,7 @@ public class Character : MonoBehaviour
                     var skeleton = skeletonAnimation[i];
                     if (skeleton.skeleton == null)
                     {
-                        Debug.LogError("Skeleton is null in SetColor()!");
+                        LogSystem.LogError("Skeleton is null in SetColor()!");
                         continue;
                     }
                     skeleton.skeleton.SetColor(_activeColor);
@@ -260,21 +250,27 @@ public class Character : MonoBehaviour
 
     void HandleSingleClick()
     {
-        TouchReset();
-
-        var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
-        canvasObject.SetActive(!canvasObject.IsActive());
+        if(GameManager.Instance.Style == GameManager.GameStyle.Normal || 
+            GameManager.Instance.Style == GameManager.GameStyle.Horror)
+        {
+            TouchReset();
+            var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
+            canvasObject.SetActive(!canvasObject.IsActive());
+        }
     }
 
     void HandleDoubleClick()
     {
-        TouchReset();
-
-        var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
-        var canvasScript = canvasObject.GetComponent<CharacterCanvasHandle>();
-        var characterSetting = canvasObject.GetChild(0);
-        var btn = characterSetting.GetChild(0).GetComponent<Button>();
-        btn.onClick?.Invoke();
+        if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
+            GameManager.Instance.Style == GameManager.GameStyle.Horror)
+        {
+            TouchReset();
+            var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
+            var canvasScript = canvasObject.GetComponent<CharacterCanvasHandle>();
+            var characterSetting = canvasObject.GetChild(0);
+            var btn = characterSetting.GetChild(1).GetComponent<Button>();
+            btn.onClick?.Invoke();
+        }
     }
 
     private void SetAnimationCanvas(params string[] msg)

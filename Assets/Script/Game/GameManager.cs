@@ -9,12 +9,20 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Normal,
         Horror,
-        Battle,
-        BattleTournament
+        Battle
     }
+
+    public enum GameState
+    {
+        Playing,
+        Pause,
+        Stop
+    }    
 
     public GameStyle Style = GameStyle.Normal;
     public int NumberOfCharacter = 7;
+    public GameSupport GameSupport;
+    public GameState State = GameState.Stop;
 
     private IEnumerator Start()
     {
@@ -28,9 +36,14 @@ public class GameManager : MonoSingleton<GameManager>
         MusicManager.Instance.PlaySound(Music.Main);
     }
 
+    public void GameCreate()
+    {
+        GameSupport.OnCreateGame();
+        State = GameState.Playing;
+    }
+
     public void GameReset()
     {
-        //Style = GameStyle.Normal;
-        //NumberOfCharacter = 7;
-    }    
+        //State = GameState.Stop;
+    }       
 }
