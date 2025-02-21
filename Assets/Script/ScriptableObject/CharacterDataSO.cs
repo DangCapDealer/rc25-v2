@@ -24,6 +24,14 @@ public class CharacterDataSO : ScriptableObject
         public AudioClip AudioClipHorror;
         public AudioClip AudioClipBattle;
         public PayType PayType;
+
+        public AudioClip GetAudioClip(GameManager.GameStyle gameStyle)
+        {
+            if (gameStyle == GameManager.GameStyle.Normal) return AudioClipNormal;
+            else if (gameStyle == GameManager.GameStyle.Horror) return AudioClipHorror;
+            else if (gameStyle == GameManager.GameStyle.Battle) return AudioClipBattle;
+            else return null;
+        }
     }
 
 

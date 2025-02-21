@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class WaitForSecondCache
 {
+    public readonly static WaitForSeconds WAIT_TIME_MINISECOND = new WaitForSeconds(0.01f);
     public readonly static WaitForSeconds WAIT_TIME_MIN = new WaitForSeconds(0.05f);
     public readonly static WaitForSeconds WAIT_TIME_ZERO_POINT_ONE = new WaitForSeconds(0.1f);
     public readonly static WaitForSeconds WAIT_TIME_QUARTER = new WaitForSeconds(0.25f);

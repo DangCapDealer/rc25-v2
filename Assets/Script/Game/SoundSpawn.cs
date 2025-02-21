@@ -1,46 +1,73 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class SoundSpawn : MonoSingleton<SoundSpawn>
 {
+    private bool isCreateSound = false;
+    public bool IsReady() => isCreateSound;
     public GameObject SoundPrefab;
 
     public void CreateSound()
     {
-        CoroutineUtils.PlayCoroutineHaftSecond(() =>
-        {
-            var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
-            for (int i = 0; i < totalCharacter.Length; i++)
-            {
-                if (totalCharacter[i].AudioClipNormal == null)
-                {
-                    Debug.LogError($"[SoundSpawn] Audio Missing {totalCharacter[i].ID}");
-                    continue;
-                }
+        isCreateSound = false;
+        StartCoroutine(createSoundCorotine());
+    }
 
+    private IEnumerator createSoundCorotine()
+    {
+        yield return WaitForSecondCache.WAIT_TIME_HAFT;
+        var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
+        for (int i = 0; i < totalCharacter.Length; i++)
+        {
+            if (totalCharacter[i].AudioClipNormal == null)
+            {
+                Debug.LogError($"[SoundSpawn] Audio Missing {totalCharacter[i].ID}");
+                continue;
+            }
+
+            if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
+                GameManager.Instance.Style == GameManager.GameStyle.Horror)
+            {
                 var soundName = $"{totalCharacter[i].ID}_{GameManager.Instance.Style}";
                 if (this.transform.FindChildByParent(soundName))
                     continue;
                 var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
                 soundObject.name = soundName;
                 var script = soundObject.GetComponent<SoundPrefab>();
-                switch (GameManager.Instance.Style)
-                {
-                    case GameManager.GameStyle.Normal:
-                        script.Create(totalCharacter[i].AudioClipNormal);
-                        break;
-                    case GameManager.GameStyle.Horror:
-                        script.Create(totalCharacter[i].AudioClipHorror);
-                        break;
-                    case GameManager.GameStyle.Battle:
-                        script.Create(totalCharacter[i].AudioClipBattle);
-                        break;
-                }
-
+                script.Create(totalCharacter[i].GetAudioClip(GameManager.Instance.Style));
                 var eventSound = soundObject.GetComponent<BeatDetection>();
                 eventSound.CallBackFunction += CallBackFunction;
             }
-        });
+            else if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
+            {
+                var soundName1 = $"{totalCharacter[i].ID}_{GameManager.GameStyle.Normal}";
+                if (this.transform.IsChild(soundName1) == false)
+                {
+                    var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
+                    soundObject.name = soundName1;
+                    var script = soundObject.GetComponent<SoundPrefab>();
+                    script.Create(totalCharacter[i].GetAudioClip(GameManager.GameStyle.Normal));
+                    var eventSound = soundObject.GetComponent<BeatDetection>();
+                    eventSound.CallBackFunction += CallBackFunction;
+                }
+
+                var soundName2 = $"{totalCharacter[i].ID}_{GameManager.GameStyle.Battle}";
+                if (this.transform.IsChild(soundName2) == false)
+                {
+                    var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
+                    soundObject.name = soundName2;
+                    var script = soundObject.GetComponent<SoundPrefab>();
+                    script.Create(totalCharacter[i].GetAudioClip(GameManager.GameStyle.Battle));
+                    var eventSound = soundObject.GetComponent<BeatDetection>();
+                    eventSound.CallBackFunction += CallBackFunction;
+                }
+            }
+            yield return null;
+        }
+        yield return null;
+        Reload();
+        isCreateSound = true;
     }
 
     public SoundPrefab Find(string name)

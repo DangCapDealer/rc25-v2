@@ -193,4 +193,16 @@ public class MenuEditor
             ReadChildObjects(childTransform);
         }
     }
+
+    [MenuItem("Tools/Set Keystore Password")]
+    public static void SetPassword()
+    {
+        //PlayerSettings.Android.useCustomKeystore = true;
+        PlayerSettings.Android.keystorePass = "123456";
+        PlayerSettings.Android.keyaliasPass = "123456";
+
+        //AssetDatabase.SaveAssets();
+
+        UnityEngine.Debug.Log("Keystore settings updated successfully!");
+    }
 }

@@ -268,6 +268,8 @@ public partial class GameUICanvas : MonoBehaviour
 
     public void BtnAuto()
     {
+        if (SoundSpawn.Instance.IsReady() == false)
+            return;
         var targetObject = GameSpawn.Instance.GetOncePositionInPool();
         if (targetObject == null)
             return;

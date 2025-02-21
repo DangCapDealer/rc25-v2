@@ -15,18 +15,7 @@ public class Character : MonoBehaviour
 
     public void CreateCharacter(Camera gameCamera)
     {
-        var soundId = $"{transform.name}_{GameManager.Instance.Style}";
-        _soundPrefab = SoundSpawn.Instance.Find(soundId);
-        _soundPrefab.Mute = false;
-
         touchDisable = false;
-
-        RegisterCameraCanvas(gameCamera);
-        RegisterCanvas();
-
-        SetAnimationCanvas("Mute", "Stop");
-        SetAnimationCanvas("Headphone", "Stop");
-
         var isFound = false;
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -40,6 +29,7 @@ public class Character : MonoBehaviour
                     {
                         isFound = true;
                         onAnimationCharacter(child);
+                        setupSound(GameManager.GameStyle.Battle);
                     }
                     else child.SetActive(false);
                 }
@@ -49,6 +39,7 @@ public class Character : MonoBehaviour
                     {
                         isFound = true;
                         onAnimationCharacter(child);
+                        setupSound(GameManager.GameStyle.Normal);
                     }
                     else child.SetActive(false);
                 }
@@ -58,6 +49,7 @@ public class Character : MonoBehaviour
             {
                 isFound = true;
                 onAnimationCharacter(child);
+                setupSound(GameManager.Instance.Style);
             }
             else child.SetActive(false);
         }
@@ -65,9 +57,22 @@ public class Character : MonoBehaviour
         if (isFound == false)
         {
             LogSystem.LogError($"Not found {transform.name}");
-        }    
+        }  
+        else
+        {
+            RegisterCameraCanvas(gameCamera);
+            RegisterCanvas();
+            SetAnimationCanvas("Mute", "Stop");
+            SetAnimationCanvas("Headphone", "Stop");
+            SoundManager.Instance.PlayOnShot(Sound.CharacterDrop);
+        }
+    }
 
-        SoundManager.Instance.PlayOnShot(Sound.CharacterDrop);
+    private void setupSound(GameManager.GameStyle gameStyle)
+    {
+        var soundId = $"{transform.name}_{gameStyle}";
+        _soundPrefab = SoundSpawn.Instance.Find(soundId);
+        _soundPrefab.Mute = false;
     }
 
     private void onAnimationCharacter(Transform _targetObject)
