@@ -160,6 +160,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     private void OnUITheme(string msg)
     {
+        Debug.Log("UI Theme Character");
         NumberofCharacter = 0;
         RemoveAllCharacter();
         for (int i = 0; i < GameManager.Instance.NumberOfCharacter; i++)
@@ -205,12 +206,14 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     public void RemoveCharacter(GameObject character)
     {
+        Debug.Log("Remove Character");
         CreateObjects.Remove(character);
         PoolByID.Instance.PushToPool(character);
 
         CanvasSystem.Instance._gameUICanvas.ReloadCharacterUIButton(character.name);
         var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, character.transform.position, Quaternion.identity, this.transform);
-        BaseObjects.Add(sponky);
+        if (BaseObjects.Contains(sponky) == false)
+            BaseObjects.Add(sponky);
 
         var _target = sponky.FindChildByParent("Normal");
         if (_target != null) _target.SetActive(false);
@@ -227,6 +230,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
     
     public void CreateBaseCharacter(Vector3 position)
     {
+        Debug.Log("Create Character");
         var sponky = PoolByID.Instance.GetPrefab(GrayPrefab, position, Quaternion.identity, this.transform);
         BaseObjects.Add(sponky);
         RuntimeDataObjects.Add(sponky);

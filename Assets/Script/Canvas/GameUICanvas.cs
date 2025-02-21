@@ -29,10 +29,10 @@ public partial class GameUICanvas : MonoBehaviour
                 GameManager.Instance.NumberOfCharacter = 10;
                 BtnAddTransform.SetActive(false);
             }
-        }
-        else if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
-        {
-            Mode3ScoreObject.SetActive(true);
+            else
+            {
+                BtnAddTransform.SetActive(true);
+            }    
         }
 
         Mode3Create();

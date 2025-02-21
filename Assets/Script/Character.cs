@@ -243,20 +243,23 @@ public class Character : MonoBehaviour
         if (hit.transform != this.transform)
             return;
 
+        Debug.Log(hit.transform);
+
         if (touchNumber == 0)
         {
             touchNumber += 1;
             touchTime = Time.time;
             Invoke("HandleSingleClick", touchThreshold);
         }
-        else if (touchNumber == 1)
+        else
         {
-            if(Time.time - touchTime < touchThreshold)
+            if (Time.time - touchTime < touchThreshold)
             {
                 touchDisable = true;
                 CancelInvoke("HandleSingleClick");
                 HandleDoubleClick();
-            }     
+            }
+            TouchReset();
         }
     }
 
@@ -269,26 +272,23 @@ public class Character : MonoBehaviour
     void HandleSingleClick()
     {
         if(GameManager.Instance.Style == GameManager.GameStyle.Normal || 
-            GameManager.Instance.Style == GameManager.GameStyle.Horror)
+            GameManager.Instance.Style == GameManager.GameStyle.Horror ||
+            GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
         {
-            TouchReset();
             var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
             canvasObject.SetActive(!canvasObject.IsActive());
         }
+        TouchReset();
     }
 
     void HandleDoubleClick()
     {
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
-            GameManager.Instance.Style == GameManager.GameStyle.Horror)
-        {
-            TouchReset();
-            var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
-            var canvasScript = canvasObject.GetComponent<CharacterCanvasHandle>();
-            var characterSetting = canvasObject.GetChild(0);
-            var btn = characterSetting.GetChild(1).GetComponent<Button>();
-            btn.onClick?.Invoke();
-        }
+        Debug.Log("Handle double click");
+        var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
+        var canvasScript = canvasObject.GetComponent<CharacterCanvasHandle>();
+        var characterSetting = canvasObject.GetChild(0);
+        var btn = characterSetting.GetChild(1).GetComponent<Button>();
+        btn.onClick?.Invoke();
     }
 
     private void SetAnimationCanvas(params string[] msg)

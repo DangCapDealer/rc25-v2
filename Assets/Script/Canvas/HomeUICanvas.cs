@@ -67,7 +67,7 @@ public class HomeUICanvas : MonoBehaviour
             });
         });
 
-        FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
+        FirebaseManager.Instance.LogEvent($"Mode_Beat_1");
     }   
 
     public void BtnSingleHorror()
@@ -96,7 +96,7 @@ public class HomeUICanvas : MonoBehaviour
             });
         });
 
-        FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
+        FirebaseManager.Instance.LogEvent($"Mode_Beat_2");
     }
 
     public void BtnSingleHuman()
@@ -125,7 +125,7 @@ public class HomeUICanvas : MonoBehaviour
             });
         });
 
-        FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
+        FirebaseManager.Instance.LogEvent($"Mode_Beat_3");
     }
 
     public void BtnBatteBeat()
@@ -154,7 +154,7 @@ public class HomeUICanvas : MonoBehaviour
             });
         });
 
-        FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
+        FirebaseManager.Instance.LogEvent($"Mode_Battle");
     }    
 
     public void BtnSetting() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting); }    
