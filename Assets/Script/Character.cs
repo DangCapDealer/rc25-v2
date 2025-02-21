@@ -45,11 +45,21 @@ public class Character : MonoBehaviour
                 }
                 continue;
             }
-            if (child.name == GameManager.Instance.Style.ToString())
+            else if (child.name == GameManager.Instance.Style.ToString())
             {
                 isFound = true;
                 onAnimationCharacter(child);
                 setupSound(GameManager.Instance.Style);
+            }
+            else if (GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
+            {
+                if (child.name == GameManager.GameStyle.Battle.ToString())
+                {
+                    isFound = true;
+                    onAnimationCharacter(child);
+                    setupSound(GameManager.Instance.Style);
+                }
+                else child.SetActive(false);
             }
             else child.SetActive(false);
         }
@@ -70,6 +80,9 @@ public class Character : MonoBehaviour
 
     private void setupSound(GameManager.GameStyle gameStyle)
     {
+        if (gameStyle == GameManager.GameStyle.Battle_Single)
+            gameStyle = GameManager.GameStyle.Battle;
+
         var soundId = $"{transform.name}_{gameStyle}";
         _soundPrefab = SoundSpawn.Instance.Find(soundId);
         _soundPrefab.Mute = false;

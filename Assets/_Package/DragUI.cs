@@ -6,6 +6,7 @@ public class DragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
+    private bool isSelect = false;
 
     void Awake()
     {
@@ -16,6 +17,7 @@ public class DragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        isSelect = true;
         if (SoundSpawn.Instance.IsReady() == false)
             return;
         canvasGroup.alpha = 0.6f;
@@ -24,6 +26,7 @@ public class DragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
 
     public void OnDrag(PointerEventData eventData)
     {
+        if(isSelect == false) return;
         if (SoundSpawn.Instance.IsReady() == false)
             return;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
@@ -32,6 +35,8 @@ public class DragUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (isSelect == false) return;
+        isSelect = false;
         if (SoundSpawn.Instance.IsReady() == false)
             return;
         canvasGroup.alpha = 1.0f;

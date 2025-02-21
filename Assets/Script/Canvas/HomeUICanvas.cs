@@ -99,6 +99,35 @@ public class HomeUICanvas : MonoBehaviour
         FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
     }
 
+    public void BtnSingleHuman()
+    {
+        StaticVariable.ClearLog();
+        MusicManager.Instance.PauseSound();
+        GameManager.Instance.Style = GameManager.GameStyle.Battle_Single;
+        BackgroundDetection.Instance.SettingBackground();
+        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                GameManager.Instance.NumberOfCharacter = 7;
+                GameManager.Instance.GameCreate();
+                SoundSpawn.Instance.CreateSound();
+                SoundSpawn.Instance.Reload();
+                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+                CanvasSystem.Instance._gameUICanvas.CreateGame();
+                CanvasSystem.Instance.ShowNativeCollapse();
+            });
+        }, () =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                CanvasSystem.Instance.ShowNativeIntertitial();
+            });
+        });
+
+        FirebaseManager.Instance.LogEvent($"Mode_{GameManager.Instance.Style}");
+    }
+
     public void BtnBatteBeat()
     {
         StaticVariable.ClearLog();

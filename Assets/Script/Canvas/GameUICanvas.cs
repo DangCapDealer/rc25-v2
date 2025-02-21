@@ -20,7 +20,9 @@ public partial class GameUICanvas : MonoBehaviour
 
     public void CreateGame()
     {
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal || GameManager.Instance.Style == GameManager.GameStyle.Horror)
+        if (GameManager.Instance.Style == GameManager.GameStyle.Normal || 
+            GameManager.Instance.Style == GameManager.GameStyle.Horror ||
+            GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
         {
             if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) || RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
             {
@@ -303,6 +305,9 @@ public partial class GameUICanvas : MonoBehaviour
         SoundSpawn.Instance.MuteAll();
         GameManager.Instance.GameReset();
         GridInCamera.Instance.CreatePosition();
+
+        Mode3UIReset();
+
         GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
     }    
 

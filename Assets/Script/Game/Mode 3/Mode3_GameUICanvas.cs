@@ -16,7 +16,9 @@ public partial class GameUICanvas : MonoBehaviour
 
     public void Mode3Create()
     {
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal || GameManager.Instance.Style == GameManager.GameStyle.Horror)
+        if (GameManager.Instance.Style == GameManager.GameStyle.Normal || 
+            GameManager.Instance.Style == GameManager.GameStyle.Horror ||
+            GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
         {
             Mode3ScoreObject.SetActive(false);
         }

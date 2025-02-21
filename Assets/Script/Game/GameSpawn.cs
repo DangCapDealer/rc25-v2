@@ -56,11 +56,57 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     public Transform GetOncePositionInPool()
     {
-        for (int i = 0; i < BaseObjects.Count; i++)
+        if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
         {
-            if (BaseObjects[i].IsActive() == false || BaseObjects[i].name.EndsWith("_animation"))
-                continue;
-            return BaseObjects[i].transform;
+            int numberCharacterLeft = 0, numberCharacterRight = 0;
+            Transform characterLeft = null, characterRight = null;
+
+            for (int  i = 0; i < CreateObjects.Count; i++)
+            {
+                if (CreateObjects[i].position().x > 0.0f) { numberCharacterRight += 1; }
+                else if (CreateObjects[i].position().x < 0.0f) { numberCharacterLeft += 1; }
+            }
+
+            for (int i = 0; i < BaseObjects.Count; i++)
+            {
+                if (BaseObjects[i].IsActive() == false || BaseObjects[i].name.EndsWith("_animation"))
+                    continue;
+                if (BaseObjects[i].position().x > 0.0f)
+                {
+                    if (characterRight == null)
+                        characterRight = BaseObjects[i].transform;
+                }
+                else if (BaseObjects[i].position().x < 0.0f)
+                {
+                    if (characterLeft == null)
+                        characterLeft = BaseObjects[i].transform;
+                }
+            }
+
+            if (numberCharacterLeft == numberCharacterRight)
+            {
+                if (characterLeft != null) return characterLeft;
+                else return characterRight;
+            }
+            else if (numberCharacterLeft < numberCharacterRight)
+            {
+                if (characterLeft != null) return characterLeft;
+                else return characterRight;
+            }
+            else
+            {
+                if (characterRight != null) return characterRight;
+                else return characterLeft;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < BaseObjects.Count; i++)
+            {
+                if (BaseObjects[i].IsActive() == false || BaseObjects[i].name.EndsWith("_animation"))
+                    continue;
+                return BaseObjects[i].transform;
+            }
         }
         return null;
     }    
