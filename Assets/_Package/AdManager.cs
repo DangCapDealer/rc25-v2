@@ -49,6 +49,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     {
         yield return new WaitUntil(() => Bacon.UMP.Instance.IsUMPReady);
         MobileAds.RaiseAdEventsOnUnityMainThread = true;
+        MobileAds.SetiOSAppPauseOnBackground(true);
         MobileAds.Initialize(initStatus =>
         {
             Debug.Log($"[{this.GetType().ToString()}] Admob Initialized");
