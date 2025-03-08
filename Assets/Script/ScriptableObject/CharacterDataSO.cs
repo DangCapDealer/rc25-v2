@@ -23,6 +23,7 @@ public class CharacterDataSO : ScriptableObject
         public AudioClip AudioClipNormal;
         public AudioClip AudioClipHorror;
         public AudioClip AudioClipBattle;
+        public AudioClip AudioClipMonster;
         public PayType PayType;
 
         public AudioClip GetAudioClip(GameManager.GameStyle gameStyle)
@@ -46,19 +47,28 @@ public class CharacterDataSO : ScriptableObject
             if (audioClip != null)
             {
                 string path = AssetDatabase.GetAssetPath(audioClip);
-                //Debug.Log("Audio file path: " + path);
+
+
                 var normalPath = path.Replace("Horror", "Normal");
                 AudioClip normalClip = AssetDatabase.LoadAssetAtPath<AudioClip>(normalPath);
                 if (normalClip != null)
                     Characters[i].AudioClipNormal = normalClip;
                 else
                     Debug.Log($"Missing normal audio {audioClip.name}");
+
                 var battlePath = path.Replace("Horror", "Human (Sprunki song)");
                 AudioClip battleClip = AssetDatabase.LoadAssetAtPath<AudioClip>(battlePath);
                 if (battleClip != null)
                     Characters[i].AudioClipBattle = battleClip;
                 else
                     Debug.Log($"Missing battle audio {audioClip.name}");
+
+                var monsterPath = path.Replace("Horror", "Monster");
+                AudioClip monsterClip = AssetDatabase.LoadAssetAtPath<AudioClip>(monsterPath);
+                if (monsterClip != null)
+                    Characters[i].AudioClipMonster = monsterClip;
+                else
+                    Debug.Log($"Missing monster audio {audioClip.name}");
             }
             else
             {

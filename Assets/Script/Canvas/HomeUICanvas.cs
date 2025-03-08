@@ -51,7 +51,7 @@ public class HomeUICanvas : MonoBehaviour
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                GameManager.Instance.NumberOfCharacter = 7;
+                GameManager.Instance.NumberOfCharacter = 8;
                 GameManager.Instance.GameCreate();
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
@@ -80,7 +80,7 @@ public class HomeUICanvas : MonoBehaviour
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                GameManager.Instance.NumberOfCharacter = 7;
+                GameManager.Instance.NumberOfCharacter = 8;
                 GameManager.Instance.GameCreate();
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
@@ -109,7 +109,7 @@ public class HomeUICanvas : MonoBehaviour
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                GameManager.Instance.NumberOfCharacter = 7;
+                GameManager.Instance.NumberOfCharacter = 8;
                 GameManager.Instance.GameCreate();
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
@@ -156,6 +156,35 @@ public class HomeUICanvas : MonoBehaviour
 
         FirebaseManager.Instance.LogEvent($"Mode_Battle");
     }    
+
+    public void BtnSingleMonster()
+    {
+        StaticVariable.ClearLog();
+        MusicManager.Instance.PauseSound();
+        GameManager.Instance.Style = GameManager.GameStyle.Monster;
+        BackgroundDetection.Instance.SettingBackground();
+        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                GameManager.Instance.NumberOfCharacter = 8;
+                GameManager.Instance.GameCreate();
+                SoundSpawn.Instance.CreateSound();
+                SoundSpawn.Instance.Reload();
+                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+                CanvasSystem.Instance._gameUICanvas.CreateGame();
+                CanvasSystem.Instance.ShowNativeCollapse();
+            });
+        }, () =>
+        {
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                CanvasSystem.Instance.ShowNativeIntertitial();
+            });
+        });
+
+        FirebaseManager.Instance.LogEvent($"Mode_Beat_4");
+    }
 
     public void BtnSetting() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting); }    
     public void BtnCheckin() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Checkin); }    

@@ -57,6 +57,8 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
     {
         if (IsInitialized == false) { AddMessage(() => LogMessage(message)); }
         else { LogMessage(message); }
+
+        LogSystem.LogSuccess(message);
     }   
 
     private void LogMessage(string message)

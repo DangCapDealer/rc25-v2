@@ -10,7 +10,10 @@ public class PopupUICanvas : MonoBehaviour
     {
         for (int i = 0; i < PopupCanvas.Length; i++)
         {
-            PopupCanvas[i].Show(popup);
+            if (PopupCanvas[i].popup == popup)
+                PopupCanvas[i].Show(popup);
+            else
+                PopupCanvas[i].Hide();
         }
     }
 }

@@ -8,6 +8,7 @@ public class GridInCamera : MonoSingleton<GridInCamera>
     public Transform[] _objects;
     public float padding = 0.2f;
     public Camera camera;
+    public float posYOffset = 0.0f;
 
     public void CreatePosition()
     {
@@ -15,25 +16,25 @@ public class GridInCamera : MonoSingleton<GridInCamera>
         switch (GameManager.Instance.NumberOfCharacter)
         {
             case 8:
-                createRowWithY(4, 0.5f);
-                createRowWithY(4, 3.5f);
+                createRowWithY(4, 0.5f + posYOffset);
+                createRowWithY(4, 3.5f + posYOffset);
                 break;
             case 9:
-                createRowWithY(5, 0.5f);
-                createRowWithY(4, 3.5f);
+                createRowWithY(5, 0.5f + posYOffset);
+                createRowWithY(4, 3.5f + posYOffset);
                 break;
             case 10:
-                createRowWithY(5, 0.5f);
-                createRowWithY(5, 3.5f);
+                createRowWithY(5, 0.5f + posYOffset);
+                createRowWithY(5, 3.5f + posYOffset);
                 break;
             case 12:
-                createRowWithY(4, 4.2f);
-                createRowWithY(4, 1.5f);
-                createRowWithY(4, -1.2f);
+                createRowWithY(4, 4.2f + posYOffset);
+                createRowWithY(4, 1.5f + posYOffset);
+                createRowWithY(4, -1.2f + posYOffset);
                 break;
             default:
-                createRowWithY(4, 0.5f);
-                createRowWithY(3, 3.5f);
+                createRowWithY(4, 0.5f + posYOffset);
+                createRowWithY(3, 3.5f + posYOffset);
                 break;
         }
 

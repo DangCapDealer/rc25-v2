@@ -16,13 +16,11 @@ public partial class GameUICanvas : MonoBehaviour
 
     public void Mode3Create()
     {
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal || 
-            GameManager.Instance.Style == GameManager.GameStyle.Horror ||
-            GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
+        if (GameManager.Instance.IsGameDefault())
         {
             Mode3ScoreObject.SetActive(false);
         }
-        else if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
+        else if (GameManager.Instance.IsGameCustom())
         {
             Mode3ScoreObject.SetActive(true);
             parentWidth = Mode3ScoreObject.GetComponent<RectTransform>().sizeDelta.x;

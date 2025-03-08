@@ -13,26 +13,31 @@ public partial class GameUICanvas : MonoBehaviour
     private float LastClickAutoTime = 0;
     public float SpaceTimeButton = 0.6f;
 
+    [Header("Auto Add Slot Character")]
+    public float PopupAdCharacterAfter = 60.0f;
+    private float _timerPopupAddCharacter = 0;
+
     private void Update()
     {
+        AutoSlotCharacter();
+
         Mode3Update();
     }
 
     public void CreateGame()
     {
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal || 
-            GameManager.Instance.Style == GameManager.GameStyle.Horror ||
-            GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
+        if (GameManager.Instance.IsGameDefault())
         {
-            if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) || RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
+            if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) || 
+                RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
             {
                 GameManager.Instance.NumberOfCharacter = 10;
-                BtnAddTransform.SetActive(false);
+                //BtnAddTransform.SetActive(false);
             }
-            else
-            {
-                BtnAddTransform.SetActive(true);
-            }    
+            //else
+            //{
+            //    BtnAddTransform.SetActive(true);
+            //}    
         }
 
         Mode3Create();
@@ -63,7 +68,7 @@ public partial class GameUICanvas : MonoBehaviour
         BtnUnlockTransform.SetActive(Manager.Instance.IsPopupUnlock == false ? false : IsCharacterAds);
     }
 
-    private bool IsCharacterAds = false;
+    //private bool IsCharacterAds = false;
 
     public void AddSlotInGame()
     {
@@ -79,6 +84,19 @@ public partial class GameUICanvas : MonoBehaviour
             });
         });
     }
+
+    private void AutoSlotCharacter()
+    {
+        if (GameManager.Instance.NumberOfCharacter >= 10) return;
+        if (GameManager.Instance.IsGameCustom()) return;
+
+        _timerPopupAddCharacter += Time.deltaTime;
+        if(_timerPopupAddCharacter > PopupAdCharacterAfter)
+        {
+            _timerPopupAddCharacter = 0;
+            CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.UnlockOnce);
+        }    
+    }    
 
 
     public void UnlockAllCharacter()

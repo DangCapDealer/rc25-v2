@@ -68,17 +68,15 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
             }    
         });
 
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
-            GameManager.Instance.Style == GameManager.GameStyle.Horror ||
-            GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
+        if (GameManager.Instance.IsGameDefault())
         {
-            speakers.ForEach(speaker => speaker.SetActive(true));
+            //speakers.ForEach(speaker => speaker.SetActive(true));
             ModeObject.SetActive(true);
             Mode3Object.SetActive(false);
         }    
-        else if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
+        else if (GameManager.Instance.IsGameCustom())
         {
-            speakers.ForEach(speaker => speaker.SetActive(false));
+            //speakers.ForEach(speaker => speaker.SetActive(false));
             ModeObject.SetActive(false);
             Mode3Object.SetActive(true);
         }    

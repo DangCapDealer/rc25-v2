@@ -13,21 +13,6 @@ public class PopupCanvas : MonoBehaviour
 
     protected UnityAction onCloseAction;
 
-    public virtual void Show(Popup p, UnityAction afterPopup)
-    {
-        Show(p);
-    }     
-
-    public virtual void Show(Popup p, params string[] msg)
-    {
-        Show(p);
-    }
-
-    public virtual void Show(Popup p, string description, UnityAction onActionFirst, UnityAction onActionSecond, params int[] value)
-    {
-        Show(p);
-    }
-
     public virtual void Show(Popup p)
     {
         if (popup == p)

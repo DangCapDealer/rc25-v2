@@ -10,7 +10,8 @@ public class GameManager : MonoSingleton<GameManager>
         Normal,
         Horror,
         Battle,
-        Battle_Single
+        Battle_Single,
+        Monster
     }
 
     public enum GameState
@@ -24,6 +25,14 @@ public class GameManager : MonoSingleton<GameManager>
     public int NumberOfCharacter = 7;
     public GameSupport GameSupport;
     public GameState State = GameState.Stop;
+
+    public GameStyle[] GameDefaults;
+    public GameStyle[] GameCustoms;
+
+    public bool IsGameDefault(GameStyle style) => GameDefaults.IsFound(style);
+    public bool IsGameDefault() => IsGameDefault((GameStyle)Style);
+    public bool IsGameCustom(GameStyle style) => GameCustoms.IsFound(style);
+    public bool IsGameCustom() => IsGameCustom((GameStyle)Style);
 
     private IEnumerator Start()
     {

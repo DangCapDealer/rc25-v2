@@ -41,16 +41,14 @@ public class CharacterCanvasHandle : MonoBehaviour
     {
         var characterSetting = transform.GetChild(0);
         var characterSettingRect = characterSetting.GetComponent<RectTransform>();
-        if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
-            GameManager.Instance.Style == GameManager.GameStyle.Horror ||
-            GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
+        if (GameManager.Instance.IsGameDefault())
         {
             this.transform.SetActive(false);
             characterSetting.GetChild(0).SetActive(false);
             characterSetting.GetChild(2).SetActive(true);
             characterSetting.GetChild(3).SetActive(true);
         }
-        else if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
+        else if (GameManager.Instance.IsGameCustom())
         {
             this.transform.SetActive(true);
             characterSetting.GetChild(0).SetActive(true);
