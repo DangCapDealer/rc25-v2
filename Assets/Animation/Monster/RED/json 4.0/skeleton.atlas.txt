@@ -1,0 +1,33 @@
+skeleton.png
+size:725,222
+filter:Linear,Linear
+pma:true
+Ellipse 1326
+bounds:472,38,121,34
+Ellipse 1334
+bounds:595,8,66,66
+LONG MAY TRAI
+bounds:430,14,61,17
+Layer 1
+bounds:2,9,220,211
+Shape 1330
+bounds:344,33,126,187
+Shape 1381
+bounds:344,3,84,28
+Shape 1382
+bounds:493,6,77,30
+Shape 15
+bounds:663,37,37,60
+rotate:90
+Shape 15 copy 2
+bounds:591,76,60,98
+rotate:90
+Shape 6
+bounds:675,142,78,42
+rotate:90
+h4
+bounds:472,74,117,146
+mat
+bounds:591,138,82,82
+than
+bounds:224,2,118,218

@@ -6,6 +6,16 @@ public class PopupUICanvas : MonoBehaviour
 {
     public PopupCanvas[] PopupCanvas;
 
+    public bool IsCanvas()
+    {
+        for (int i = 0; i < PopupCanvas.Length; i++)
+        {
+            if (PopupCanvas[i].transform.IsActive() == true)
+                return true;
+        }
+        return false;
+    }    
+
     public void ShowPopup(Popup popup)
     {
         for (int i = 0; i < PopupCanvas.Length; i++)

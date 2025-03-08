@@ -44,19 +44,16 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
         AutoNoAd();
     }
 
+
+    [Header("SCREEN")]
+    public string ScreenID = "";
     public void ChooseScreen(string name)
     {
+        ScreenID = name;
         _screenUICanvas.SimpleForEach(x =>
         {
-            if(x.name == name)
-            {
-                x.SetActive(true);
-            }
-            else
-            {
-                x.SetActive(false);
-            } 
-               
+            if(x.name == name) x.SetActive(true);
+            else x.SetActive(false);
         });
     }
 

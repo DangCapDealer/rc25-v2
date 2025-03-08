@@ -6,6 +6,7 @@ using UnityEngine;
 public class HomeUICanvas : MonoBehaviour
 {
     public Transform _btnProductRemoveAd;
+    public Transform[] _btnModes;
 
     private void Start()
     {
@@ -68,6 +69,7 @@ public class HomeUICanvas : MonoBehaviour
         });
 
         FirebaseManager.Instance.LogEvent($"Mode_Beat_1");
+        RuntimeStorageData.Player.Modes.Add("SingleNormalBeat - 1");
     }   
 
     public void BtnSingleHorror()
@@ -97,6 +99,7 @@ public class HomeUICanvas : MonoBehaviour
         });
 
         FirebaseManager.Instance.LogEvent($"Mode_Beat_2");
+        RuntimeStorageData.Player.Modes.Add("SingleHorrorBeat - 2");
     }
 
     public void BtnSingleHuman()
@@ -126,6 +129,7 @@ public class HomeUICanvas : MonoBehaviour
         });
 
         FirebaseManager.Instance.LogEvent($"Mode_Beat_3");
+        RuntimeStorageData.Player.Modes.Add("SingleHumanBeat - 3");
     }
 
     public void BtnBatteBeat()
@@ -155,6 +159,7 @@ public class HomeUICanvas : MonoBehaviour
         });
 
         FirebaseManager.Instance.LogEvent($"Mode_Battle");
+        RuntimeStorageData.Player.Modes.Add("BattleBeat_Solo");
     }    
 
     public void BtnSingleMonster()
@@ -184,6 +189,7 @@ public class HomeUICanvas : MonoBehaviour
         });
 
         FirebaseManager.Instance.LogEvent($"Mode_Beat_4");
+        RuntimeStorageData.Player.Modes.Add("SingleMonsterBeat - 4");
     }
 
     public void BtnSetting() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting); }    

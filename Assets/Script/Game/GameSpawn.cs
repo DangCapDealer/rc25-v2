@@ -36,6 +36,16 @@ public class GameSpawn : MonoSingleton<GameSpawn>
         return dataFromSO;
     }
 
+    public Transform IsReadyBaseObject()
+    {
+        for (int i = 0; i < BaseObjects.Count; i++)
+        {
+            if (BaseObjects[i].IsActive() == true)
+                return BaseObjects[i].transform;
+        }
+        return null;
+    }
+
     public Transform CheckingNearPositionInPool(Vector2 target)
     {
         float min = 1.3f;
@@ -160,7 +170,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
 
     private void OnUITheme(string msg)
     {
-        Debug.Log("UI Theme Character");
+        //Debug.Log("UI Theme Character");
         NumberofCharacter = 0;
         RemoveAllCharacter();
         for (int i = 0; i < GameManager.Instance.NumberOfCharacter; i++)

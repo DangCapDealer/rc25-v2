@@ -1,0 +1,35 @@
+skeleton.png
+size:763,200
+filter:Linear,Linear
+pma:true
+1
+bounds:490,9,81,81
+2
+bounds:706,28,53,53
+4
+bounds:573,9,81,81
+HEAD
+bounds:2,2,220,196
+LONG MAY
+bounds:373,13,37,10
+MIENG
+bounds:680,21,69,24
+rotate:90
+Shape 640
+bounds:709,83,52,115
+Shape 640 copy
+bounds:373,49,52,115
+rotate:90
+Shape 642
+bounds:656,13,22,77
+Shape 642 copy
+bounds:373,25,22,77
+rotate:90
+h6
+bounds:224,7,94,147
+rotate:90
+mu1
+bounds:224,103,265,95
+than1
+bounds:491,92,106,216
+rotate:90

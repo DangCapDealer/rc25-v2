@@ -28,6 +28,7 @@ public class PlayerSerializable
     public int DayCheckIn = 0;
     public int NumberOfCheckIn = 0;
     public int NumberOfAd = 0;
+    public List<string> Modes;
 
     public PlayerSerializable()
     {
@@ -40,6 +41,7 @@ public class PlayerSerializable
         NumberOfCheckIn = 0;
         DayCheckIn = 0;
         NumberOfAd = 0;
+        Modes = new List<string>();
     }
 
     public bool IsProductId(string productId)

@@ -1,0 +1,16 @@
+skeleton.png
+size:446,213
+filter:Linear,Linear
+pma:true
+Ellipse 514
+bounds:351,52,51,51
+Ellipse 520
+bounds:351,10,59,40
+Rectangle 2 copy 4
+bounds:2,2,224,209
+h5
+bounds:228,7,96,121
+rotate:90
+than
+bounds:228,105,106,216
+rotate:90

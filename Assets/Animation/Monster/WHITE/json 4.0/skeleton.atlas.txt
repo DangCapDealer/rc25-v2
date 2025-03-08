@@ -1,0 +1,44 @@
+skeleton.png
+size:330,514
+filter:Linear,Linear
+pma:true
+Monster/Ellipse 594
+bounds:2,40,81,81
+Monster/Ellipse 594 copy
+bounds:85,68,53,53
+Monster/Ellipse 594 copy 2
+bounds:140,33,81,45
+Monster/Layer 10
+bounds:2,306,206,196
+rotate:90
+Monster/Shape 1366 copy
+bounds:2,123,179,69
+Monster/Shape 1367
+bounds:2,9,76,29
+Monster/Shape 1368 copy
+bounds:140,80,41,41
+Monster/Shape 1370
+bounds:183,80,108,107
+rotate:90
+Monster/Shape 46 copy 2
+bounds:200,313,37,10
+Monster/Shape 668
+bounds:239,315,8,9
+rotate:90
+Monster/Shape 671
+bounds:223,4,57,34
+Monster/Shape 671 copy
+bounds:289,21,57,34
+rotate:90
+Monster/Shape 673
+bounds:223,40,64,38
+Monster/Shape 673 copy
+bounds:85,2,64,38
+rotate:90
+Monster/TAI2
+bounds:200,325,128,187
+Monster/h5
+bounds:224,190,96,121
+Monster/than
+bounds:2,194,110,220
+rotate:90

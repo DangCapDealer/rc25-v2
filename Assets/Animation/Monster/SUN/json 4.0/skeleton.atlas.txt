@@ -1,0 +1,33 @@
+skeleton.png
+size:299,530
+filter:Linear,Linear
+pma:true
+Ellipse 544
+bounds:212,383,72,81
+rotate:90
+Ellipse 544 copy
+bounds:212,312,69,81
+rotate:90
+Ellipse 544 copy 2
+bounds:212,457,85,71
+Ellipse 544 copy 3
+bounds:2,5,80,71
+rotate:90
+Ellipse 544 copy 4
+bounds:221,9,75,70
+Ellipse 544 copy 5
+bounds:75,6,72,79
+Ellipse 544 copy 6
+bounds:149,81,79,71
+Ellipse 544 copy 7
+bounds:149,2,70,77
+h1
+bounds:2,182,145,166
+rotate:90
+hat1
+bounds:170,154,156,97
+rotate:90
+head
+bounds:2,329,208,199
+mat
+bounds:2,87,137,93

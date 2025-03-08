@@ -1,0 +1,98 @@
+skeleton.png
+size:1420,269
+filter:Linear,Linear
+pma:true
+Ellipse 8 copy
+bounds:685,6,81,81
+Ellipse 8 copy 2
+bounds:368,4,61,61
+Ellipse 8 copy 3
+bounds:341,7,16,16
+Layer 5
+bounds:768,15,72,144
+rotate:90
+Shape 1388 copy
+bounds:936,106,161,152
+rotate:90
+Shape 1388 copy 2
+bounds:782,106,161,152
+rotate:90
+Shape 1388 copy 3
+bounds:361,67,200,112
+rotate:90
+Shape 1388 copy 4
+bounds:475,67,200,112
+rotate:90
+Shape 27
+bounds:632,7,23,75
+Shape 27 copy 2
+bounds:208,25,27,78
+rotate:90
+ts5
+bounds:208,25,27,78
+rotate:90
+Shape 27 copy 5
+bounds:288,25,27,78
+rotate:90
+ts6
+bounds:288,25,27,78
+rotate:90
+Shape 27 copy 6
+bounds:657,8,26,74
+ts3
+bounds:657,8,26,74
+Shape 29
+bounds:1314,137,104,130
+Shape 30
+bounds:1208,124,104,143
+Shape 31
+bounds:676,89,104,178
+Shape 32
+bounds:1314,3,72,132
+Shape 33
+bounds:589,84,85,183
+Shape 36
+bounds:1195,7,112,108
+rotate:90
+Shape 37
+bounds:1090,121,116,146
+Shape 38
+bounds:285,5,18,54
+rotate:90
+Shape 39
+bounds:491,11,54,139
+rotate:90
+Shape 40
+bounds:1388,71,64,24
+rotate:90
+dau
+bounds:155,54,213,204
+rotate:90
+h2
+bounds:914,4,100,156
+rotate:90
+h5
+bounds:1072,8,96,121
+rotate:90
+hoa 1
+bounds:431,5,60,58
+rotate:90
+hoa 2
+bounds:2,12,37,36
+rotate:90
+hoa 3
+bounds:40,13,36,35
+rotate:90
+hoa 4
+bounds:158,3,49,48
+rotate:90
+than1
+bounds:2,51,151,216
+ts4
+bounds:208,2,21,75
+rotate:90
+ts7
+bounds:77,14,35,79
+rotate:90
+ts8
+bounds:1388,16,22,53
