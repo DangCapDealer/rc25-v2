@@ -31,6 +31,7 @@ public class CharacterDataSO : ScriptableObject
             if (gameStyle == GameManager.GameStyle.Normal) return AudioClipNormal;
             else if (gameStyle == GameManager.GameStyle.Horror) return AudioClipHorror;
             else if (gameStyle == GameManager.GameStyle.Battle) return AudioClipBattle;
+            else if (gameStyle == GameManager.GameStyle.Monster) return AudioClipMonster;
             else return null;
         }
     }

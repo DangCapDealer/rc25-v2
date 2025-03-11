@@ -79,12 +79,12 @@ public class CharacterCanvasHandle : MonoBehaviour
 
     private void Update()
     {
-        if(GameManager.Instance.Style == GameManager.GameStyle.Normal || GameManager.Instance.Style == GameManager.GameStyle.Horror)
+        if(GameManager.Instance.IsGameDefault())
         {
             Delay -= Time.deltaTime;
             if (Delay < 0) this.transform.Hide();
         }    
-        else if(GameManager.Instance.Style == GameManager.GameStyle.Battle)
+        else if(GameManager.Instance.IsGameCustom())
         {
             if(clipCaculate > 0)
             {

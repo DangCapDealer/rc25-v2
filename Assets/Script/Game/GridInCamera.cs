@@ -24,17 +24,21 @@ public class GridInCamera : MonoSingleton<GridInCamera>
                 createRowWithY(4, 3.5f + posYOffset);
                 break;
             case 10:
-                createRowWithY(5, 0.5f + posYOffset);
-                createRowWithY(5, 3.5f + posYOffset);
-                break;
-            case 12:
-                createRowWithY(4, 4.2f + posYOffset);
-                createRowWithY(4, 1.5f + posYOffset);
-                createRowWithY(4, -1.2f + posYOffset);
+                if(GameManager.Instance.IsGameDefault())
+                {
+                    createRowWithY(5, 0.5f + posYOffset);
+                    createRowWithY(5, 3.5f + posYOffset);
+                }    
+                else if(GameManager.Instance.IsGameCustom())
+                {
+                    createRowWithY(4, 4.2f + posYOffset);
+                    createRowWithY(2, 2.0f + posYOffset);
+                    createRowWithY(4, -0.12f + posYOffset);
+                }    
                 break;
             default:
                 createRowWithY(4, 0.5f + posYOffset);
-                createRowWithY(3, 3.5f + posYOffset);
+                createRowWithY(4, 3.5f + posYOffset);
                 break;
         }
 

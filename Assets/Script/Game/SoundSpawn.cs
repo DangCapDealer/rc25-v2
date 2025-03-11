@@ -75,6 +75,18 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
                 var eventSound = soundObject.GetComponent<BeatDetection>();
                 eventSound.CallBackFunction += CallBackFunction;
             }
+            else if (GameManager.Instance.Style == GameManager.GameStyle.Monster)
+            {
+                var soundName = $"{totalCharacter[i].ID}_{GameManager.GameStyle.Monster}";
+                if (this.transform.FindChildByParent(soundName))
+                    continue;
+                var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
+                soundObject.name = soundName;
+                var script = soundObject.GetComponent<SoundPrefab>();
+                script.Create(totalCharacter[i].GetAudioClip(GameManager.GameStyle.Monster));
+                var eventSound = soundObject.GetComponent<BeatDetection>();
+                eventSound.CallBackFunction += CallBackFunction;
+            }
             yield return null;
         }
         yield return null;

@@ -31,14 +31,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public bool IsBannerMREC = false;
 
     [Header("Ad Manager")]
-#if UNITY_ANDROID
-    public string _adUnitId = "ca-app-pub-5904408074441373~6318315191";
-#elif UNITY_IPHONE
-    public string _adUnitId = "ca-app-pub-5904408074441373~6917230354";
-#else
-    public string _adUnitId = "unused";
-#endif
-
+    public string _adUnitId = "ca-app-pub-5904408074441373~4518678593";
 
     void Start()
     {
@@ -199,13 +192,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public int _interstitalReloadCount = 0;
 
     public float InterAdSpaceTimeAutoCounter = 0;
-#if UNITY_ANDROID
-    public string _adUnitInterId = "ca-app-pub-5904408074441373/8357882100";
-#elif UNITY_IPHONE
-    public string _adUnitInterId = "ca-app-pub-5904408074441373/5604148681";
-#else
-    public string _adUnitInterId = "unused";
-#endif
+    public string _adUnitInterId = "ca-app-pub-5904408074441373/8836093904";
 
     private InterstitialAd _interstitialAd;
     private InterstitialAd _interstitialHomeAd;
@@ -296,14 +283,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public int _interstitialHomeAdReloadCount = 0;
 
     public float InterHomeAdSpaceTimeAutoCounter = 0;
-
-#if UNITY_ANDROID
-    public string _adUnitInterHomeId = "ca-app-pub-5904408074441373/8357882100";
-#elif UNITY_IPHONE
-    public string _adUnitInterHomeId = "ca-app-pub-5904408074441373/5604148681";
-#else
-    public string _adUnitInterHomeId = "unused";
-#endif
+    public string _adUnitInterHomeId = "ca-app-pub-5904408074441373/2893502086";
 
     public void LoadInterstitialHomeAd()
     {
@@ -385,13 +365,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
 
     [Header("Ad Open Interstitial")]
-#if UNITY_ANDROID
-    public string _adUnitInterOpenId = "ca-app-pub-5904408074441373/7180531807";
-#elif UNITY_IPHONE
-    public string _adUnitInterOpenId = "ca-app-pub-5904408074441373/4650159660";
-#else
-    public string _adUnitInterId = "unused";
-#endif
+    public string _adUnitInterOpenId = "ca-app-pub-5904408074441373/3310341039";
 
     public float InterOpenAdMaximusTimeCounter = 0.0f;
     public float InterOpenAdMaximusTime = 15.0f;
@@ -467,13 +441,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public bool IsPreloadReward = true;
     public AdState RewardAdState = AdState.NotAvailable;
     public int _rewardReloadCount = 0;
-#if UNITY_ANDROID
-    public string _adUnitRewardId = "ca-app-pub-5904408074441373/5867450136";
-#elif UNITY_IPHONE
-    public string _adUnitRewardId = "ca-app-pub-5904408074441373/4291067011";
-#else
-    public string _adUnitRewardId = "unused";
-#endif
+    public string _adUnitRewardId = "ca-app-pub-5904408074441373/1580420414";
 
     private RewardedAd _rewardedAd;
 
@@ -530,14 +498,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public bool IsPreloadRewardSecond = true;
     public AdState RewardSecondAdState = AdState.NotAvailable;
     public int _rewardSecondLoadCount = 0;
-
-#if UNITY_ANDROID
-    public string _adUnitRewardSecondId = "ca-app-pub-5904408074441373/5867450136";
-#elif UNITY_IPHONE
-    public string _adUnitRewardSecondId = "ca-app-pub-5904408074441373/4291067011";
-#else
-    public string _adUnitRewardSecondId = "unused";
-#endif
+    public string _adUnitRewardSecondId = "ca-app-pub-5904408074441373/9267338743";
 
     private RewardedAd _rewardedSecondAd;
     public void LoadRewardedSecondAd()
@@ -594,14 +555,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public bool IsPreloadRewardThrid = true;
     public AdState RewardThridAdState = AdState.NotAvailable;
     public int _rewardThridLoadCount = 0;
-
-#if UNITY_ANDROID
-    public string _adUnitRewardThriddId = "ca-app-pub-5904408074441373/5867450136";
-#elif UNITY_IPHONE
-    public string _adUnitRewardThriddId = "ca-app-pub-5904408074441373/4291067011";
-#else
-    public string _adUnitRewardThriddId = "unused";
-#endif
+    public string _adUnitRewardThriddId = "ca-app-pub-5904408074441373/7387280867";
 
     private RewardedAd _rewardedThridAd;
 
@@ -660,13 +614,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public bool IsPreloadOpen = true;
     public AdState OpenAdState = AdState.NotAvailable;
     public int _openReloadCount = 0;
-#if UNITY_ANDROID
-    public string _adUnitOpenId = "ca-app-pub-5904408074441373/7978608159";
-#elif UNITY_IPHONE
-    public string _adUnitOpenId = "ca-app-pub-5904408074441373/2977985343";
-#else
-    public string _adUnitOpenId = "unused";
-#endif
+    public string _adUnitOpenId = "ca-app-pub-5904408074441373/7523012234";
     private AppOpenAd appOpenAd;
 
     public float OpenAdSpaceTimeCounter = 0.0f;
@@ -746,7 +694,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
 #else
 
-    public float InterAdSpaceTimeAutoCounter = 0;
+    [HideInInspector] public float InterAdSpaceTimeAutoCounter = 0;
+    [HideInInspector] public float OpenAdSpaceTimeCounter = 0;
 
     private void Start()
     {

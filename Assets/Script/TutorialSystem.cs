@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TutorialSystem : MonoBehaviour
+public class TutorialSystem : MonoSingleton<TutorialSystem>
 {
     public Canvas canvas;
     [Header("HAND UI")]
@@ -27,6 +27,12 @@ public class TutorialSystem : MonoBehaviour
         AutoHomeUI();
         AutoGameUI();
     }
+
+    public void DisableTutorial()
+    {
+        hand.DOKill();
+        hand.Hide();
+    }    
 
     private void AutoHomeUI()
     {
@@ -92,11 +98,6 @@ public class TutorialSystem : MonoBehaviour
                 break;
             }
         }
-    }    
-
-    private void ShowAnimation(Vector3 position)
-    {
-        
     }    
 
     private bool EventCheckingWithTime()

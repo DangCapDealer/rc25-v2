@@ -74,6 +74,7 @@ public class Character : MonoBehaviour
             RegisterCanvas();
             SetAnimationCanvas("Mute", "Stop");
             SetAnimationCanvas("Headphone", "Stop");
+            ShowCharacterCanvas();
             SoundManager.Instance.PlayOnShot(Sound.CharacterDrop);
         }
     }
@@ -224,7 +225,6 @@ public class Character : MonoBehaviour
         {
             var scriptTarget = target.GetComponent<Character>();
             var IsHeadphone = scriptTarget._soundPrefab.IsHeadphone;
-            //Debug.Log(IsHeadphone);
             _soundPrefab.Mute = !IsHeadphone;
             SetAnimationCanvas("Mute", _soundPrefab.Mute == true ? "Play" : "Stop");
             SetAnimationCanvas("Headphone", "Stop");
@@ -238,12 +238,8 @@ public class Character : MonoBehaviour
 
     private void OnTouchBegan(RaycastHit hit)
     {
-        if (touchDisable == true)
-            return;
-        if (hit.transform != this.transform)
-            return;
-
-        Debug.Log(hit.transform);
+        if (touchDisable == true) return;
+        if (hit.transform != this.transform) return;
 
         if (touchNumber == 0)
         {
@@ -271,13 +267,9 @@ public class Character : MonoBehaviour
 
     void HandleSingleClick()
     {
-        if(GameManager.Instance.Style == GameManager.GameStyle.Normal || 
-            GameManager.Instance.Style == GameManager.GameStyle.Horror ||
-            GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
-        {
-            var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
-            canvasObject.SetActive(!canvasObject.IsActive());
-        }
+        var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
+        if (canvasObject.IsActive()) canvasObject.SetActive(false);
+        else GameSpawn.Instance.CharacterMessage("Character", "CharacterUICanvas", "Show");
         TouchReset();
     }
 
@@ -290,6 +282,17 @@ public class Character : MonoBehaviour
         var btn = characterSetting.GetChild(1).GetComponent<Button>();
         btn.onClick?.Invoke();
     }
+
+    public void ShowCharacterCanvas()
+    {
+        if (GameManager.Instance.IsGameDefault())
+        {
+            var canvasObject = this.transform.FindChildByParent("CharacterCanvas");
+            var canvasScript = canvasObject.GetComponent<CharacterCanvasHandle>();
+            canvasScript.BtnReset();
+            canvasObject.SetActive(true);
+        }
+    }    
 
     private void SetAnimationCanvas(params string[] msg)
     {

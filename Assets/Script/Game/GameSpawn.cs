@@ -275,4 +275,22 @@ public class GameSpawn : MonoSingleton<GameSpawn>
     {
 
     }    
+
+    public void CharacterMessage(params string[] args)
+    {
+        if (args[0] == "Character")
+        {
+            if (args[1] == "CharacterUICanvas")
+            {
+                if (args[2] == "Show")
+                {
+                    for (int i = 0; i < CreateObjects.Count; i++)
+                    {
+                        var characterScript = CreateObjects[i].GetComponent<Character>();
+                        characterScript.ShowCharacterCanvas();
+                    }
+                }    
+            }    
+        }    
+    }    
 }

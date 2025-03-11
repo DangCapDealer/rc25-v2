@@ -48,6 +48,7 @@ public class HomeUICanvas : MonoBehaviour
         MusicManager.Instance.PauseSound();
         GameManager.Instance.Style = GameManager.GameStyle.Normal;
         BackgroundDetection.Instance.SettingBackground();
+        TutorialSystem.Instance.DisableTutorial();
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -108,6 +109,7 @@ public class HomeUICanvas : MonoBehaviour
         MusicManager.Instance.PauseSound();
         GameManager.Instance.Style = GameManager.GameStyle.Battle_Single;
         BackgroundDetection.Instance.SettingBackground();
+        TutorialSystem.Instance.DisableTutorial();
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -138,11 +140,12 @@ public class HomeUICanvas : MonoBehaviour
         MusicManager.Instance.PauseSound();
         GameManager.Instance.Style = GameManager.GameStyle.Battle;
         BackgroundDetection.Instance.SettingBackground();
+        TutorialSystem.Instance.DisableTutorial();
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                GameManager.Instance.NumberOfCharacter = 12;
+                GameManager.Instance.NumberOfCharacter = 10;
                 GameManager.Instance.GameCreate();
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
@@ -168,6 +171,7 @@ public class HomeUICanvas : MonoBehaviour
         MusicManager.Instance.PauseSound();
         GameManager.Instance.Style = GameManager.GameStyle.Monster;
         BackgroundDetection.Instance.SettingBackground();
+        TutorialSystem.Instance.DisableTutorial();
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>

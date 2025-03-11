@@ -40,6 +40,8 @@ public partial class GameUICanvas : MonoBehaviour
             //}    
         }
 
+        _timerPopupAddCharacter = 0;
+
         Mode3Create();
 
 
@@ -167,6 +169,8 @@ public partial class GameUICanvas : MonoBehaviour
                 changeStateBaseCharacter(targetObject, true, false);
                 _lastTargetObjectFromDrag = targetObject;
             }
+
+            GameSpawn.Instance.CharacterMessage("Character", "CharacterUICanvas", "Show");  
         }    
         else
         {
@@ -264,6 +268,7 @@ public partial class GameUICanvas : MonoBehaviour
     {
         if (Time.time - LastClickAutoTime < SpaceTimeButton)
             return;
+        TutorialSystem.Instance.DisableTutorial();
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>

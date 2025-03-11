@@ -12,7 +12,10 @@ public class AdjustImagePosition : MonoBehaviour
         if (GameManager.Instance.NumberOfCharacter > 10)
             _target.position = _target.position.WithY(-1.75f);
         else
-            _target.position = _target.position.WithY(0.0f);
+        {
+            if (GameManager.Instance.IsGameDefault()) _target.position = _target.position.WithY(0.0f);
+            else if(GameManager.Instance.IsGameCustom()) _target.position = _target.position.WithY(-0.50f);
+        }    
 
         onCaculateTabHeight();
     }
