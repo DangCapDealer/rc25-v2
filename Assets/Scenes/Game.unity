@@ -1519,13 +1519,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1974874739}
+  - {fileID: 538796842}
   - {fileID: 895134637}
   - {fileID: 2096783947}
   - {fileID: 242213305}
   - {fileID: 1178413661}
   - {fileID: 260016187}
-  - {fileID: 538796842}
-  - {fileID: 1974874739}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5428,7 +5428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: -0.000017166138}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &474867450
@@ -5523,6 +5523,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   RaycastCamera: {fileID: 776627908}
+  TestMode: 1
 --- !u!1 &477486706
 GameObject:
   m_ObjectHideFlags: 0
@@ -10632,7 +10633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &941994966
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14860,6 +14861,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1570395697355290024, guid: d8df754863af43e42a75ebf8b8f0a34d, type: 3}
   m_PrefabInstance: {fileID: 6341099020524450603}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1362678684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8457349395472846022, guid: d8df754863af43e42a75ebf8b8f0a34d, type: 3}
+  m_PrefabInstance: {fileID: 6341099020524450603}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84fee50a872d4e4494c304da944e2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1366913390
 GameObject:
   m_ObjectHideFlags: 0
@@ -20446,6 +20458,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUMPReady: 0
+  HasUnknownError: 0
+  CanRequestAds: 0
+  IsDisableOnEditor: 1
+  debugGeography: 0
+  testDeviceIds: []
 --- !u!4 &2050692114
 Transform:
   m_ObjectHideFlags: 0
@@ -21274,6 +21291,17 @@ MonoBehaviour:
   - {fileID: 221629157}
   - {fileID: 2065304633}
   - {fileID: 463010911}
+--- !u!114 &2102782011 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3593393416238123449, guid: d3866b8c0f4ce77428f9cf4b1e2b5977, type: 3}
+  m_PrefabInstance: {fileID: 1507828212422264522}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84fee50a872d4e4494c304da944e2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2107308380
 GameObject:
   m_ObjectHideFlags: 0
@@ -21746,6 +21774,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7550176376905575324, guid: d3866b8c0f4ce77428f9cf4b1e2b5977, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550176376905575324, guid: d3866b8c0f4ce77428f9cf4b1e2b5977, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2102782011}
+    - target: {fileID: 7550176376905575324, guid: d3866b8c0f4ce77428f9cf4b1e2b5977, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BtnClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550176376905575324, guid: d3866b8c0f4ce77428f9cf4b1e2b5977, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ReceiverNativeAd, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7738490846546822293, guid: d3866b8c0f4ce77428f9cf4b1e2b5977, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 50.900146
@@ -21851,6 +21895,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1534912190483304569, guid: c41e1b53bfa166240a779e147831af70, type: 3}
+      propertyPath: TimeAfterReload
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313365445314745341, guid: c41e1b53bfa166240a779e147831af70, type: 3}
+      propertyPath: TimeAfterReload
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2685925229896183002, guid: c41e1b53bfa166240a779e147831af70, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -21891,6 +21943,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6405029159395436776, guid: c41e1b53bfa166240a779e147831af70, type: 3}
+      propertyPath: TimeAfterReload
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 8664948394646419301, guid: c41e1b53bfa166240a779e147831af70, type: 3}
       propertyPath: m_Name
       value: AdmobNativeManager
@@ -21916,6 +21972,22 @@ PrefabInstance:
     - target: {fileID: 113066027100468034, guid: d8df754863af43e42a75ebf8b8f0a34d, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 44.80005
+      objectReference: {fileID: 0}
+    - target: {fileID: 496877331416581344, guid: d8df754863af43e42a75ebf8b8f0a34d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 496877331416581344, guid: d8df754863af43e42a75ebf8b8f0a34d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1362678684}
+    - target: {fileID: 496877331416581344, guid: d8df754863af43e42a75ebf8b8f0a34d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BtnClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 496877331416581344, guid: d8df754863af43e42a75ebf8b8f0a34d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ReceiverNativeAd, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1570395697355290024, guid: d8df754863af43e42a75ebf8b8f0a34d, type: 3}
       propertyPath: m_Pivot.x

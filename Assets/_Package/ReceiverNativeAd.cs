@@ -10,7 +10,7 @@ public class ReceiverNativeAd : MonoBehaviour
     public NativeAdPosition adPosition;
     public GameObject _content;
 
-#if ADMOB
+
     public RawImage adIcon;
     public RawImage adImage;
     public RawImage adChoices;
@@ -31,13 +31,25 @@ public class ReceiverNativeAd : MonoBehaviour
     private bool IsNativeImport = false;
     private float timer = 0;
 
+    public void BtnClose()
+    {
+        if (adPosition == NativeAdPosition.Banner) return;
+        if (NativeAdHandle == null) return;
+
+        NativeAdHandle.NativeAdState = AdManager.AdState.NotAvailable;
+        this.gameObject.SetActive(false);
+    }
+
+
+#if ADMOB
     private void OnEnable()
     {
         UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
         timer = 0;
         NativeAdHandle = AdNativeManager.Instance.GetNativeAd(adPosition);
         NativeAdHandle.IsReloadNativeAd = IsReloadNativeAd;
-        NativeAdHandle.OnChangeNativeAd += NativeAdHandle_OnChangeNativeAd;
+        NativeAdHandle.OnChangeNativeAd += _OnChangeNativeAd;
+        NativeAdHandle.OnClickedNativeAd += _OnClickedNativeAd;
         IsNativeImport = false;
 #if UNITY_EDITOR
         UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(true));
@@ -46,28 +58,34 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private void OnDisable()
     {
-        NativeAdHandle.OnChangeNativeAd -= NativeAdHandle_OnChangeNativeAd;
+        NativeAdHandle.OnChangeNativeAd -= _OnChangeNativeAd;
+        NativeAdHandle.OnClickedNativeAd -= _OnClickedNativeAd;
     }
 
-    private void NativeAdHandle_OnChangeNativeAd()
+    private void _OnChangeNativeAd()
     {
         IsNativeImport = false;
     }
 
+    private void _OnClickedNativeAd()
+    {
+        if (adPosition == NativeAdPosition.Banner) UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
+        else UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
+    }
+
     private void Update()
     {
-        if (RuntimeStorageData.Player.IsLoadAds == false)
-            return;
-        if (NativeAdHandle == null)
-            return;
-        if (IsNativeImport == true)
-            return;
+        if (RuntimeStorageData.Player.IsLoadAds == false) return;
+        if (NativeAdHandle == null) return;
+        if (IsNativeImport == true) return;
 
-        if (NativeAdHandle.nativeAdLoaded == true)
+        if (NativeAdHandle.NativeAdLoaded() == true)
         {
+            nativeAd = NativeAdHandle.nativeAd;
+            if (nativeAd == null) return;
+
             NativeAdHandle.IsUsed = true;
             IsNativeImport = true;
-            nativeAd = NativeAdHandle.nativeAd;
 
             _content.SetActive(true);
             var IconTexture = this.nativeAd.GetIconTexture();
@@ -76,19 +94,13 @@ public class ReceiverNativeAd : MonoBehaviour
             var CallToActionText = this.nativeAd.GetCallToActionText();
             var ImageTextures = this.nativeAd.GetImageTextures();
 
-            if (IconTexture != null)
-            {
-                adIcon.color = Color.white;
-            }
-            else
-            {
-                adIcon.color = adColor;
-            }
+            adIcon.color = IconTexture == null ? adColor : Color.white;
+
             adIcon.texture = IconTexture;
             adHeadline.text = HeadlineText;
             adBody.text = BodyText;
             adCallToAction.text = CallToActionText;
-            if (!this.nativeAd.RegisterIconImageGameObject(adCTA))
+            if (!this.nativeAd.RegisterCallToActionGameObject(adCTA))
             {
                 Debug.Log($"[{this.GetType().ToString()}] Register CTA game object error!!!");
             }

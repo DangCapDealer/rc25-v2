@@ -25,7 +25,7 @@ public partial class GameUICanvas : MonoBehaviour
             Mode3ScoreObject.SetActive(true);
             parentWidth = Mode3ScoreObject.GetComponent<RectTransform>().sizeDelta.x;
             Mode3ScoreImage.fillAmount = 0.5f;
-            BtnAddTransform.SetActive(false);
+            //BtnAddTransform.SetActive(false);
         }
     }    
 
