@@ -100,10 +100,7 @@ public class ReceiverNativeAd : MonoBehaviour
             adHeadline.text = HeadlineText;
             adBody.text = BodyText;
             adCallToAction.text = CallToActionText;
-            if (!this.nativeAd.RegisterCallToActionGameObject(adCTA))
-            {
-                Debug.Log($"[{this.GetType().ToString()}] Register CTA game object error!!!");
-            }
+            if (!this.nativeAd.RegisterCallToActionGameObject(adCTA)) Debug.Log($"[{this.GetType().ToString()}] Register CTA game object error!!!");
             adImage.texture = ImageTextures[0];
         }
         else
