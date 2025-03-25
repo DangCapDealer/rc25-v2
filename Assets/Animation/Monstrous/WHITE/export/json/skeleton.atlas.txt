@@ -1,0 +1,33 @@
+skeleton.png
+size:1046,203
+filter:Linear,Linear
+pma:true
+1
+bounds:714,2,87,81
+rotate:90
+2
+bounds:880,21,68,68
+HEAD
+bounds:2,4,205,197
+REF 1
+bounds:209,12,189,104
+rotate:90
+Shape 1407
+bounds:438,19,182,274
+rotate:90
+Shape 668-1
+bounds:797,6,83,81
+rotate:90
+Shape 671
+bounds:995,34,58,36
+rotate:90
+Shape 673
+bounds:950,30,62,43
+rotate:90
+TAI
+bounds:936,94,108,107
+TAI2
+bounds:315,14,121,187
+thân
+bounds:714,91,110,220
+rotate:90

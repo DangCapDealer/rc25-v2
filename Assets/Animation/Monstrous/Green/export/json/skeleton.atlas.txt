@@ -1,0 +1,85 @@
+skeleton.png
+size:1234,221
+filter:Linear,Linear
+pma:true
+1
+bounds:1145,132,87,87
+Ellipse 8 copy 11
+bounds:816,23,35,35
+Ellipse 8 copy 13
+bounds:816,23,35,35
+Ellipse 8 copy 12
+bounds:860,102,30,30
+Ellipse 8 copy 14
+bounds:1041,116,103,102
+rotate:90
+Layer 1
+bounds:756,10,58,48
+Layer 29 copy
+bounds:756,10,58,48
+Shape 1413
+bounds:585,88,124,131
+Shape 1414
+bounds:522,4,38,156
+rotate:90
+Shape 27
+bounds:711,109,23,75
+rotate:90
+Shape 27 copy 2
+bounds:442,12,27,78
+rotate:90
+Shape 27 copy 5
+bounds:467,44,27,78
+rotate:90
+Shape 27 copy 6
+bounds:680,20,26,74
+rotate:90
+Shape 29
+bounds:987,9,104,130
+rotate:90
+Shape 30
+bounds:896,115,104,143
+rotate:90
+Shape 31
+bounds:361,41,104,178
+Shape 32
+bounds:853,12,72,132
+rotate:90
+Shape 33
+bounds:711,134,85,183
+rotate:90
+Shape 36
+bounds:1119,2,112,109
+rotate:90
+Shape 37
+bounds:467,73,116,146
+Shape 38
+bounds:711,89,18,54
+rotate:90
+Shape 40
+bounds:783,60,64,24
+dau
+bounds:2,6,213,204
+rotate:90
+mieng
+bounds:585,77,55,9
+than1
+bounds:208,3,151,216
+ts3
+bounds:707,60,26,74
+rotate:90
+ts4
+bounds:783,86,21,75
+rotate:90
+ts5
+bounds:547,44,27,78
+rotate:90
+ts6
+bounds:627,48,27,78
+rotate:90
+ts7
+bounds:361,4,35,79
+rotate:90
+ts8
+bounds:788,110,22,53
+rotate:90

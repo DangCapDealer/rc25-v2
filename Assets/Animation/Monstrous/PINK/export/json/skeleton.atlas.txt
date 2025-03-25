@@ -1,0 +1,27 @@
+skeleton.png
+size:523,264
+filter:Linear,Linear
+pma:true
+1
+bounds:427,181,81,81
+Ellipse 1332
+bounds:148,25,13,39
+Ellipse 1332 copy
+bounds:510,223,11,39
+Layer 3
+bounds:209,16,138,138
+Shape 1372
+bounds:490,115,64,28
+rotate:90
+Shape 1417
+bounds:349,24,130,139
+rotate:90
+dau
+bounds:2,66,205,196
+mieng
+bounds:427,166,46,13
+no1
+bounds:2,2,144,62
+than1
+bounds:209,156,106,216
+rotate:90

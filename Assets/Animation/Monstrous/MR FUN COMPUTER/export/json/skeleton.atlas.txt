@@ -1,0 +1,34 @@
+skeleton.png
+size:771,269
+filter:Linear,Linear
+pma:true
+DAU1
+bounds:476,95,172,158
+rotate:90
+Shape 1388 copy
+bounds:664,23,111,105
+rotate:90
+Shape 1388
+bounds:664,23,111,105
+rotate:90
+Shape 1426
+bounds:528,8,85,52
+rotate:90
+Shape 1426 copy
+bounds:623,8,85,39
+rotate:90
+Shape 1426 copy 2
+bounds:582,8,85,39
+rotate:90
+Shape 1426 copy 2-1
+bounds:441,26,85,52
+chan1
+bounds:2,2,265,285
+rotate:90
+day dien copy 2
+bounds:289,80,187,185
+rotate:90
+day dien copy 3
+bounds:636,136,133,131
+than1
+bounds:289,22,150,56

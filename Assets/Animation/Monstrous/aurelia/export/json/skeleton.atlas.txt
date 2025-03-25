@@ -1,0 +1,47 @@
+skeleton.png
+size:396,812
+filter:Linear,Linear
+pma:true
+1
+bounds:193,28,84,84
+2
+bounds:311,59,73,74
+rotate:90
+DAU
+bounds:2,599,221,211
+Layer 5
+bounds:193,114,116,89
+Layer 6
+bounds:216,332,139,118
+rotate:90
+Layer 8
+bounds:2,220,172,208
+rotate:90
+Layer 9
+bounds:2,394,212,203
+MIENG
+bounds:279,43,69,24
+rotate:90
+Rounded Rectangle 1525
+bounds:389,422,5,43
+Rounded Rectangle 1525 copy
+bounds:389,467,43,5
+rotate:90
+Shape 1429
+bounds:212,205,125,120
+rotate:90
+mu
+bounds:225,473,337,114
+rotate:90
+ten1
+bounds:336,134,58,226
+ten2
+bounds:134,22,57,196
+ten3
+bounds:341,662,47,148
+ten4
+bounds:341,512,47,148
+ten5
+bounds:341,362,46,148
+than1
+bounds:2,2,130,216

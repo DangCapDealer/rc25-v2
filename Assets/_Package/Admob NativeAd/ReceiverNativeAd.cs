@@ -69,8 +69,11 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private void _OnClickedNativeAd()
     {
-        if (adPosition == NativeAdPosition.Banner) UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
-        else UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
+        if (adPosition == NativeAdPosition.Banner) 
+            UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
+        else 
+            UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
+        UnityMainThreadDispatcher.Instance().Enqueue(() => IsNativeImport = false);
     }
 
     private void Update()
@@ -82,8 +85,6 @@ public class ReceiverNativeAd : MonoBehaviour
         if (NativeAdHandle.NativeAdLoaded() == true)
         {
             nativeAd = NativeAdHandle.nativeAd;
-            if (nativeAd == null) return;
-
             NativeAdHandle.IsUsed = true;
             IsNativeImport = true;
 

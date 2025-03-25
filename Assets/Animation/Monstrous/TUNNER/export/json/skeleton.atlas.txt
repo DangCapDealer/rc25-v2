@@ -1,0 +1,32 @@
+skeleton.png
+size:616,196
+filter:Linear,Linear
+pma:true
+1
+bounds:335,5,81,81
+2
+bounds:418,33,53,53
+HEAD
+bounds:2,2,192,198
+rotate:90
+Layer 3
+bounds:202,66,131,128
+Shape 1382
+bounds:509,9,77,34
+rotate:90
+Shape 1382 copy
+bounds:473,9,77,34
+rotate:90
+Shape 640
+bounds:202,12,52,115
+rotate:90
+Shape 640 copy
+bounds:553,85,61,109
+Shape 642
+bounds:545,6,22,77
+Shape 642 copy
+bounds:569,11,72,31
+rotate:90
+than1
+bounds:335,88,106,216
+rotate:90

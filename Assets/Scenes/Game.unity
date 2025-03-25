@@ -5428,7 +5428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000017166138}
+  m_AnchoredPosition: {x: 0, y: -0.00008106232}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &474867450
@@ -5523,7 +5523,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   RaycastCamera: {fileID: 776627908}
-  TestMode: 1
 --- !u!1 &477486706
 GameObject:
   m_ObjectHideFlags: 0
@@ -13005,7 +13004,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 852494886}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.80514467
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

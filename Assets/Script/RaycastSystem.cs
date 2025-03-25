@@ -17,12 +17,8 @@ public class RaycastSystem : MonoSingleton<RaycastSystem>
     public LayerMask OutlineLayer;
     public Camera RaycastCamera;
 
-    [Header("TESTING MODE")]
-    public bool TestMode = false;
-
     void Update()
     {
-        RaycatTestingMode();
         if (IsClickingUI() == true)
             return;
 
@@ -32,23 +28,6 @@ public class RaycastSystem : MonoSingleton<RaycastSystem>
             return;
         }
         RaycastChecking();
-    }
-
-    private void RaycatTestingMode()
-    {
-        if(TestMode == false) return;
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            if (touch.phase == TouchPhase.Began)
-            {
-                Ray ray = RaycastCamera.ScreenPointToRay(touch.position);
-                if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
-                {
-                    Debug.Log($"TEST MODE: RAYCAST {hit.transform.name}");
-                }
-            }
-        }
     }
 
     private void RaycastCheckingOnPauseState()

@@ -33,13 +33,16 @@ public class RequestNativeAd : MonoBehaviour
     {
         if (AdManager.Instance.IsInitalized == false) return;
         if (RuntimeStorageData.Player.IsLoadAds == false) return;
+
         if (Position == NativeAdPosition.Banner && Manager.Instance.IsNativeBanner == false) return;
         if (Position == NativeAdPosition.BannerCollapse && Manager.Instance.IsNativeMREC == false) return;
         if (Position == NativeAdPosition.Interstitial && Manager.Instance.IsNativeInter == false) return;
+
+        if (IsUsed == false) return;
+
         if (NativeAdState == AdManager.AdState.NotAvailable) RequestAd();
         else if (NativeAdState == AdManager.AdState.Ready)
         {
-            if (IsUsed == false) return;
             if(IsReloadNativeAd == true)
             {
                 caculateTime += Time.deltaTime;
@@ -75,15 +78,18 @@ public class RequestNativeAd : MonoBehaviour
 
     private void OnNativeAdClicked(object sender, EventArgs e)
     {
-        if (NativeAdState == AdManager.AdState.Ready)
+        //if (NativeAdState == AdManager.AdState.Ready)
+        //{
+        //    Debug.Log($"[{this.GetType().ToString()}] Native ad Clicked.");
+
+
+        //}
+
+        if(IsUsed)
         {
             Debug.Log($"[{this.GetType().ToString()}] Native ad Clicked.");
-
             caculateTime = 0.0f;
             nativeAdLoaded = false;
-
-            this.nativeAd = null;
-
             NativeAdState = AdManager.AdState.NotAvailable;
             OnClickedNativeAd?.Invoke();
         }

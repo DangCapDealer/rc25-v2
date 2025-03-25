@@ -63,7 +63,7 @@ public class RC25Auto : EditorWindow
             Transform monsterChild = null;
             foreach (Transform child in obj.transform)
             {
-                if (child.name.Equals("Monster", System.StringComparison.OrdinalIgnoreCase))
+                if (child.name.Equals(themeName, System.StringComparison.OrdinalIgnoreCase))
                 {
                     hasMonsterChild = true;
                     monsterChild = child;
@@ -73,7 +73,7 @@ public class RC25Auto : EditorWindow
 
             if (hasMonsterChild)
             {
-                Debug.Log("Object đã có child tên 'Monster'.");
+                Debug.Log($"Object đã có child tên '{themeName}'.");
                 DestroyImmediate(monsterChild.gameObject);
                 continue;
             }
@@ -98,7 +98,7 @@ public class RC25Auto : EditorWindow
             bool hasMonsterChild = false;
             foreach (Transform child in obj.transform)
             {
-                if (child.name.Equals("Monster", System.StringComparison.OrdinalIgnoreCase))
+                if (child.name.Equals(themeName, System.StringComparison.OrdinalIgnoreCase))
                 {
                     hasMonsterChild = true;
                     break;
@@ -107,11 +107,11 @@ public class RC25Auto : EditorWindow
 
             if (hasMonsterChild)
             {
-                Debug.Log("Object đã có child tên 'Monster'.");
+                Debug.Log($"Object đã có child tên '{themeName}'.");
                 continue;
             }
 
-            string spineAssetPath = $"Assets/Animation/Monster/{obj.name}/export/skeleton_SkeletonData.asset";
+            string spineAssetPath = $"Assets/Animation/{themeName}/{obj.name}/export/skeleton_SkeletonData.asset";
             SkeletonDataAsset spineAsset = AssetDatabase.LoadAssetAtPath<SkeletonDataAsset>(spineAssetPath);
             if (spineAsset == null)
             {
@@ -119,7 +119,7 @@ public class RC25Auto : EditorWindow
                 continue;
             }
 
-            GameObject monsterChild = new GameObject("Monster");
+            GameObject monsterChild = new GameObject(themeName);
             monsterChild.transform.SetParent(obj.transform);
             monsterChild.transform.localPosition = Vector3.zero.WithY(-2.38f);
             monsterChild.transform.localScale = VectorExtensions.Create3D(1.2f, 1.2f, 1.2f);

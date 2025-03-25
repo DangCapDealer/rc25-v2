@@ -1,0 +1,26 @@
+skeleton.png
+size:812,218
+filter:Linear,Linear
+pma:true
+DAU
+bounds:264,19,187,197
+MAT1
+bounds:672,134,82,82
+MU1
+bounds:2,8,208,260
+rotate:90
+Rounded Rectangle 1524
+bounds:591,2,108,48
+Shape 1 copy 6
+bounds:591,52,57,193
+rotate:90
+Shape 1381 copy 2
+bounds:756,159,49,57
+Shape 1419
+bounds:453,3,106,136
+rotate:90
+Shape 1421
+bounds:701,8,42,109
+rotate:90
+THAN1
+bounds:453,111,217,105

@@ -1,0 +1,34 @@
+skeleton.png
+size:700,204
+filter:Linear,Linear
+pma:true
+1
+bounds:474,120,82,82
+2
+bounds:543,3,57,57
+4
+bounds:561,69,72,72
+DAU
+bounds:2,2,248,200
+MIENG
+bounds:635,61,80,53
+rotate:90
+Shape 1404
+bounds:602,15,55,44
+Shape 1404 copy
+bounds:455,4,86,56
+Shape 1404 copy 2
+bounds:474,62,85,56
+Shape 1404 copy 2-1
+bounds:654,147,55,44
+rotate:90
+TAI
+bounds:252,13,77,105
+rotate:90
+Triangle 1
+bounds:558,143,94,59
+Triangle 1 copy
+bounds:359,31,94,59
+than1
+bounds:252,92,110,220
+rotate:90
