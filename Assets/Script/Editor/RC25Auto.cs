@@ -12,6 +12,7 @@ public class RC25Auto : EditorWindow
 {
 
     static string themeName = "Monster";
+    static string basePath = "Assets/Animation/{0}/{1}/export/";
 
     [MenuItem("Auto/Custom Prefabs")]
     public static void ShowWindow()
@@ -23,6 +24,7 @@ public class RC25Auto : EditorWindow
     {
         GUILayout.Label("Editor Window - Import nhân vật mới", EditorStyles.boldLabel);
         themeName = EditorGUILayout.TextField("Tên chủ đề mới:", themeName);
+        basePath = EditorGUILayout.TextField("Template path:", basePath);
 
         GUILayout.Space(10);
         GUILayout.Label("Tên chủ đề vừa tạo:");
@@ -111,7 +113,8 @@ public class RC25Auto : EditorWindow
                 continue;
             }
 
-            string spineAssetPath = $"Assets/Animation/{themeName}/{obj.name}/export/skeleton_SkeletonData.asset";
+            //string spineAssetPath = $"Assets/Animation/{themeName}/{obj.name}/export/skeleton_SkeletonData.asset";
+            string spineAssetPath = $"{string.Format(basePath, themeName, obj.name)}/skeleton_SkeletonData.asset";
             SkeletonDataAsset spineAsset = AssetDatabase.LoadAssetAtPath<SkeletonDataAsset>(spineAssetPath);
             if (spineAsset == null)
             {
@@ -174,11 +177,11 @@ public class RC25Auto : EditorWindow
 
             if (prefab != null)
             {
-                if (prefab.name.Contains("Admob") ||
-                    prefab.name.Contains("Canvas") ||
-                    prefab.name.Contains("Base") ||
-                    prefab.name.Contains("Sound") ||
-                    prefab.name.Contains("Black")) continue;
+                if (prefab.name.ToLower().Contains("admob") ||
+                    prefab.name.ToLower().Contains("canvas") ||
+                    prefab.name.ToLower().Contains("base") ||
+                    prefab.name.ToLower().Contains("sound") ||
+                    prefab.name.ToLower().Contains("black")) continue;
 
                 if (GameObject.Find(prefab.name) != null) continue;
 
