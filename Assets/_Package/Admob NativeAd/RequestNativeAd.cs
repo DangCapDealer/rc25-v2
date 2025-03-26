@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class RequestNativeAd : MonoBehaviour
 {
+#if ADMOB
     [Header("Native Ad Item")]
     public NativeAdPosition Position;
     public string AdNativeUnitId = "ca-app-pub-5904408074441373/4554368467";
@@ -15,20 +16,15 @@ public class RequestNativeAd : MonoBehaviour
 
     public bool IsUsed = true;
     public bool IsReloadNativeAd = true;
+    public bool nativeAdLoaded = false;
+
+    public NativeAd nativeAd;
     public float TimeAfterReload = 30.0f;
-
-
-    private float caculateTime = 0.0f;
-    private bool nativeAdLoaded = false;
+    private float CaculateTime = 0.0f;
 
     public event Action OnClickedNativeAd;
     public event Action OnChangeNativeAd;
 
-    public NativeAd nativeAd;
-
-    public bool NativeAdLoaded() => nativeAdLoaded;
-
-#if ADMOB
     private void Update()
     {
         if (AdManager.Instance.IsInitalized == false) return;
@@ -36,16 +32,15 @@ public class RequestNativeAd : MonoBehaviour
         if (Position == NativeAdPosition.Banner && Manager.Instance.IsNativeBanner == false) return;
         if (Position == NativeAdPosition.BannerCollapse && Manager.Instance.IsNativeMREC == false) return;
         if (Position == NativeAdPosition.Interstitial && Manager.Instance.IsNativeInter == false) return;
-        if (IsUsed == false) return;
-
         if (NativeAdState == AdManager.AdState.NotAvailable) RequestAd();
         else if (NativeAdState == AdManager.AdState.Ready)
         {
-            if(IsReloadNativeAd == false) return;
-            caculateTime += Time.deltaTime;
-            if (caculateTime > TimeAfterReload)
+            if (IsUsed == false) return;
+            if (IsReloadNativeAd == false) return;
+            CaculateTime += Time.deltaTime;
+            if (CaculateTime > TimeAfterReload)
             {
-                caculateTime = 0.0f;
+                CaculateTime = 0.0f;
                 NativeAdState = AdManager.AdState.NotAvailable;
             }
         }
@@ -53,25 +48,36 @@ public class RequestNativeAd : MonoBehaviour
 
     private void RequestAd()
     {
+        Debug.Log($"[{this.GetType().ToString()}] Load native Ad");
+
         if (NativeAdState == AdManager.AdState.Loading) return;
         NativeAdState = AdManager.AdState.Loading;
 
-        Debug.Log($"[{this.GetType().ToString()}] Load native Ad");
-
-        AdLoader adLoader = new AdLoader.Builder(AdNativeUnitId).ForNativeAd().Build();
+        AdLoader adLoader = new AdLoader.Builder(AdNativeUnitId)
+            .ForNativeAd()
+            .Build();
         adLoader.OnNativeAdLoaded += this.HandleNativeAdLoaded;
         adLoader.OnAdFailedToLoad += HandleAdFailedToLoad;
         adLoader.OnNativeAdClicked += OnNativeAdClicked;
-        //adLoader.OnNativeAdImpression += OnNativeAdImpression;
+        adLoader.OnNativeAdImpression += OnNativeAdImpression;
         adLoader.LoadAd(new AdRequest());
+    }
+
+    private void OnNativeAdImpression(object sender, EventArgs e)
+    {
+        Debug.Log($"[{this.GetType().ToString()}] On Native Ad Impression");
     }
 
     private void OnNativeAdClicked(object sender, EventArgs e)
     {
-        if (IsUsed == false) return;
-        Debug.Log($"[{this.GetType().ToString()}] Native ad Clicked.");
-        NativeAdState = AdManager.AdState.NotAvailable;
-        OnClickedNativeAd?.Invoke();
+        if (NativeAdState == AdManager.AdState.Ready)
+        {
+            CaculateTime = 0.0f;
+            NativeAdState = AdManager.AdState.NotAvailable;
+
+            OnClickedNativeAd?.Invoke();
+            Debug.Log($"[{this.GetType().ToString()}] Native ad Clicked.");
+        }
     }
 
     private void HandleNativeAdLoaded(object sender, NativeAdEventArgs args)
@@ -79,6 +85,7 @@ public class RequestNativeAd : MonoBehaviour
         Debug.Log($"[{this.GetType().ToString()}] Native ad loaded.");
         NativeAdState = AdManager.AdState.Ready;
         this.nativeAd = args.nativeAd;
+        this.nativeAd.OnPaidEvent += OnPaidEvent;
         this.nativeAdLoaded = true;
         this.IsUsed = false;
 
@@ -94,7 +101,7 @@ public class RequestNativeAd : MonoBehaviour
 
     private void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs e)
     {
-        Debug.Log($"[{this.GetType().ToString()}] Native ad failed to load: " + e.LoadAdError.GetMessage());
+        Debug.Log($"[{this.GetType().ToString()}] Native ad failed to load: " + e.ToString());
         NativeAdState = AdManager.AdState.NotAvailable;
     }
 #else

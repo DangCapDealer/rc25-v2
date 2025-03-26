@@ -10,7 +10,7 @@ public class ReceiverNativeAd : MonoBehaviour
     public NativeAdPosition adPosition;
     public GameObject _content;
 
-
+#if ADMOB
     public RawImage adIcon;
     public RawImage adImage;
     public RawImage adChoices;
@@ -26,31 +26,27 @@ public class ReceiverNativeAd : MonoBehaviour
 
     public Color adColor = Color.white;
     public bool IsReloadNativeAd = true;
-
-
     private RequestNativeAd NativeAdHandle;
+
     private bool IsNativeImport = false;
     private float timer = 0;
 
     public void BtnClose()
     {
         if (adPosition == NativeAdPosition.Banner) return;
-        if (this.NativeAdHandle == null) return;
-        if (this.NativeAdHandle.IsUsed == false) return;
-
-        this.NativeAdHandle.NativeAdState = AdManager.AdState.NotAvailable;
         UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
     }
 
-
-#if ADMOB
     private void OnEnable()
     {
         UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
+        timer = 0;
         NativeAdHandle = AdNativeManager.Instance.GetNativeAd(adPosition);
         NativeAdHandle.IsReloadNativeAd = IsReloadNativeAd;
-        NativeAdHandle.OnChangeNativeAd += _OnChangeNativeAd;
-        NativeAdHandle.OnClickedNativeAd += _OnClickedNativeAd;
+
+        NativeAdHandle.OnChangeNativeAd += NativeAdHandle_OnChangeNativeAd;
+        NativeAdHandle.OnClickedNativeAd += NativeAdHandle_OnClickedNativeAd;
+
         IsNativeImport = false;
 #if UNITY_EDITOR
         UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(true));
@@ -59,20 +55,17 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private void OnDisable()
     {
-        NativeAdHandle.OnChangeNativeAd -= _OnChangeNativeAd;
-        NativeAdHandle.OnClickedNativeAd -= _OnClickedNativeAd;
-    }
+        NativeAdHandle.OnChangeNativeAd -= NativeAdHandle_OnChangeNativeAd;
+        NativeAdHandle.OnClickedNativeAd -= NativeAdHandle_OnClickedNativeAd;
+    }    
 
-    private void _OnChangeNativeAd()
+    private void NativeAdHandle_OnClickedNativeAd()
     {
-        IsNativeImport = false;
-    }
-
-    private void _OnClickedNativeAd()
-    {
-        if (adPosition == NativeAdPosition.Banner) UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
+        if (adPosition == NativeAdPosition.Banner) 
+            UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
         else UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
     }
+    private void NativeAdHandle_OnChangeNativeAd() => IsNativeImport = false;
 
     private void Update()
     {
@@ -80,11 +73,11 @@ public class ReceiverNativeAd : MonoBehaviour
         if (NativeAdHandle == null) return;
         if (IsNativeImport == true) return;
 
-        if (NativeAdHandle.NativeAdLoaded() == true)
+        if (NativeAdHandle.nativeAdLoaded == true)
         {
-            nativeAd = NativeAdHandle.nativeAd;
             NativeAdHandle.IsUsed = true;
             IsNativeImport = true;
+            nativeAd = NativeAdHandle.nativeAd;
 
             _content.SetActive(true);
             var IconTexture = this.nativeAd.GetIconTexture();
@@ -93,7 +86,8 @@ public class ReceiverNativeAd : MonoBehaviour
             var CallToActionText = this.nativeAd.GetCallToActionText();
             var ImageTextures = this.nativeAd.GetImageTextures();
 
-            adIcon.color = IconTexture == null ? adColor : Color.white;
+            if (IconTexture != null) adIcon.color = Color.white;
+            else adIcon.color = adColor;
 
             adIcon.texture = IconTexture;
             adHeadline.text = HeadlineText;
@@ -102,7 +96,7 @@ public class ReceiverNativeAd : MonoBehaviour
             if (!this.nativeAd.RegisterCallToActionGameObject(adCTA)) Debug.Log($"[{this.GetType().ToString()}] Register CTA game object error!!!");
             adImage.texture = ImageTextures[0];
         }
-        else if(_content.IsActive())
+        else if (_content.IsActive())
         {
 #if !UNITY_EDITOR
             timer += Time.deltaTime;
