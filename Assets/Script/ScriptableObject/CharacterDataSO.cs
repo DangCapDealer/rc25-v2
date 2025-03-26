@@ -24,6 +24,7 @@ public class CharacterDataSO : ScriptableObject
         public AudioClip AudioClipHorror;
         public AudioClip AudioClipBattle;
         public AudioClip AudioClipMonster;
+        public AudioClip AudioClipMonstrous;
         public PayType PayType;
 
         public AudioClip GetAudioClip(GameManager.GameStyle gameStyle)
@@ -32,6 +33,7 @@ public class CharacterDataSO : ScriptableObject
             else if (gameStyle == GameManager.GameStyle.Horror) return AudioClipHorror;
             else if (gameStyle == GameManager.GameStyle.Battle) return AudioClipBattle;
             else if (gameStyle == GameManager.GameStyle.Monster) return AudioClipMonster;
+            else if (gameStyle == GameManager.GameStyle.Monstrous) return AudioClipMonstrous;
             else return null;
         }
     }
@@ -70,6 +72,12 @@ public class CharacterDataSO : ScriptableObject
                     Characters[i].AudioClipMonster = monsterClip;
                 else
                     Debug.Log($"Missing monster audio {audioClip.name}");
+                var MonstrousPath = path.Replace("Horror", "Monstrous");
+                AudioClip MonstrousClip = AssetDatabase.LoadAssetAtPath<AudioClip>(MonstrousPath);
+                if (MonstrousClip != null)
+                    Characters[i].AudioClipMonstrous = MonstrousClip;
+                else
+                    Debug.Log($"Missing Monstrous audio {audioClip.name}");
             }
             else
             {

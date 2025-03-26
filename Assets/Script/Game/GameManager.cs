@@ -11,7 +11,8 @@ public class GameManager : MonoSingleton<GameManager>
         Horror,
         Battle,
         Battle_Single,
-        Monster
+        Monster,
+        Monstrous
     }
 
     public enum GameState

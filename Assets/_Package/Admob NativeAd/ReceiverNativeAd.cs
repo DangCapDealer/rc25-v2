@@ -26,18 +26,20 @@ public class ReceiverNativeAd : MonoBehaviour
 
     public Color adColor = Color.white;
     public bool IsReloadNativeAd = true;
-    [HideInInspector] public RequestNativeAd NativeAdHandle;
 
+
+    private RequestNativeAd NativeAdHandle;
     private bool IsNativeImport = false;
     private float timer = 0;
 
     public void BtnClose()
     {
         if (adPosition == NativeAdPosition.Banner) return;
-        if (NativeAdHandle == null) return;
+        if (this.NativeAdHandle == null) return;
+        if (this.NativeAdHandle.IsUsed == false) return;
 
-        NativeAdHandle.NativeAdState = AdManager.AdState.NotAvailable;
-        this.gameObject.SetActive(false);
+        this.NativeAdHandle.NativeAdState = AdManager.AdState.NotAvailable;
+        UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
     }
 
 
@@ -45,7 +47,6 @@ public class ReceiverNativeAd : MonoBehaviour
     private void OnEnable()
     {
         UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
-        timer = 0;
         NativeAdHandle = AdNativeManager.Instance.GetNativeAd(adPosition);
         NativeAdHandle.IsReloadNativeAd = IsReloadNativeAd;
         NativeAdHandle.OnChangeNativeAd += _OnChangeNativeAd;
@@ -69,11 +70,8 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private void _OnClickedNativeAd()
     {
-        if (adPosition == NativeAdPosition.Banner) 
-            UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
-        else 
-            UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
-        UnityMainThreadDispatcher.Instance().Enqueue(() => IsNativeImport = false);
+        if (adPosition == NativeAdPosition.Banner) UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
+        else UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
     }
 
     private void Update()
@@ -104,7 +102,7 @@ public class ReceiverNativeAd : MonoBehaviour
             if (!this.nativeAd.RegisterCallToActionGameObject(adCTA)) Debug.Log($"[{this.GetType().ToString()}] Register CTA game object error!!!");
             adImage.texture = ImageTextures[0];
         }
-        else
+        else if(_content.IsActive())
         {
 #if !UNITY_EDITOR
             timer += Time.deltaTime;

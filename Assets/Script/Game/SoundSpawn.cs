@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundSpawn : MonoSingleton<SoundSpawn>
@@ -11,81 +12,42 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
     public void CreateSound()
     {
         isCreateSound = false;
-        StartCoroutine(createSoundCorotine());
+        StartCoroutine(createSoundCoroutine());
     }
 
-    private IEnumerator createSoundCorotine()
+    private IEnumerator createSoundCoroutine()
     {
         yield return WaitForSecondCache.WAIT_TIME_HAFT;
         var totalCharacter = GameSpawn.Instance.CharacterData.Characters;
-        for (int i = 0; i < totalCharacter.Length; i++)
+        foreach (var character in totalCharacter)
         {
-            if (totalCharacter[i].AudioClipNormal == null)
+            if (character.AudioClipNormal == null)
             {
-                Debug.LogError($"[SoundSpawn] Audio Missing {totalCharacter[i].ID}");
+                Debug.LogError($"[SoundSpawn] Audio Missing {character.ID}");
                 continue;
             }
 
-            if (GameManager.Instance.Style == GameManager.GameStyle.Normal ||
-                GameManager.Instance.Style == GameManager.GameStyle.Horror)
+            var styles = new List<GameManager.GameStyle>();
+            if (GameManager.Instance.IsGameDefault())
             {
-                var soundName = $"{totalCharacter[i].ID}_{GameManager.Instance.Style}";
-                if (this.transform.FindChildByParent(soundName))
-                    continue;
-                var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
-                soundObject.name = soundName;
-                var script = soundObject.GetComponent<SoundPrefab>();
-                script.Create(totalCharacter[i].GetAudioClip(GameManager.Instance.Style));
-                var eventSound = soundObject.GetComponent<BeatDetection>();
-                eventSound.CallBackFunction += CallBackFunction;
-            }
-            else if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
-            {
-                var soundName1 = $"{totalCharacter[i].ID}_{GameManager.GameStyle.Normal}";
-                if (this.transform.IsChild(soundName1) == false)
-                {
-                    var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
-                    soundObject.name = soundName1;
-                    var script = soundObject.GetComponent<SoundPrefab>();
-                    script.Create(totalCharacter[i].GetAudioClip(GameManager.GameStyle.Normal));
-                    var eventSound = soundObject.GetComponent<BeatDetection>();
-                    eventSound.CallBackFunction += CallBackFunction;
-                }
+                if (GameManager.Instance.Style == GameManager.GameStyle.Battle_Single) styles.Add(GameManager.GameStyle.Battle);
+                else styles.Add(GameManager.Instance.Style);
+            }    
+            else if (GameManager.Instance.IsGameCustom()) styles.AddRange(new[] { GameManager.GameStyle.Normal, GameManager.GameStyle.Battle });
+            else Debug.Log("Game chưa được cài đặt sound");
 
-                var soundName2 = $"{totalCharacter[i].ID}_{GameManager.GameStyle.Battle}";
-                if (this.transform.IsChild(soundName2) == false)
+            foreach (var style in styles)
+            {
+                var soundName = $"{character.ID}_{style}";
+                if (!this.transform.IsChild(soundName))
                 {
                     var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
-                    soundObject.name = soundName2;
+                    soundObject.name = soundName;
                     var script = soundObject.GetComponent<SoundPrefab>();
-                    script.Create(totalCharacter[i].GetAudioClip(GameManager.GameStyle.Battle));
+                    script.Create(character.GetAudioClip(style));
                     var eventSound = soundObject.GetComponent<BeatDetection>();
                     eventSound.CallBackFunction += CallBackFunction;
                 }
-            }
-            else if (GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
-            {
-                var soundName = $"{totalCharacter[i].ID}_{GameManager.GameStyle.Battle}";
-                if (this.transform.FindChildByParent(soundName))
-                    continue;
-                var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
-                soundObject.name = soundName;
-                var script = soundObject.GetComponent<SoundPrefab>();
-                script.Create(totalCharacter[i].GetAudioClip(GameManager.GameStyle.Battle));
-                var eventSound = soundObject.GetComponent<BeatDetection>();
-                eventSound.CallBackFunction += CallBackFunction;
-            }
-            else if (GameManager.Instance.Style == GameManager.GameStyle.Monster)
-            {
-                var soundName = $"{totalCharacter[i].ID}_{GameManager.GameStyle.Monster}";
-                if (this.transform.FindChildByParent(soundName))
-                    continue;
-                var soundObject = PoolByID.Instance.GetPrefab(SoundPrefab, this.transform);
-                soundObject.name = soundName;
-                var script = soundObject.GetComponent<SoundPrefab>();
-                script.Create(totalCharacter[i].GetAudioClip(GameManager.GameStyle.Monster));
-                var eventSound = soundObject.GetComponent<BeatDetection>();
-                eventSound.CallBackFunction += CallBackFunction;
             }
             yield return null;
         }

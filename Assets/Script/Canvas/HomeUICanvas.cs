@@ -41,19 +41,19 @@ public class HomeUICanvas : MonoBehaviour
         }
     }
 
-
-    public void BtnSingle()
+    private void StartGame(GameManager.GameStyle style, int numberOfCharacters, string logEvent, string modeName)
     {
         StaticVariable.ClearLog();
         MusicManager.Instance.PauseSound();
-        GameManager.Instance.Style = GameManager.GameStyle.Normal;
+        GameManager.Instance.Style = style;
         BackgroundDetection.Instance.SettingBackground();
-        TutorialSystem.Instance.DisableTutorial();
+        TutorialSystem.Instance?.DisableTutorial();
+
         AdManager.Instance.ShowInterstitialHomeAd(() =>
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
-                GameManager.Instance.NumberOfCharacter = 8;
+                GameManager.Instance.NumberOfCharacter = numberOfCharacters;
                 GameManager.Instance.GameCreate();
                 SoundSpawn.Instance.CreateSound();
                 SoundSpawn.Instance.Reload();
@@ -63,139 +63,19 @@ public class HomeUICanvas : MonoBehaviour
             });
         }, () =>
         {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                CanvasSystem.Instance.ShowNativeIntertitial();
-            });
+            UnityMainThreadDispatcher.Instance().Enqueue(CanvasSystem.Instance.ShowNativeIntertitial);
         });
 
-        FirebaseManager.Instance.LogEvent($"Mode_Beat_1");
-        RuntimeStorageData.Player.Modes.Add("SingleNormalBeat - 1");
-    }   
-
-    public void BtnSingleHorror()
-    {
-        StaticVariable.ClearLog();
-        MusicManager.Instance.PauseSound();
-        GameManager.Instance.Style = GameManager.GameStyle.Horror;
-        BackgroundDetection.Instance.SettingBackground();
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                GameManager.Instance.NumberOfCharacter = 8;
-                GameManager.Instance.GameCreate();
-                SoundSpawn.Instance.CreateSound();
-                SoundSpawn.Instance.Reload();
-                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-                CanvasSystem.Instance._gameUICanvas.CreateGame();
-                CanvasSystem.Instance.ShowNativeCollapse();
-            });
-        }, () =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                CanvasSystem.Instance.ShowNativeIntertitial();
-            });
-        });
-
-        FirebaseManager.Instance.LogEvent($"Mode_Beat_2");
-        RuntimeStorageData.Player.Modes.Add("SingleHorrorBeat - 2");
+        FirebaseManager.Instance.LogEvent(logEvent);
+        RuntimeStorageData.Player.Modes.Add(modeName);
     }
 
-    public void BtnSingleHuman()
-    {
-        StaticVariable.ClearLog();
-        MusicManager.Instance.PauseSound();
-        GameManager.Instance.Style = GameManager.GameStyle.Battle_Single;
-        BackgroundDetection.Instance.SettingBackground();
-        TutorialSystem.Instance.DisableTutorial();
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                GameManager.Instance.NumberOfCharacter = 8;
-                GameManager.Instance.GameCreate();
-                SoundSpawn.Instance.CreateSound();
-                SoundSpawn.Instance.Reload();
-                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-                CanvasSystem.Instance._gameUICanvas.CreateGame();
-                CanvasSystem.Instance.ShowNativeCollapse();
-            });
-        }, () =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                CanvasSystem.Instance.ShowNativeIntertitial();
-            });
-        });
-
-        FirebaseManager.Instance.LogEvent($"Mode_Beat_3");
-        RuntimeStorageData.Player.Modes.Add("SingleHumanBeat - 3");
-    }
-
-    public void BtnBatteBeat()
-    {
-        StaticVariable.ClearLog();
-        MusicManager.Instance.PauseSound();
-        GameManager.Instance.Style = GameManager.GameStyle.Battle;
-        BackgroundDetection.Instance.SettingBackground();
-        TutorialSystem.Instance.DisableTutorial();
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                GameManager.Instance.NumberOfCharacter = 10;
-                GameManager.Instance.GameCreate();
-                SoundSpawn.Instance.CreateSound();
-                SoundSpawn.Instance.Reload();
-                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-                CanvasSystem.Instance._gameUICanvas.CreateGame();
-                CanvasSystem.Instance.ShowNativeCollapse();
-            });
-        }, () =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                CanvasSystem.Instance.ShowNativeIntertitial();
-            });
-        });
-
-        FirebaseManager.Instance.LogEvent($"Mode_Battle");
-        RuntimeStorageData.Player.Modes.Add("BattleBeat_Solo");
-    }    
-
-    public void BtnSingleMonster()
-    {
-        StaticVariable.ClearLog();
-        MusicManager.Instance.PauseSound();
-        GameManager.Instance.Style = GameManager.GameStyle.Monster;
-        BackgroundDetection.Instance.SettingBackground();
-        TutorialSystem.Instance.DisableTutorial();
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                GameManager.Instance.NumberOfCharacter = 8;
-                GameManager.Instance.GameCreate();
-                SoundSpawn.Instance.CreateSound();
-                SoundSpawn.Instance.Reload();
-                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-                CanvasSystem.Instance._gameUICanvas.CreateGame();
-                CanvasSystem.Instance.ShowNativeCollapse();
-            });
-        }, () =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
-            {
-                CanvasSystem.Instance.ShowNativeIntertitial();
-            });
-        });
-
-        FirebaseManager.Instance.LogEvent($"Mode_Beat_4");
-        RuntimeStorageData.Player.Modes.Add("SingleMonsterBeat - 4");
-    }
-
+    public void BtnSingle() => StartGame(GameManager.GameStyle.Normal, 8, "Mode_Beat_1", "SingleNormalBeat - 1");
+    public void BtnSingleHorror() => StartGame(GameManager.GameStyle.Horror, 8, "Mode_Beat_2", "SingleHorrorBeat - 2");
+    public void BtnSingleHuman() => StartGame(GameManager.GameStyle.Battle_Single, 8, "Mode_Beat_3", "SingleHumanBeat - 3");
+    public void BtnBatteBeat() => StartGame(GameManager.GameStyle.Battle, 10, "Mode_Battle", "BattleBeat_Solo");
+    public void BtnSingleMonster() => StartGame(GameManager.GameStyle.Monster, 8, "Mode_Beat_4", "SingleMonsterBeat - 4");
+    public void BtnSingleMonstrous() => StartGame(GameManager.GameStyle.Monstrous, 8, "Mode_Beat_5", "SingleMonsterBeat - 5");
     public void BtnSetting() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting); }    
     public void BtnCheckin() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Checkin); }    
     public void BtnNoAds() { CanvasSystem.Instance.ShowNoAd(); }
