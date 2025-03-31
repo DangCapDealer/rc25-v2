@@ -61,11 +61,13 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private void NativeAdHandle_OnClickedNativeAd()
     {
-        if (adPosition == NativeAdPosition.Banner) 
-            UnityMainThreadDispatcher.Instance().Enqueue(() => _content.SetActive(false));
-        else UnityMainThreadDispatcher.Instance().Enqueue(() => gameObject.SetActive(false));
+
     }
-    private void NativeAdHandle_OnChangeNativeAd() => IsNativeImport = false;
+
+    private void NativeAdHandle_OnChangeNativeAd()
+    {
+        IsNativeImport = false;
+    }    
 
     private void Update()
     {
