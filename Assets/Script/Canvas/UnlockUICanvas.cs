@@ -26,7 +26,7 @@ public class UnlockUICanvas : PopupCanvas
 
     public void ShowAd()
     {
-        AdManager.Instance.ShowRewardedSecondAd(() =>
+        AdManager.Instance.ShowRewardedAd(() =>
         {
             NumberOfAds += 1;
             if(NumberOfAds >= 3)

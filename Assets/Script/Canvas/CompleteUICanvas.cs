@@ -7,46 +7,46 @@ public class CompleteUICanvas : PopupCanvas
 {
     public void BtnHome()
     {
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        CanvasSystem.Instance._loadingUICanvas.ShowLoading(() =>
         {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            AdManager.Instance.ShowInterstitialHomeAd(() =>
             {
-                CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
-                CanvasSystem.Instance.AutoNoAd();
-                GameManager.Instance.GameReset();
-                GameSpawn.Instance.RemoveAllCharacter();
-                SoundSpawn.Instance.MuteAll();
-                MusicManager.Instance.PlaySound(Music.Main);
-                Hide();
-            });
-        }, () =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
+                    CanvasSystem.Instance.AutoNoAd();
+                    GameManager.Instance.GameReset();
+                    GameSpawn.Instance.RemoveAllCharacter();
+                    SoundSpawn.Instance.MuteAll();
+                    MusicManager.Instance.PlaySound(Music.Main);
+                    Hide();
+                });
+            }, () =>
             {
-                CanvasSystem.Instance.ShowNativeIntertitial();
+                UnityMainThreadDispatcher.Instance().Enqueue(() => CanvasSystem.Instance.ShowNativeIntertitial());
             });
         });
     }
 
     public void BtnReplay()
     {
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        CanvasSystem.Instance._loadingUICanvas.ShowLoading(() =>
         {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            AdManager.Instance.ShowInterstitialHomeAd(() =>
             {
-                GameSpawn.Instance.RemoveAllCharacter();
-                SoundSpawn.Instance.MuteAll();
-                GameManager.Instance.State = GameManager.GameState.Playing;
-                GridInCamera.Instance.CreatePosition();
-                CanvasSystem.Instance._gameUICanvas.Mode3UIReset();
-                GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
-                Hide();
-            });
-        }, () =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    GameSpawn.Instance.RemoveAllCharacter();
+                    SoundSpawn.Instance.MuteAll();
+                    GameManager.Instance.State = GameManager.GameState.Playing;
+                    GridInCamera.Instance.CreatePosition();
+                    CanvasSystem.Instance._gameUICanvas.Mode3UIReset();
+                    GameEvent.OnUIThemeMethod(GameManager.Instance.Style.ToString());
+                    Hide();
+                });
+            }, () =>
             {
-                CanvasSystem.Instance.ShowNativeIntertitial();
+                UnityMainThreadDispatcher.Instance().Enqueue(() => CanvasSystem.Instance.ShowNativeIntertitial());
             });
         });
     }

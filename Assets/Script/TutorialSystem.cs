@@ -12,8 +12,12 @@ public class TutorialSystem : MonoSingleton<TutorialSystem>
     public Transform hand;
     private RectTransform handRect;
 
+    [Header("SETTING")]
     private float _autoHandle;
     public float _autoDelay = 20.0f;
+    public bool _isTutorial = true;
+
+    public bool IsTutorial() => _isTutorial;
 
     private void Start()
     {
@@ -22,6 +26,7 @@ public class TutorialSystem : MonoSingleton<TutorialSystem>
 
     private void Update()
     {
+        if (IsTutorial() == false) return;
         if (CanvasSystem.Instance._popupUICanvas.IsCanvas()) return;
 
         AutoHomeUI();

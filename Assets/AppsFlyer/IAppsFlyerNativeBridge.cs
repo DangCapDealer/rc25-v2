@@ -25,8 +25,6 @@ namespace AppsFlyerSDK
 
         void setAdditionalData(Dictionary<string, string> customData);
 
-        void setDeepLinkTimeout(long deepLinkTimeout);
-
         void setResolveDeepLinkURLs(params string[] urls);
 
         void setOneLinkCustomDomain(params string[] domains);
@@ -38,12 +36,6 @@ namespace AppsFlyerSDK
         void anonymizeUser(bool shouldAnonymizeUser);
 
         string getAppsFlyerId();
-
-        void enableTCFDataCollection(bool shouldCollectTcfData);
-
-        void setConsentData(AppsFlyerConsent appsFlyerConsent);
-
-        void logAdRevenue(AFAdRevenueData adRevenueData, Dictionary<string, string> additionalParameters);
 
         void setMinTimeBetweenSessions(int seconds);
 

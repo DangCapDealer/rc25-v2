@@ -7,30 +7,33 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
     public HomeUICanvas _homeUICanvas;
     public GameUICanvas _gameUICanvas;
     public PopupUICanvas _popupUICanvas;
+    public GameLoadingUICanvas _loadingUICanvas;
 
     public GameObject[] _screenUICanvas;
 
     public Transform _bannerCollapse;
     public void ShowNativeCollapse()
     {
-        if (RuntimeStorageData.Player.IsLoadAds == false)
-            return;
-        if (Manager.Instance.IsNativeMREC == false)
-            return;
+        if (RuntimeStorageData.Player.IsLoadAds == false) return;
+        if (Manager.Instance.IsNativeMREC == false) return;
         _bannerCollapse.SetActive(true);
+
+        _nativeCollapseAutomation = 0;
     }
 
     public Transform _nativeInter;
     public void ShowNativeIntertitial()
     {
-        if (RuntimeStorageData.Player.IsLoadAds == false)
-            return;
-        if (Manager.Instance.IsNativeInter == false)
-            return;
+        if (RuntimeStorageData.Player.IsLoadAds == false) return;
+        if (Manager.Instance.IsNativeInter == false) return;
         _nativeInter.SetActive(true);
     }
 
     public Transform _nativeBanner;
+
+    [Header("Native Collapse")]
+    public float _nativeCollapseAutomationTime = 45.0f;
+    public float _nativeCollapseAutomation = 0;
     
 
     private IEnumerator Start()
@@ -42,6 +45,20 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
         yield return WaitForSecondCache.WAIT_TIME_ZERO_POINT_ONE;
         OnIAPurchase("", "");
         AutoNoAd();
+    }
+
+    private void Update()
+    {
+        if (RuntimeStorageData.Player.IsLoadAds == false) return;
+        if (Manager.Instance.IsNativeMREC == false) return;
+
+        if (_bannerCollapse.IsActive() == true) return;
+
+        _nativeCollapseAutomation += Time.deltaTime;
+        if(_nativeCollapseAutomation > _nativeCollapseAutomationTime)
+        {
+            ShowNativeCollapse();
+        }    
     }
 
 
@@ -62,13 +79,8 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
 #if INAPP
         if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) &&
             RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
-        {
-
-        }
-        else
-        {
-            ShowNoAd();
-        }
+        { }
+        else ShowNoAd();
 #endif
     }    
 
@@ -96,7 +108,6 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
             }
             while (RuntimeStorageData.Player.Packages.Contains(randomproductID));
             var numberOfProduct = InappController.Instance.GetProductIndexById(randomproductID);
-            //Debug.Log("--------------------- " + randomproductID);
             switch (numberOfProduct)
             {
                 case 0:

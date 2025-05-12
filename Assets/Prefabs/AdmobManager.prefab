@@ -533,8 +533,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d650bca6c92a094ba68fc2d08c1948b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rate: 0.35
+  gameCameraPositionY: 0.85
   rectTransform: {fileID: 2237232515320024352}
+  _target: {fileID: 0}
+  canvasRect: {fileID: 0}
 --- !u!1 &6250950431105924873
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,41 +954,34 @@ MonoBehaviour:
   IsInitalized: 0
   IsBannerShow: 0
   IsBannerMREC: 0
-  _adUnitId: ca-app-pub-5904408074441373~4518678593
-  UseInterstitial: 1
   _loadingInterstitalAd: {fileID: 7835374869262347077}
   IsPreloadInterstitial: 1
   InterAdState: 2
   InterAdShowState: 0
   _interstitalReloadCount: 0
   InterAdSpaceTimeAutoCounter: 0
-  _adUnitInterId: ca-app-pub-5904408074441373/8836093904
+  _adUnitInterId: ca-app-pub-8190506959251235/3532337274
   IsPreloadinterstitialHome: 1
   InterHomeAdState: 2
   InterHomeAdShowState: 0
   _interstitialHomeAdReloadCount: 0
   InterHomeAdSpaceTimeAutoCounter: 0
-  _adUnitInterHomeId: ca-app-pub-5904408074441373/2893502086
-  _adUnitInterOpenId: ca-app-pub-5904408074441373/3310341039
+  _adUnitInterHomeId: ca-app-pub-8190506959251235/6987516492
+  _adUnitInterOpenId: ca-app-pub-8190506959251235/8740416011
   InterOpenAdMaximusTimeCounter: 0
   InterOpenAdMaximusTime: 15
   UseReward: 1
   IsPreloadReward: 1
   RewardAdState: 2
   _rewardReloadCount: 0
-  _adUnitRewardId: ca-app-pub-5904408074441373/1580420414
-  IsPreloadRewardSecond: 1
-  RewardSecondAdState: 2
-  _rewardSecondLoadCount: 0
-  _adUnitRewardSecondId: ca-app-pub-5904408074441373/9267338743
+  _adUnitRewardId: ca-app-pub-8190506959251235/1368358305
   IsPreloadRewardThrid: 1
   RewardThridAdState: 2
   _rewardThridLoadCount: 0
-  _adUnitRewardThriddId: ca-app-pub-5904408074441373/7387280867
-  UseOpen: 1
+  _adUnitRewardThriddId: ca-app-pub-8190506959251235/1096895560
   IsPreloadOpen: 1
   OpenAdState: 2
   _openReloadCount: 0
-  _adUnitOpenId: ca-app-pub-5904408074441373/7523012234
+  _adUnitOpenId: ca-app-pub-8190506959251235/4305287493
   OpenAdSpaceTimeCounter: 0
   OpenAdSpaceTime: 3

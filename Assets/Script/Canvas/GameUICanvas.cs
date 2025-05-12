@@ -32,12 +32,9 @@ public partial class GameUICanvas : MonoBehaviour
                 RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
             {
                 GameManager.Instance.NumberOfCharacter = 10;
-                //BtnAddTransform.SetActive(false);
+                BtnAddTransform.SetActive(false);
             }
-            //else
-            //{
-            //    BtnAddTransform.SetActive(true);
-            //}    
+            else BtnAddTransform.SetActive(true);
         }
 
         _timerPopupAddCharacter = 0;
@@ -269,24 +266,24 @@ public partial class GameUICanvas : MonoBehaviour
         if (Time.time - LastClickAutoTime < SpaceTimeButton)
             return;
         TutorialSystem.Instance.DisableTutorial();
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        CanvasSystem.Instance._loadingUICanvas.ShowLoading(() =>
         {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            AdManager.Instance.ShowInterstitialHomeAd(() =>
             {
-                CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
-                CanvasSystem.Instance.AutoNoAd();
-                GameManager.Instance.GameReset();
-                GameManager.Instance.State = GameManager.GameState.Stop;
-                GameSpawn.Instance.RemoveAllCharacter();
-                SoundSpawn.Instance.MuteAll();
-                //CanvasSystem.Instance.ShowNativeCollapse();
-                MusicManager.Instance.PlaySound(Music.Main);
-            });
-        }, () =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    CanvasSystem.Instance.ChooseScreen("HomeUICanvas");
+                    CanvasSystem.Instance.AutoNoAd();
+                    GameManager.Instance.GameReset();
+                    GameManager.Instance.State = GameManager.GameState.Stop;
+                    GameSpawn.Instance.RemoveAllCharacter();
+                    SoundSpawn.Instance.MuteAll();
+                    //CanvasSystem.Instance.ShowNativeCollapse();
+                    MusicManager.Instance.PlaySound(Music.Main);
+                });
+            }, () =>
             {
-                CanvasSystem.Instance.ShowNativeIntertitial();
+                UnityMainThreadDispatcher.Instance().Enqueue(() => CanvasSystem.Instance.ShowNativeIntertitial());
             });
         });
     }

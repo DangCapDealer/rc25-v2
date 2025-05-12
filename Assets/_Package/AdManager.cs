@@ -49,7 +49,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         yield return WaitForSecondCache.WAIT_TIME_FIVE;
 #endif
         LoadRewardedAd();
-        LoadRewardedSecondAd();
+        //LoadRewardedSecondAd();
         LoadRewardedThridAd();
         if (RuntimeStorageData.Player.IsLoadAds == true)
         {
@@ -67,9 +67,9 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     {
         if (IsInitalized == false) return;
         if (IsCanUpdate == false) return;
-        if (IsPreloadReward) if (RewardAdState == AdState.NotAvailable) LoadRewardedAd();
-        if (IsPreloadRewardSecond) if (RewardSecondAdState == AdState.NotAvailable) LoadRewardedSecondAd();
-        if (IsPreloadRewardThrid) if (RewardThridAdState == AdState.NotAvailable) LoadRewardedThridAd();
+        if (IsPreloadReward && RewardAdState == AdState.NotAvailable) LoadRewardedAd();
+        //if (IsPreloadRewardSecond) if (RewardSecondAdState == AdState.NotAvailable) LoadRewardedSecondAd();
+        if (IsPreloadRewardThrid && RewardThridAdState == AdState.NotAvailable) LoadRewardedThridAd();
 
         CaculaterCounterInterAd();
         CaculaterCounterInterOpenAd();
@@ -354,50 +354,50 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         }
     }
 
-    [Header("AD REWARD THIRD")]
-    public bool IsPreloadRewardSecond = true;
-    public AdState RewardSecondAdState = AdState.NotAvailable;
-    public int _rewardSecondLoadCount = 0;
-    public string _adUnitRewardSecondId = "ca-app-pub-5904408074441373/9267338743";
+    //[Header("AD REWARD SECOND")]
+    //public bool IsPreloadRewardSecond = true;
+    //public AdState RewardSecondAdState = AdState.NotAvailable;
+    //public int _rewardSecondLoadCount = 0;
+    //public string _adUnitRewardSecondId = "ca-app-pub-5904408074441373/9267338743";
 
-    private RewardedAd _rewardedSecondAd;
-    private void LoadRewardedSecondAd()
-    {
-        if (RewardSecondAdState == AdState.Loading) return;
-        RewardSecondAdState = AdState.Loading;
+    //private RewardedAd _rewardedSecondAd;
+    //private void LoadRewardedSecondAd()
+    //{
+    //    if (RewardSecondAdState == AdState.Loading) return;
+    //    RewardSecondAdState = AdState.Loading;
 
-        if (_rewardedSecondAd != null)
-        {
-            _rewardedSecondAd.Destroy();
-            _rewardedSecondAd = null;
-        }
-        var adRequest = new AdRequest();
+    //    if (_rewardedSecondAd != null)
+    //    {
+    //        _rewardedSecondAd.Destroy();
+    //        _rewardedSecondAd = null;
+    //    }
+    //    var adRequest = new AdRequest();
 
-        RewardedAd.Load(_adUnitRewardSecondId, adRequest, (RewardedAd ad, LoadAdError error) =>
-        {
-            if (error != null || ad == null)
-            {
-                RewardSecondAdState = AdState.NotAvailable;
-                _rewardSecondLoadCount += 1;
-                return;
-            }
+    //    RewardedAd.Load(_adUnitRewardSecondId, adRequest, (RewardedAd ad, LoadAdError error) =>
+    //    {
+    //        if (error != null || ad == null)
+    //        {
+    //            RewardSecondAdState = AdState.NotAvailable;
+    //            _rewardSecondLoadCount += 1;
+    //            return;
+    //        }
 
-            _rewardedSecondAd = ad;
-            _rewardedSecondAd.OnAdFullScreenContentClosed += () => { RewardSecondAdState = AdState.NotAvailable; };
-            _rewardedSecondAd.OnAdFullScreenContentFailed += (AdError error) => { RewardSecondAdState = AdState.NotAvailable; };
-            RewardSecondAdState = AdState.Ready;
-            _rewardSecondLoadCount = 0;
-        });
-    }
+    //        _rewardedSecondAd = ad;
+    //        _rewardedSecondAd.OnAdFullScreenContentClosed += () => { RewardSecondAdState = AdState.NotAvailable; };
+    //        _rewardedSecondAd.OnAdFullScreenContentFailed += (AdError error) => { RewardSecondAdState = AdState.NotAvailable; };
+    //        RewardSecondAdState = AdState.Ready;
+    //        _rewardSecondLoadCount = 0;
+    //    });
+    //}
 
-    public void ShowRewardedSecondAd(UnityAction RewardComplete)
-    {
-        if (_rewardedSecondAd != null && _rewardedSecondAd.CanShowAd())
-        {
-            OpenAdSpaceTimeCounter = 0;
-            _rewardedSecondAd.Show((Reward reward) => UnityMainThreadDispatcher.Instance().Enqueue(() => RewardComplete?.Invoke()));
-        }
-    }
+    //public void ShowRewardedSecondAd(UnityAction RewardComplete)
+    //{
+    //    if (_rewardedSecondAd != null && _rewardedSecondAd.CanShowAd())
+    //    {
+    //        OpenAdSpaceTimeCounter = 0;
+    //        _rewardedSecondAd.Show((Reward reward) => UnityMainThreadDispatcher.Instance().Enqueue(() => RewardComplete?.Invoke()));
+    //    }
+    //}
 
     [Header("AD REWARD THIRD")]
     public bool IsPreloadRewardThrid = true;

@@ -6,7 +6,9 @@ public enum NativeAdPosition
 {
     Banner,
     BannerCollapse,
-    Interstitial
+    Interstitial,
+    InterstitialSecond,
+    MrecLoading
 }
 
 public class AdNativeManager : MonoSingleton<AdNativeManager>

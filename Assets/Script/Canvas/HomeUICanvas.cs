@@ -44,26 +44,32 @@ public class HomeUICanvas : MonoBehaviour
     private void StartGame(GameManager.GameStyle style, int numberOfCharacters, string logEvent, string modeName)
     {
         StaticVariable.ClearLog();
+
+        //CanvasSystem.Instance._loadingUICanvas.ShowLoading();
+
         MusicManager.Instance.PauseSound();
         GameManager.Instance.Style = style;
         BackgroundDetection.Instance.SettingBackground();
         TutorialSystem.Instance?.DisableTutorial();
 
-        AdManager.Instance.ShowInterstitialHomeAd(() =>
+        CanvasSystem.Instance._loadingUICanvas.ShowLoading(() =>
         {
-            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            AdManager.Instance.ShowInterstitialHomeAd(() =>
             {
-                GameManager.Instance.NumberOfCharacter = numberOfCharacters;
-                GameManager.Instance.GameCreate();
-                SoundSpawn.Instance.CreateSound();
-                SoundSpawn.Instance.Reload();
-                CanvasSystem.Instance.ChooseScreen("GameUICanvas");
-                CanvasSystem.Instance._gameUICanvas.CreateGame();
-                CanvasSystem.Instance.ShowNativeCollapse();
+                UnityMainThreadDispatcher.Instance().Enqueue(() =>
+                {
+                    GameManager.Instance.NumberOfCharacter = numberOfCharacters;
+                    GameManager.Instance.GameCreate();
+                    SoundSpawn.Instance.CreateSound();
+                    SoundSpawn.Instance.Reload();
+                    CanvasSystem.Instance.ChooseScreen("GameUICanvas");
+                    CanvasSystem.Instance._gameUICanvas.CreateGame();
+                    CanvasSystem.Instance.ShowNativeCollapse();
+                });
+            }, () =>
+            {
+                UnityMainThreadDispatcher.Instance().Enqueue(CanvasSystem.Instance.ShowNativeIntertitial);
             });
-        }, () =>
-        {
-            UnityMainThreadDispatcher.Instance().Enqueue(CanvasSystem.Instance.ShowNativeIntertitial);
         });
 
         FirebaseManager.Instance.LogEvent(logEvent);

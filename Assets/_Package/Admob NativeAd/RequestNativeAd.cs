@@ -29,9 +29,12 @@ public class RequestNativeAd : MonoBehaviour
     {
         if (AdManager.Instance.IsInitalized == false) return;
         if (RuntimeStorageData.Player.IsLoadAds == false) return;
+
         if (Position == NativeAdPosition.Banner && Manager.Instance.IsNativeBanner == false) return;
         if (Position == NativeAdPosition.BannerCollapse && Manager.Instance.IsNativeMREC == false) return;
         if (Position == NativeAdPosition.Interstitial && Manager.Instance.IsNativeInter == false) return;
+        if (Position == NativeAdPosition.InterstitialSecond && Manager.Instance.IsNativeInter == false) return;
+
         if (NativeAdState == AdManager.AdState.NotAvailable) RequestAd();
         else if (NativeAdState == AdManager.AdState.Ready)
         {

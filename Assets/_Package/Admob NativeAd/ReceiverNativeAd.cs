@@ -30,6 +30,7 @@ public class ReceiverNativeAd : MonoBehaviour
 
     private bool IsNativeImport = false;
     private float timer = 0;
+    private int adIndex = 0;
 
     public void BtnClose()
     {
