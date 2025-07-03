@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +12,9 @@ public class GameManager : MonoSingleton<GameManager>
         Battle,
         Battle_Single,
         Monster,
-        Monstrous
+        Monstrous,
+        ItalianBrainrot
+
     }
 
     public enum GameState
@@ -30,6 +32,8 @@ public class GameManager : MonoSingleton<GameManager>
     public GameStyle[] GameDefaults;
     public GameStyle[] GameCustoms;
 
+    // lấy thông tin game
+    // game defautl thì sẽ không bao gồm mode battle thi đấu 2 bên
     public bool IsGameDefault(GameStyle style) => GameDefaults.IsFound(style);
     public bool IsGameDefault() => IsGameDefault((GameStyle)Style);
     public bool IsGameCustom(GameStyle style) => GameCustoms.IsFound(style);

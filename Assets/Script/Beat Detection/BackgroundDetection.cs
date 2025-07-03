@@ -15,6 +15,7 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
     public int numberOfKick = 0;
     public int numberOfSnare = 0;
 
+    // đata background game
     [System.Serializable]
     public class BackgroundData
     {
@@ -93,6 +94,7 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
         if (GameManager.Instance.State != GameManager.GameState.Playing)
             return;
 
+        // chỉ dành riêng cho mode 2 bên để chia phe đấm nhau
         if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
         {
             var targetPosition = CanvasSystem.Instance._gameUICanvas.Mode3GetTargetPosition();

@@ -25,8 +25,11 @@ public class CharacterDataSO : ScriptableObject
         public AudioClip AudioClipBattle;
         public AudioClip AudioClipMonster;
         public AudioClip AudioClipMonstrous;
+        public AudioClip AudioClipItalianBrainrot;
+
         public PayType PayType;
 
+        // tuỳ chỉnh data để trả về đúng mode
         public AudioClip GetAudioClip(GameManager.GameStyle gameStyle)
         {
             if (gameStyle == GameManager.GameStyle.Normal) return AudioClipNormal;
@@ -34,6 +37,7 @@ public class CharacterDataSO : ScriptableObject
             else if (gameStyle == GameManager.GameStyle.Battle) return AudioClipBattle;
             else if (gameStyle == GameManager.GameStyle.Monster) return AudioClipMonster;
             else if (gameStyle == GameManager.GameStyle.Monstrous) return AudioClipMonstrous;
+            else if (gameStyle == GameManager.GameStyle.ItalianBrainrot) return AudioClipItalianBrainrot;
             else return null;
         }
     }

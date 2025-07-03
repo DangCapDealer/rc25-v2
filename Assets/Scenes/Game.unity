@@ -2598,7 +2598,7 @@ MonoBehaviour:
   NumberOfCharacter: 7
   GameSupport: {fileID: 218633219}
   State: 2
-  GameDefaults: 0000000001000000030000000400000005000000
+  GameDefaults: 000000000100000003000000040000000500000006000000
   GameCustoms: 02000000
 --- !u!4 &218633218
 Transform:
@@ -5732,7 +5732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 261.92996}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &474867450
@@ -12422,6 +12422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logAppflyerEvent: 1
+  isAppflyerDebug: 1
 --- !u!4 &1077255219
 Transform:
   m_ObjectHideFlags: 0
@@ -13523,8 +13524,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 852494887}
   m_HandleRect: {fileID: 852494886}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.8362938
+  m_Value: 0.9999995
+  m_Size: 0.83629376
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

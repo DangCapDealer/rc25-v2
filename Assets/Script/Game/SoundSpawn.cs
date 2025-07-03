@@ -27,13 +27,24 @@ public class SoundSpawn : MonoSingleton<SoundSpawn>
                 continue;
             }
 
+            // Cái này không ảnh hưởng khi thêm mode mới
+            // Có thể sẽ ảnh hưởng khi thêm 1 mode battle
             var styles = new List<GameManager.GameStyle>();
             if (GameManager.Instance.IsGameDefault())
             {
-                if (GameManager.Instance.Style == GameManager.GameStyle.Battle_Single) styles.Add(GameManager.GameStyle.Battle);
-                else styles.Add(GameManager.Instance.Style);
+                if (GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
+                {
+                    styles.Add(GameManager.GameStyle.Battle);
+                }
+                else
+                {
+                    styles.Add(GameManager.Instance.Style);
+                }
             }    
-            else if (GameManager.Instance.IsGameCustom()) styles.AddRange(new[] { GameManager.GameStyle.Normal, GameManager.GameStyle.Battle });
+            else if (GameManager.Instance.IsGameCustom())
+            {
+                styles.AddRange(new[] { GameManager.GameStyle.Normal, GameManager.GameStyle.Battle });
+            }
             else Debug.Log("Game chưa được cài đặt sound");
 
             foreach (var style in styles)

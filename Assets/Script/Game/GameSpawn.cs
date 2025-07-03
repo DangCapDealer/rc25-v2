@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,6 +64,7 @@ public class GameSpawn : MonoSingleton<GameSpawn>
         return targetObject;
     }    
 
+    // tìm vị trí chưa thêm nhân vật
     public Transform GetOncePositionInPool()
     {
         if(GameManager.Instance.Style == GameManager.GameStyle.Battle)

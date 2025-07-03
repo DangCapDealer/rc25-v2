@@ -13,6 +13,9 @@ public class Character : MonoBehaviour
     public Color _activeColor;
     public Color _inactiveColor;
 
+
+    // Đoạn này để active character theo mode. Mode nào hiện character đó
+    // Nếu thêm mode bth thì không cần quan tâm
     public void CreateCharacter(Camera gameCamera)
     {
         touchDisable = false;
@@ -23,6 +26,8 @@ public class Character : MonoBehaviour
             if (child.name == "CharacterCanvas") continue;
             if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
             {
+                // riêng Mode battle bị lệch nên custom
+                // đây là mode battle 2 bên
                 if (transform.position.x > 0)
                 {
                     if(child.name == GameManager.GameStyle.Battle.ToString())
@@ -47,12 +52,14 @@ public class Character : MonoBehaviour
             }
             else if (child.name == GameManager.Instance.Style.ToString())
             {
+                // Mode bth sẽ nhảy vào đây
                 isFound = true;
                 onAnimationCharacter(child);
                 setupSound(GameManager.Instance.Style);
             }
             else if (GameManager.Instance.Style == GameManager.GameStyle.Battle_Single)
             {
+                // Đây là Mode Battle bình thường
                 if (child.name == GameManager.GameStyle.Battle.ToString())
                 {
                     isFound = true;
@@ -61,6 +68,7 @@ public class Character : MonoBehaviour
                 }
                 else child.SetActive(false);
             }
+            //else if (GameManager.Instance.Style == GameManager.GameStyle.ItalianBrainrot)
             else child.SetActive(false);
         }
 
@@ -79,6 +87,9 @@ public class Character : MonoBehaviour
         }
     }
 
+    // cái này lỗi mode sửa đổi do GD nên mode này có sự thay đổi
+    // Battle_Single mode thường
+    // Battle mode battle
     private void setupSound(GameManager.GameStyle gameStyle)
     {
         if (gameStyle == GameManager.GameStyle.Battle_Single)

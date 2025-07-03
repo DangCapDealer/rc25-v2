@@ -133,6 +133,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
                 return;
             }
             _interstitialAd = ad;
+            _interstitialAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
             _interstitialAd.OnAdFullScreenContentClosed += () => { ActionOnAfterInterstitalAd?.Invoke(); };
             _interstitialAd.OnAdFullScreenContentFailed += (AdError error) => { ActionOnAfterInterstitalAd?.Invoke(); };
             InterAdState = AdState.Ready;
@@ -205,6 +206,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             }
 
             _interstitialHomeAd = ad;
+            _interstitialHomeAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
             InterHomeAdState = AdState.Ready;
             _interstitialHomeAd.OnAdFullScreenContentClosed += () => { ActionOnAfterInterstitalHomeAd?.Invoke(); };
             _interstitialHomeAd.OnAdFullScreenContentFailed += (AdError error) => { ActionOnAfterInterstitalHomeAd?.Invoke(); };
@@ -269,7 +271,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         {
             if (error != null || ad == null) return;
             _interstitialOpenAd = ad;
-            _interstitialOpenAd.OnAdPaid += (AdValue adValue) => { };
+            _interstitialOpenAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
             _interstitialOpenAd.OnAdFullScreenContentClosed += () => { ActionOnAfterInterstitalOpenAd?.Invoke(); };
             _interstitialOpenAd.OnAdFullScreenContentFailed += (AdError error) => { ActionOnAfterInterstitalOpenAd?.Invoke(); };
 
@@ -338,6 +340,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             }
 
             _rewardedAd = ad;
+            _rewardedAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
             _rewardedAd.OnAdFullScreenContentClosed += () => { RewardAdState = AdState.NotAvailable; };
             _rewardedAd.OnAdFullScreenContentFailed += (AdError error) => { RewardAdState = AdState.NotAvailable; };
             RewardAdState = AdState.Ready;
@@ -429,6 +432,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
             }
 
             _rewardedThridAd = ad;
+            _rewardedThridAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
             _rewardedThridAd.OnAdFullScreenContentClosed += () => { RewardThridAdState = AdState.NotAvailable; };
             _rewardedThridAd.OnAdFullScreenContentFailed += (AdError error) => { RewardThridAdState = AdState.NotAvailable; };
             RewardThridAdState = AdState.Ready;
@@ -485,6 +489,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
                 }
 
                 appOpenAd = ad;
+                appOpenAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
                 appOpenAd.OnAdFullScreenContentClosed += () => { OpenAdState = AdState.NotAvailable; };
                 appOpenAd.OnAdFullScreenContentFailed += (AdError error) => { OpenAdState = AdState.NotAvailable; };
                 OpenAdState = appOpenAd.CanShowAd() == true ? AdState.Ready : AdState.NotAvailable;

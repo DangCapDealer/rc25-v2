@@ -100,6 +100,8 @@ public class RequestNativeAd : MonoBehaviour
         Debug.Log(String.Format($"[{this.GetType().ToString()}] Native ad paid {0} {1}.",
             e.AdValue.Value,
             e.AdValue.CurrencyCode));
+
+        AppflyerEventSender.Instance.logAdRevenue(e.AdValue);
     }
 
     private void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs e)

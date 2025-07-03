@@ -41,6 +41,7 @@ public class HomeUICanvas : MonoBehaviour
         }
     }
 
+    //vào game thôi
     private void StartGame(GameManager.GameStyle style, int numberOfCharacters, string logEvent, string modeName)
     {
         StaticVariable.ClearLog();
@@ -76,6 +77,7 @@ public class HomeUICanvas : MonoBehaviour
         RuntimeStorageData.Player.Modes.Add(modeName);
     }
 
+    // sự kiện các button
     public void BtnSingle() => StartGame(GameManager.GameStyle.Normal, 8, "Mode_Beat_1", "SingleNormalBeat - 1");
     public void BtnSingleHorror() => StartGame(GameManager.GameStyle.Horror, 8, "Mode_Beat_2", "SingleHorrorBeat - 2");
     public void BtnSingleHuman() => StartGame(GameManager.GameStyle.Battle_Single, 8, "Mode_Beat_3", "SingleHumanBeat - 3");

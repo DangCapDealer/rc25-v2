@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,7 @@ public class GameSupport : MonoBehaviour
 {
     void Update()
     {
+        // mode battle có thêm tính toán về điểm số
         if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
         {
             mode3_CaculateCharacter();
