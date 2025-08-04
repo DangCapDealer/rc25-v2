@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "337532539156",
+    "project_id": "rc25-sprank-beats-studio",
+    "storage_bucket": "rc25-sprank-beats-studio.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337532539156:android:d4cd0a5a3d9812d9687201",
+        "android_client_info": {
+          "package_name": "com.sprank.horror.beats.studio.battle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxHvSdMDAthcKHr8MJblt0uujTueFhAB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
