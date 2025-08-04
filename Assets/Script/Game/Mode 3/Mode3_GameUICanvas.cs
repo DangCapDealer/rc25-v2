@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 using UnityEngine;
@@ -38,7 +38,7 @@ public partial class GameUICanvas : MonoBehaviour
     {
         if (GameManager.Instance.State != GameManager.GameState.Playing)
             return;
-
+        // Mode battle thì nó sẽ có thêm điểm số show UI
         if (GameManager.Instance.Style == GameManager.GameStyle.Battle)
         {
             var speed = GameManager.Instance.GameSupport.Mode3GetSpeed();

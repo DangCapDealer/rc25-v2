@@ -34,7 +34,7 @@ public class CharacterUIHandle : MonoBehaviour
         this.gameObject.name = data.ID;
 
         var baseImg = this.gameObject.GetComponent<Image>();
-        baseImg.sprite = data.Icon;
+        baseImg.sprite = data.GetIcon(GameManager.Instance.Style.ToString());
         baseImg.preserveAspect = true;
 
         if (data.PayType == CharacterDataSO.PayType.Ads)
@@ -77,7 +77,7 @@ public class CharacterUIHandle : MonoBehaviour
             locked.SetActive(false);
         }
 
-        icon.sprite = data.Icon;
+        icon.sprite = data.GetIcon(GameManager.Instance.Style.ToString());
         icon.preserveAspect = true;
     }
 

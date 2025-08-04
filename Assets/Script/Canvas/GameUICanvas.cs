@@ -290,11 +290,9 @@ public partial class GameUICanvas : MonoBehaviour
 
     public void BtnAuto()
     {
-        if (SoundSpawn.Instance.IsReady() == false)
-            return;
+        if (SoundSpawn.Instance.IsReady() == false) return;
         var targetObject = GameSpawn.Instance.GetOncePositionInPool();
-        if (targetObject == null)
-            return;
+        if (targetObject == null) return;
         Transform target = null;
         int counter = 0;
         while (counter < 15)
@@ -302,11 +300,15 @@ public partial class GameUICanvas : MonoBehaviour
             var child  = Content.GetChild(Random.Range(0, Content.childCount));
             if (child.name.EndsWith("_ads") == true)
                 continue;
-            if (child.GetChild(0).IsActive() == true) { target = child.GetChild(0); break; }
+            var iconObject = child.FindChildByParent("Icon");
+            if (iconObject.IsActive() == true) 
+            { 
+                target = iconObject;
+                break; 
+            }
             counter++;
         }
-        if (target == null)
-            return;
+        if (target == null) return;
         target.SetActive(false);
         LastClickAutoTime = Time.time;
         GameSpawn.Instance.SpawnCharacterIntoPosition(target.parent.name, targetObject);

@@ -72,8 +72,14 @@ public class Manager : MonoSingletonGlobal<Manager>
 
     public void Start()
     {
-        loadingCanvas.Show(null, 0.0f, 0.9f, 1.0f, 7.0f);
+        Time.timeScale = 1;
+        loadingCanvas.Show(null, 0.0f, 0.9f, 10.0f);
     }
+
+    //private void Update()
+    //{
+    //    Debug.Log($"[Manager] {Time.timeScale}");
+    //}
 
     public void CompleteOpenAd()
     {
@@ -82,7 +88,7 @@ public class Manager : MonoSingletonGlobal<Manager>
         loadingCanvas.Show(() =>
         {
             loadingCanvas.Hide();
-        }, 0.9f, 1.0f, 10.0f, 0.1f);
+        }, 0.9f, 1.0f, 1.0f);
     }    
 
 

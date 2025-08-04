@@ -57,20 +57,20 @@ namespace Bacon
         }
 
         private IEnumerator ContinuteLoadAd;
-        protected bool isChecking = false;
+        protected bool IsChecking = false;
         public IEnumerator DOGatherConsent(IEnumerator _ContinuteLoadAd)
         {
             Time.timeScale = 0;
             if (Instance == null)
                 throw new Exception(logPrefix + "AdmobConsentController NULL");
 
-            if (isChecking)
+            if (IsChecking)
             {
                 Debug.LogError(logPrefix + ConsentInformation.ConsentStatus.ToString().ToUpper() + " CHECKING");
                 yield break;
             }
 
-            isChecking = true;
+            IsChecking = true;
             ResetConsentInformation();
             FirebaseManager.Instance.LogUMP("ump_check");
             ContinuteLoadAd = _ContinuteLoadAd;
@@ -97,7 +97,7 @@ namespace Bacon
                 {
                     Debug.LogError(logPrefix + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> " + error.Message);
                     FirebaseManager.Instance.LogUMP("ump_update_error_" + ConsentInformation.ConsentStatus.ToString());
-                    isChecking = false;
+                    IsChecking = false;
                     HasUnknownError = true;
                     return;
                 }
@@ -108,7 +108,7 @@ namespace Bacon
                     // Return control back to the user.
                     Debug.Log(logPrefix + "Update " + ConsentInformation.ConsentStatus.ToString().ToUpper() + " -- Consent has already been gathered or not required");
                     FirebaseManager.Instance.LogUMP("ump_update_success_" + ConsentInformation.ConsentStatus.ToString());
-                    isChecking = false;
+                    IsChecking = false;
                     IsUMPReady = true;
                     
                     LogAllConsentInformation();
@@ -134,11 +134,12 @@ namespace Bacon
                         FirebaseManager.Instance.LogUMP("ump_loadshow_success");
                     }
                     CanRequestAds = ConsentInformation.CanRequestAds();
-                    isChecking = false;
+                    IsChecking = false;
                 });
             });
 
-            while (isChecking && (ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
+            //Debug.Log(logPrefix + ConsentInformation.ConsentStatus.ToString().ToUpper() + " --> LOAD AND SHOW SUCCESS");
+            while (IsChecking && (ConsentInformation.ConsentStatus == ConsentStatus.Required || ConsentInformation.ConsentStatus == ConsentStatus.Unknown))
             {
                 yield return null;
             }
@@ -152,10 +153,10 @@ namespace Bacon
         public void LogAllConsentInformation()
         {
             Time.timeScale = 1;
-            //Debug.Log($"[{this.GetType().ToString()}] --------------------------------- Log All Consent Information ---------------------------------");
-            //Debug.Log($"[{this.GetType().ToString()}] Is Consent Form Available : " + ConsentInformation.IsConsentFormAvailable());
-            //Debug.Log($"[{this.GetType().ToString()}] Consent Status : " + ConsentInformation.ConsentStatus);
-            //Debug.Log($"[{this.GetType().ToString()}] Can Request Ads : " + ConsentInformation.CanRequestAds());
+            Debug.Log($"[{this.GetType().ToString()}] --------------------------------- Log All Consent Information ---------------------------------");
+            Debug.Log($"[{this.GetType().ToString()}] Is Consent Form Available : " + ConsentInformation.IsConsentFormAvailable());
+            Debug.Log($"[{this.GetType().ToString()}] Consent Status : " + ConsentInformation.ConsentStatus);
+            Debug.Log($"[{this.GetType().ToString()}] Can Request Ads : " + ConsentInformation.CanRequestAds());
 
         }
 

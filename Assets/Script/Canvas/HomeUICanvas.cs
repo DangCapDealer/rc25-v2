@@ -84,6 +84,7 @@ public class HomeUICanvas : MonoBehaviour
     public void BtnBatteBeat() => StartGame(GameManager.GameStyle.Battle, 10, "Mode_Battle", "BattleBeat_Solo");
     public void BtnSingleMonster() => StartGame(GameManager.GameStyle.Monster, 8, "Mode_Beat_4", "SingleMonsterBeat - 4");
     public void BtnSingleMonstrous() => StartGame(GameManager.GameStyle.Monstrous, 8, "Mode_Beat_5", "SingleMonsterBeat - 5");
+    public void BtnSingleItalianBrainrot() => StartGame(GameManager.GameStyle.ItalianBrainrot, 8, "Mode_Beat_5", "SingleMonsterBeat - 6");
     public void BtnSetting() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Setting); }    
     public void BtnCheckin() { CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.Checkin); }    
     public void BtnNoAds() { CanvasSystem.Instance.ShowNoAd(); }

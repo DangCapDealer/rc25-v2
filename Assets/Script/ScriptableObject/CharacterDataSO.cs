@@ -18,7 +18,15 @@ public class CharacterDataSO : ScriptableObject
     public class CharacterSO
     {
         public string ID;
-        public Sprite Icon;
+        [HideInInspector] public Sprite Icon;
+
+        public Sprite[] Icons;
+        public Sprite GetIcon(string _mode)
+        {
+            if (_mode == "ItalianBrainrot") return Icons[1];
+            else return Icons[0];
+        }
+
         public GameObject Prefab;
         public AudioClip AudioClipNormal;
         public AudioClip AudioClipHorror;
@@ -94,7 +102,56 @@ public class CharacterDataSO : ScriptableObject
         AssetDatabase.Refresh();
         Debug.Log("Saved " + this.name);
 #endif
-    }    
+    }
+    [Button]
+    private void importSound()
+    {
+        // dùng nhạc bài horror
+        //for (int i = 0; i < Characters.Length; i++)
+        //{
+        //    Characters[i].AudioClipItalianBrainrot = Characters[i].AudioClipHorror;
+        //}
+
+        //EditorUtility.SetDirty(this);
+        //AssetDatabase.SaveAssets();
+        //AssetDatabase.Refresh();
+        //Debug.Log("Saved " + this.name);
+    }
+
+    [Button]
+    private void importIcon()
+    {
+        //for (int i = 0; i < Characters.Length; i++)
+        //{
+        //    Characters[i].Icons = new Sprite[0];
+        //    Characters[i].Icons = Characters[i].Icons.Add(Characters[i].Icon);
+        //    var characterObject = Characters[i].Prefab;
+        //    GameObject prefabInstance = PrefabUtility.LoadPrefabContents(AssetDatabase.GetAssetPath(characterObject));
+        //    //Debug.Log(prefabInstance.transform.childCount);
+        //    var spriteObject = prefabInstance.FindChildByParent("ItalianBrainrot");
+        //    if (spriteObject == null)
+        //    {
+        //        Debug.Log($"{prefabInstance.name} ERROR");
+        //        continue;
+        //    }
+
+        //    var sr = spriteObject.GetComponent<SpriteRenderer>();
+        //    //Debug.Log(sr.sprite.name);
+        //    var iconPath = $"Assets/Texture2D/Icon-1/{sr.sprite.name}.png";
+        //    var iconSprite = AssetDatabase.LoadAssetAtPath<Sprite>(iconPath);
+        //    if (iconSprite == null)
+        //    {
+        //        Debug.Log($"ICON {iconPath} ERROR");
+        //        continue;
+        //    }
+        //    Characters[i].Icons = Characters[i].Icons.Add(iconSprite);
+        //}
+
+        //EditorUtility.SetDirty(this);
+        //AssetDatabase.SaveAssets();
+        //AssetDatabase.Refresh();
+        //Debug.Log("Saved " + this.name);
+    }
 
 
     public CharacterSO[] Characters;
