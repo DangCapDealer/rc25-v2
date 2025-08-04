@@ -1,5 +1,7 @@
 #if AppsFlyerSDK
 using AppsFlyerSDK;
+#endif
+#if ADMOB
 using GoogleMobileAds.Api;
 #endif
 using System.Collections;
@@ -44,11 +46,13 @@ public class AppflyerEventSender : MonoBehaviour
 
         double value = adValue.Value / microValue;
         Debug.Log("======" + value);
+#if AppsFlyerSDK
         AppsFlyerAdRevenue.logAdRevenue("admob",
                                         AppsFlyerAdRevenueMediationNetworkType.AppsFlyerAdRevenueMediationNetworkTypeGoogleAdMob,
                                         value,
                                         adValue.CurrencyCode,
                                         additionalParams);
+#endif
     }
 #endif
 
