@@ -1,4 +1,6 @@
+#if ADMOB
 using GoogleMobileAds.Api;
+#endif
 using PimDeWitte.UnityMainThreadDispatcher;
 using System.Collections;
 using System.Collections.Generic;

@@ -122,6 +122,7 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
             });
     }
 #else
+    public bool IsInitialized = true;
     public bool IsNativeAd_Item = false;
     public void EventClickItem(string message, string number_click)
     {
@@ -156,6 +157,11 @@ public class FirebaseManager : MonoSingletonGlobal<FirebaseManager>
     public void LogUMP(string message)
     {
         Debug.Log($"[{this.GetType().ToString()}] Log UMP.");
+    }
+
+    public void LogEvent(string message)
+    {
+        Debug.Log($"[{this.GetType().ToString()}] Log Event {message}.");
     }
 #endif
 }

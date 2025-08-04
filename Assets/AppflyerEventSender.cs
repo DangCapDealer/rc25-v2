@@ -1,5 +1,7 @@
+#if AppsFlyerSDK
 using AppsFlyerSDK;
 using GoogleMobileAds.Api;
+#endif
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,9 +29,14 @@ public class AppflyerEventSender : MonoBehaviour
     }
     private void Start()
     {
+#if AppsFlyerSDK
         AppsFlyerAdRevenue.start();
         AppsFlyer.setIsDebug(isAppflyerDebug);
+#endif
     }
+
+
+#if ADMOB
     private readonly float microValue = 1000000;
     public void logAdRevenue(AdValue adValue)
     {
@@ -43,6 +50,7 @@ public class AppflyerEventSender : MonoBehaviour
                                         adValue.CurrencyCode,
                                         additionalParams);
     }
+#endif
 
     public void af_tutorial_completion(bool af_success,int af_tutorial_id)
     {
@@ -91,7 +99,9 @@ public class AppflyerEventSender : MonoBehaviour
     }
     void sendEvent(string eventName, Dictionary<string, string> eventValues)
     {
+#if AppsFlyerSDK
         if (logAppflyerEvent)
         AppsFlyer.sendEvent(AFInAppEvents.PURCHASE, eventValues);
+#endif
     }
 }

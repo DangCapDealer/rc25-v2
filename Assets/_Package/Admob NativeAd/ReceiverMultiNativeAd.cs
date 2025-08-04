@@ -1,4 +1,6 @@
+#if ADMOB
 using GoogleMobileAds.Api;
+#endif
 using PimDeWitte.UnityMainThreadDispatcher;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,8 +22,9 @@ public class ReceiverMultiNativeAd : MonoBehaviour
     public Text adCallToAction;
     public Text adAdvertiser;
     public Text adBody;
-
+#if ADMOB
     private NativeAd nativeAd;
+#endif
     public string ctaSize = "Medium";
 
     public Color adColor = Color.white;
@@ -96,8 +99,10 @@ public class ReceiverMultiNativeAd : MonoBehaviour
         {
             NativeAdHandles[NativeIndex].IsUsed = true;
             IsNativeImport = true;
+#if ADMOB
             nativeAd = NativeAdHandles[NativeIndex].nativeAd;
             RegisterAd(nativeAd);
+#endif
         }
         else if (_content.IsActive())
         {
@@ -111,7 +116,7 @@ public class ReceiverMultiNativeAd : MonoBehaviour
 #endif
         }
     }
-
+#if ADMOB
     private void RegisterAd(NativeAd importNativeAd)
     {
         Debug.Log($"[ReceiverMultiNativeAd] Register Ad Index {NativeIndex}");
@@ -133,4 +138,5 @@ public class ReceiverMultiNativeAd : MonoBehaviour
         if (!this.nativeAd.RegisterCallToActionGameObject(adCTA)) Debug.Log($"[ReceiverMultiNativeAd] Register CTA game object error!!!");
         adImage.texture = ImageTextures[0];
     }    
+#endif
 }

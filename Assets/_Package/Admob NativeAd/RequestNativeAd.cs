@@ -8,22 +8,21 @@ using UnityEngine;
 
 public class RequestNativeAd : MonoBehaviour
 {
+    public bool IsUsed = true;
+    public bool nativeAdLoaded = false;
+    public bool IsReloadNativeAd = true;
+    public event Action OnClickedNativeAd;
+    public event Action OnChangeNativeAd;
+
 #if ADMOB
     [Header("Native Ad Item")]
     public NativeAdPosition Position;
     public string AdNativeUnitId = "ca-app-pub-5904408074441373/4554368467";
     public AdManager.AdState NativeAdState = AdManager.AdState.NotAvailable;
 
-    public bool IsUsed = true;
-    public bool IsReloadNativeAd = true;
-    public bool nativeAdLoaded = false;
-
     public NativeAd nativeAd;
     public float TimeAfterReload = 30.0f;
     private float CaculateTime = 0.0f;
-
-    public event Action OnClickedNativeAd;
-    public event Action OnChangeNativeAd;
 
     private void Update()
     {
