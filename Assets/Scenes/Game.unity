@@ -21438,6 +21438,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUMPReady: 0
+  HasUnknownError: 0
+  CanRequestAds: 0
+  IsDisableOnEditor: 1
+  debugGeography: 0
+  testDeviceIds: []
 --- !u!4 &2050692114
 Transform:
   m_ObjectHideFlags: 0
