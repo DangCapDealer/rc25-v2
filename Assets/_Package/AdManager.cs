@@ -450,6 +450,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
 
     [Header("AD OPEN")]
+    public GameObject LoadingOpenAdCanvas;
     public bool IsPreloadOpen = true;
     public AdState OpenAdState = AdState.NotAvailable;
     public int _openReloadCount = 0;
@@ -490,8 +491,18 @@ public class AdManager : MonoSingletonGlobal<AdManager>
 
                 appOpenAd = ad;
                 appOpenAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
-                appOpenAd.OnAdFullScreenContentClosed += () => { OpenAdState = AdState.NotAvailable; };
-                appOpenAd.OnAdFullScreenContentFailed += (AdError error) => { OpenAdState = AdState.NotAvailable; };
+
+                appOpenAd.OnAdFullScreenContentClosed += () => 
+                {
+                    UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Hide());
+                    OpenAdState = AdState.NotAvailable; 
+                };
+
+                appOpenAd.OnAdFullScreenContentFailed += (AdError error) => 
+                {
+                    UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Hide());
+                    OpenAdState = AdState.NotAvailable; 
+                };
                 OpenAdState = appOpenAd.CanShowAd() == true ? AdState.Ready : AdState.NotAvailable;
                 _openReloadCount = 0;
             });
@@ -519,7 +530,9 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         if (IsAdAvailable)
         {
             Debug.Log($"[{this.GetType().ToString()}] Showing app open ad.");
-            appOpenAd.Show();
+            UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Show());
+            DOVirtual.DelayedCall(0.1f, () => appOpenAd.Show());
+            //appOpenAd.Show();
         }
     }
 #else

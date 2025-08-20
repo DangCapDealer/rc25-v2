@@ -14,11 +14,11 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
     public Transform _bannerCollapse;
     public void ShowNativeCollapse()
     {
-        if (RuntimeStorageData.Player.IsLoadAds == false) return;
-        if (Manager.Instance.IsNativeMREC == false) return;
-        _bannerCollapse.SetActive(true);
+        //if (RuntimeStorageData.Player.IsLoadAds == false) return;
+        //if (Manager.Instance.IsNativeMREC == false) return;
+        //_bannerCollapse.SetActive(true);
 
-        _nativeCollapseAutomation = 0;
+        //_nativeCollapseAutomation = 0;
     }
 
     public Transform _nativeInter;
