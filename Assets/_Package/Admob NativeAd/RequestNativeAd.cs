@@ -58,10 +58,10 @@ public class RequestNativeAd : MonoBehaviour
         AdLoader adLoader = new AdLoader.Builder(AdNativeUnitId)
             .ForNativeAd()
             .Build();
-        adLoader.OnNativeAdLoaded += this.HandleNativeAdLoaded;
-        adLoader.OnAdFailedToLoad += HandleAdFailedToLoad;
-        adLoader.OnNativeAdClicked += OnNativeAdClicked;
-        adLoader.OnNativeAdImpression += OnNativeAdImpression;
+        //adLoader.OnNativeAdLoaded += this.HandleNativeAdLoaded;
+        //adLoader.OnAdFailedToLoad += HandleAdFailedToLoad;
+        //adLoader.OnNativeAdClicked += OnNativeAdClicked;
+        //adLoader.OnNativeAdImpression += OnNativeAdImpression;
         adLoader.LoadAd(new AdRequest());
     }
 
@@ -87,27 +87,27 @@ public class RequestNativeAd : MonoBehaviour
         Debug.Log($"[{this.GetType().ToString()}] Native ad loaded.");
         NativeAdState = AdManager.AdState.Ready;
         this.nativeAd = args.nativeAd;
-        this.nativeAd.OnPaidEvent += OnPaidEvent;
+        //this.nativeAd.OnPaidEvent += OnPaidEvent;
         this.nativeAdLoaded = true;
         this.IsUsed = false;
 
         OnChangeNativeAd?.Invoke();
     }
 
-    private void OnPaidEvent(object sender, AdValueEventArgs e)
-    {
-        Debug.Log(String.Format($"[{this.GetType().ToString()}] Native ad paid {0} {1}.",
-            e.AdValue.Value,
-            e.AdValue.CurrencyCode));
+    //private void OnPaidEvent(object sender, AdValueEventArgs e)
+    //{
+    //    Debug.Log(String.Format($"[{this.GetType().ToString()}] Native ad paid {0} {1}.",
+    //        e.AdValue.Value,
+    //        e.AdValue.CurrencyCode));
 
-        AppflyerEventSender.Instance.logAdRevenue(e.AdValue);
-    }
+    //    AppflyerEventSender.Instance.logAdRevenue(e.AdValue);
+    //}
 
-    private void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs e)
-    {
-        Debug.Log($"[{this.GetType().ToString()}] Native ad failed to load: " + e.ToString());
-        NativeAdState = AdManager.AdState.NotAvailable;
-    }
+    //private void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs e)
+    //{
+    //    Debug.Log($"[{this.GetType().ToString()}] Native ad failed to load: " + e.ToString());
+    //    NativeAdState = AdManager.AdState.NotAvailable;
+    //}
 #else
     [Header("Native Ad Item")]
     public NativeAdPosition Position;

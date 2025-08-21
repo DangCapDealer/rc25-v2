@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RC25_Icon07_150725_Media_512x512_0: -6657388373996461319
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
