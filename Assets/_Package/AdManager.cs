@@ -21,8 +21,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     public enum AdBannerSize { Banner, FullWidth }
 
     public bool IsInitalized = false;
-    public bool IsBannerShow = false;
-    public bool IsBannerMREC = false;
+    //public bool IsBannerShow = false;
+    //public bool IsBannerMREC = false;
 
     private bool IsCanUpdate = false;
     public bool IsBlockedAutoIntertitialAd = false;
@@ -54,7 +54,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
         LoadRewardedThridAd();
         if (RuntimeStorageData.Player.IsLoadAds == true)
         {
-            LoadNativeOverlayBannerAd();
+            //LoadNativeOverlayBannerAd();
+            LoadBannerAd();
             LoadNativeOverlayAd();
             LoadInterstitialAd();
             LoadInterstitialHomeAd();
@@ -78,7 +79,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
         CaculaterCounterInterOpenAd();
         CaculaterCounterOpenAd();
 
-        CaculaterCounterCollapseBannerAd();
+        CaculaterCounterBannerAd();
 
         if (RuntimeStorageData.Player.IsLoadAds == false) return;
         timerReload += Time.deltaTime;
@@ -88,7 +89,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
         if (IsPreloadInterstitial) if (InterAdState == AdState.NotAvailable) LoadInterstitialAd();
         if (IsPreloadOpen) if (OpenAdState == AdState.NotAvailable) LoadAppOpenAd();
         if (IsPreloadNativeOverlayAd) if (NativeOverlayAdState == AdState.NotAvailable) LoadNativeOverlayAd();
-        if (IsPreloadNativeOverlayBannerAd) if (NativeOverlayBannerAdState == AdState.NotAvailable) LoadNativeOverlayBannerAd();
+        if (IsPreloadBanner) if (BannerAdState == AdState.NotAvailable) LoadBannerAd();
+        //if (IsPreloadNativeOverlayBannerAd) if (NativeOverlayBannerAdState == AdState.NotAvailable) LoadNativeOverlayBannerAd();
 
         timerReload = 0;
     }
@@ -103,7 +105,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     {
         InterAdSpaceTimeAutoCounter = 0;
         InterHomeAdSpaceTimeAutoCounter = 0;
-    }    
+    }
 
 
     public bool IsPreloadInterstitial = true;
@@ -228,14 +230,14 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             if (Callback != null) Callback?.Invoke();
             if (CallbackAfterInter != null) CallbackAfterInter?.Invoke();
             return;
-        }    
+        }
 
         if (InterHomeAdShowState == AdShowState.Pending) return;
         if (InterHomeAdSpaceTimeAutoCounter < Manager.Instance.InterHomeReloadTimer)
         {
             if (Callback != null) Callback?.Invoke();
             return;
-        }    
+        }
 
         if (_interstitialHomeAd != null && _interstitialHomeAd.CanShowAd())
         {
@@ -271,7 +273,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
         {
             if (afterAd != null) afterAd?.Invoke();
             return;
-        } 
+        }
         Debug.Log($"[{this.GetType().ToString()}] Promise show interstitial open Ad");
         var adRequest = new AdRequest();
         InterstitialAd.Load(_adUnitInterOpenId, adRequest, (InterstitialAd ad, LoadAdError error) =>
@@ -457,6 +459,93 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             _rewardedThridAd.Show((Reward reward) => UnityMainThreadDispatcher.Instance().Enqueue(() => RewardComplete?.Invoke()));
         }
     }
+    [Header("AD BANNER")]
+    public bool IsPreloadBanner = true;
+    public AdState BannerAdState = AdState.NotAvailable;
+    public int _bannerReloadCount = 0;
+    public string _adUnitBannerId = "";
+    private BannerView bannerAd;
+
+    private bool IsBanner = false;
+    private float TimeBanner = 0;
+    private void CaculaterCounterBannerAd()
+    {
+        if (Time.time - TimeBanner > 30)
+        {
+            TimeBanner = Time.time;
+            BannerAdState = AdState.NotAvailable;
+        }    
+    }    
+
+    private void LoadBannerAd()
+    {
+        if (RuntimeStorageData.Player.IsLoadAds == false) return;
+        if (BannerAdState == AdState.Loading) return;
+        BannerAdState = AdState.Loading;
+
+        if (bannerAd != null)
+        {
+            // Always destroy the banner view when no longer needed.
+            bannerAd.Destroy();
+            bannerAd = null;
+        }
+
+        AdSize adaptiveSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
+
+
+        bannerAd = new BannerView(_adUnitBannerId, adaptiveSize, AdPosition.Bottom);
+        bannerAd.LoadAd(new AdRequest());
+        if (IsBanner == true) 
+            ShowBanner();
+        else HideBanner();
+
+        // [START listen_to_events]
+        bannerAd.OnBannerAdLoaded += () =>
+        {
+            // Raised when an ad is loaded into the banner view.
+            BannerAdState = AdState.Ready;
+        };
+        bannerAd.OnBannerAdLoadFailed += (LoadAdError error) =>
+        {
+            // Raised when an ad fails to load into the banner view.
+            BannerAdState = AdState.NotAvailable;
+        };
+        bannerAd.OnAdPaid += (AdValue adValue) =>
+        {
+            // Raised when the ad is estimated to have earned money.
+        };
+        bannerAd.OnAdImpressionRecorded += () =>
+        {
+            // Raised when an impression is recorded for an ad.
+        };
+        bannerAd.OnAdClicked += () =>
+        {
+            // Raised when a click is recorded for an ad.
+            BannerAdState = AdState.NotAvailable;
+        };
+        bannerAd.OnAdFullScreenContentOpened += () =>
+        {
+            // Raised when an ad opened full screen content.
+        };
+        bannerAd.OnAdFullScreenContentClosed += () =>
+        {
+            // Raised when the ad closed full screen content.
+        };
+    }
+
+    public void ShowBanner() 
+    {
+        IsBanner = true;
+        bannerAd.Show(); 
+    }
+
+    public void HideBanner() 
+    {
+        IsBanner = false;
+        bannerAd.Hide(); 
+    }
+
+    
 
     [Header("AD OPEN")]
     public GameObject LoadingOpenAdCanvas;

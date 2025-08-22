@@ -23,6 +23,7 @@ public class LoadingCanvas : MonoBehaviour
         this.canvasGroup.DOFade(0.0f, 0.3f).OnComplete(() => {
             this.canvasGroup.gameObject.SetActive(false);
             //AdManager.Instance.ShowNativeOverlayBannerAd();
+            AdManager.Instance.ShowBanner();
         });
 
         // The #if UNITY_EDITOR block might be redundant if the DOTween animation handles the immediate deactivation

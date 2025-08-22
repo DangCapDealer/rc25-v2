@@ -12,7 +12,8 @@ public class GameLoadingUICanvas : MonoBehaviour
 
     public void ShowLoading(UnityAction Callback)
     {
-        AdManager.Instance.HideNativeOverlayBannerAd();
+        //AdManager.Instance.HideNativeOverlayBannerAd();
+        AdManager.Instance.HideBanner();
         _canvasGroup.alpha = 0;
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {
@@ -24,7 +25,8 @@ public class GameLoadingUICanvas : MonoBehaviour
                     UnityMainThreadDispatcher.Instance().Enqueue(() =>
                     {
                         UnityMainThreadDispatcher.Instance().Enqueue(() => _content.Hide());
-                        _canvasGroup.DOFade(0.0f, 0.2f).OnComplete(AdManager.Instance.ShowNativeOverlayBannerAd);
+                        //_canvasGroup.DOFade(0.0f, 0.2f).OnComplete(AdManager.Instance.ShowNativeOverlayBannerAd);
+                        AdManager.Instance.ShowBanner();
                         Callback?.Invoke();
                     });
                 });

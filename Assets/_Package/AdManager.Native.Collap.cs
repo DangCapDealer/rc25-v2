@@ -16,8 +16,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     public int NativerOverlayAdReloadCount = 0;
     public int NativeOverlayShowCount = 0;
 
-    public Color MainBackgroundColor;
-    public Color CallToActionTextBackgroundColor;
+    //public Color MainBackgroundColor;
+    //public Color CallToActionTextBackgroundColor;
 
     //public float CollapseAdSpaceTimeCounter = 0.0f;
     //public float CollapseAdSpaceTime = 15.0f;
@@ -124,14 +124,14 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             var NativeOverlayAdCanvas = this.transform.FindChildByParent("NativeOverlayAdCanvas");
             var LoadingCanvas = NativeOverlayAdCanvas.FindChildByParent("LoadingCanvas");
             var ImageMainBackground = LoadingCanvas.GetComponent<Image>();
-            ImageMainBackground.color = MainBackgroundColor;
+            ImageMainBackground.color = Color.white;
             //ImageMainBackground.color = Color.red;
 
             var overlayInterStyle = new NativeTemplateStyle();
             overlayInterStyle.TemplateId = NativeTemplateId.Medium;
-            overlayInterStyle.MainBackgroundColor = MainBackgroundColor;
+            overlayInterStyle.MainBackgroundColor = Color.white;
             overlayInterStyle.CallToActionText = new NativeTemplateTextStyle();
-            overlayInterStyle.CallToActionText.BackgroundColor = CallToActionTextBackgroundColor;
+            overlayInterStyle.CallToActionText.BackgroundColor = Color.blue;
             overlayInterStyle.CallToActionText.TextColor = Color.white;
             overlayInterStyle.CallToActionText.FontSize = 9;
             overlayInterStyle.CallToActionText.Style = NativeTemplateFontStyle.Bold;
@@ -163,10 +163,12 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             var NativeOverlayAdCanvas = this.transform.FindChildByParent("NativeOverlayAdCanvas");
             NativeOverlayAdCanvas.Show();
 
-            HideNativeOverlayBannerAd();
+            //HideNativeOverlayBannerAd();
 
             RenderNativeOverlayAd();
             DOVirtual.DelayedCall(0.1f, _nativeOverlayAd.Show);
+
+            HideBanner();
         }
     }
 
@@ -179,7 +181,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
 
         IsBlockedAutoIntertitialAd = false;
 
-        ShowNativeOverlayBannerAd();
+        //ShowNativeOverlayBannerAd();
 
         if (_nativeOverlayAd != null)
         {
@@ -190,6 +192,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
 
             _nativeOverlayAd.Hide();
         }
+
+        ShowBanner();
     }
 
     /// <summary>
