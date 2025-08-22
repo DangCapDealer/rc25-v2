@@ -11,7 +11,7 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
 
     public GameObject[] _screenUICanvas;
 
-    public Transform _bannerCollapse;
+    //public Transform _bannerCollapse;
     public void ShowNativeCollapse()
     {
         //if (RuntimeStorageData.Player.IsLoadAds == false) return;
@@ -21,15 +21,15 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
         //_nativeCollapseAutomation = 0;
     }
 
-    public Transform _nativeInter;
-    public void ShowNativeIntertitial()
-    {
-        if (RuntimeStorageData.Player.IsLoadAds == false) return;
-        if (Manager.Instance.IsNativeInter == false) return;
-        _nativeInter.SetActive(true);
-    }
+    //public Transform _nativeInter;
+    //public void ShowNativeIntertitial()
+    //{
+    //    if (RuntimeStorageData.Player.IsLoadAds == false) return;
+    //    if (Manager.Instance.IsNativeInter == false) return;
+    //    _nativeInter.SetActive(true);
+    //}
 
-    public Transform _nativeBanner;
+    //public Transform _nativeBanner;
 
     [Header("Native Collapse")]
     public float _nativeCollapseAutomationTime = 45.0f;
@@ -47,19 +47,19 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
         AutoNoAd();
     }
 
-    private void Update()
-    {
-        if (RuntimeStorageData.Player.IsLoadAds == false) return;
-        if (Manager.Instance.IsNativeMREC == false) return;
+    //private void Update()
+    //{
+    //    if (RuntimeStorageData.Player.IsLoadAds == false) return;
+    //    if (Manager.Instance.IsNativeMREC == false) return;
 
-        if (_bannerCollapse.IsActive() == true) return;
+    //    if (_bannerCollapse.IsActive() == true) return;
 
-        _nativeCollapseAutomation += Time.deltaTime;
-        if(_nativeCollapseAutomation > _nativeCollapseAutomationTime)
-        {
-            ShowNativeCollapse();
-        }    
-    }
+    //    _nativeCollapseAutomation += Time.deltaTime;
+    //    if(_nativeCollapseAutomation > _nativeCollapseAutomationTime)
+    //    {
+    //        ShowNativeCollapse();
+    //    }    
+    //}
 
 
     [Header("SCREEN")]
@@ -136,8 +136,8 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
             RuntimeStorageData.Player.Packages.Contains(InappController.Instance.GetProductIdByIndex(1)) == false)
         { RuntimeStorageData.Player.IsLoadAds = true; }
         else { RuntimeStorageData.Player.IsLoadAds = false; }
-        _nativeBanner.SetActive(RuntimeStorageData.Player.IsLoadAds);
-        if (_bannerCollapse.IsActive() == true) _bannerCollapse.SetActive(RuntimeStorageData.Player.IsLoadAds);
-        if (RuntimeStorageData.Player.IsLoadAds == true) { _nativeBanner.SetActive(Manager.Instance.IsNativeBanner); }
+        //_nativeBanner.SetActive(RuntimeStorageData.Player.IsLoadAds);
+        //if (_bannerCollapse.IsActive() == true) _bannerCollapse.SetActive(RuntimeStorageData.Player.IsLoadAds);
+        //if (RuntimeStorageData.Player.IsLoadAds == true) { _nativeBanner.SetActive(Manager.Instance.IsNativeBanner); }
     }
 }

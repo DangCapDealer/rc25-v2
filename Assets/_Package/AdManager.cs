@@ -13,7 +13,7 @@ using GoogleMobileAds.Api;
 #endif
 
 [DefaultExecutionOrder(-7)]
-public class AdManager : MonoSingletonGlobal<AdManager>
+public partial class AdManager : MonoSingletonGlobal<AdManager>
 {
 #if ADMOB
     public enum AdState { Loading, Ready, NotAvailable }
@@ -25,6 +25,7 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     public bool IsBannerMREC = false;
 
     private bool IsCanUpdate = false;
+    public bool IsBlockedAutoIntertitialAd = false;
 
     private void Start() => StartCoroutine(Bacon.UMP.Instance.DOGatherConsent(LoadAds()));
 
@@ -53,6 +54,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         LoadRewardedThridAd();
         if (RuntimeStorageData.Player.IsLoadAds == true)
         {
+            LoadNativeOverlayBannerAd();
+            LoadNativeOverlayAd();
             LoadInterstitialAd();
             LoadInterstitialHomeAd();
         }
@@ -75,6 +78,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         CaculaterCounterInterOpenAd();
         CaculaterCounterOpenAd();
 
+        CaculaterCounterCollapseBannerAd();
+
         if (RuntimeStorageData.Player.IsLoadAds == false) return;
         timerReload += Time.deltaTime;
         if (timerReload < 5.0f) return;
@@ -82,6 +87,8 @@ public class AdManager : MonoSingletonGlobal<AdManager>
         if (IsPreloadinterstitialHome) if (InterHomeAdState == AdState.NotAvailable) LoadInterstitialHomeAd();
         if (IsPreloadInterstitial) if (InterAdState == AdState.NotAvailable) LoadInterstitialAd();
         if (IsPreloadOpen) if (OpenAdState == AdState.NotAvailable) LoadAppOpenAd();
+        if (IsPreloadNativeOverlayAd) if (NativeOverlayAdState == AdState.NotAvailable) LoadNativeOverlayAd();
+        if (IsPreloadNativeOverlayBannerAd) if (NativeOverlayBannerAdState == AdState.NotAvailable) LoadNativeOverlayBannerAd();
 
         timerReload = 0;
     }
@@ -295,13 +302,15 @@ public class AdManager : MonoSingletonGlobal<AdManager>
     }
     private void CaculaterCounterInterAd()
     {
+        if (IsBlockedAutoIntertitialAd == true) return;
+
         if (Manager.Instance.IsIngame == true && Manager.Instance.IngameScreenID == "GameUICanvas")
         {
             InterAdSpaceTimeAutoCounter += Time.deltaTime;
             if (InterAdSpaceTimeAutoCounter > Manager.Instance.InterAutoReloadTimer)
             {
                 InterAdSpaceTimeAutoCounter = 0;
-                ShowInterstitialAd(() => UnityMainThreadDispatcher.Instance().Enqueue(() => CanvasSystem.Instance.ShowNativeIntertitial()));
+                ShowInterstitialAd(() => UnityMainThreadDispatcher.Instance().Enqueue(AdManager.Instance.ShowNativeOverlayAd));
             }
         }
 

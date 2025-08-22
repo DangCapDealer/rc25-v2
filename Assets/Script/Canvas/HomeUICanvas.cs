@@ -69,7 +69,7 @@ public class HomeUICanvas : MonoBehaviour
                 });
             }, () =>
             {
-                UnityMainThreadDispatcher.Instance().Enqueue(CanvasSystem.Instance.ShowNativeIntertitial);
+                UnityMainThreadDispatcher.Instance().Enqueue(AdManager.Instance.ShowNativeOverlayAd);
             });
         });
 

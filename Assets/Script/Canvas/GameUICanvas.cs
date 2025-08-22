@@ -86,15 +86,15 @@ public partial class GameUICanvas : MonoBehaviour
 
     private void AutoSlotCharacter()
     {
-        if (GameManager.Instance.NumberOfCharacter >= 10) return;
-        if (GameManager.Instance.IsGameCustom()) return;
+        //if (GameManager.Instance.NumberOfCharacter >= 10) return;
+        //if (GameManager.Instance.IsGameCustom()) return;
 
-        _timerPopupAddCharacter += Time.deltaTime;
-        if(_timerPopupAddCharacter > PopupAdCharacterAfter)
-        {
-            _timerPopupAddCharacter = 0;
-            CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.UnlockOnce);
-        }    
+        //_timerPopupAddCharacter += Time.deltaTime;
+        //if(_timerPopupAddCharacter > PopupAdCharacterAfter)
+        //{
+        //    _timerPopupAddCharacter = 0;
+        //    CanvasSystem.Instance._popupUICanvas.ShowPopup(Popup.UnlockOnce);
+        //}    
     }    
 
 
@@ -283,7 +283,7 @@ public partial class GameUICanvas : MonoBehaviour
                 });
             }, () =>
             {
-                UnityMainThreadDispatcher.Instance().Enqueue(() => CanvasSystem.Instance.ShowNativeIntertitial());
+                UnityMainThreadDispatcher.Instance().Enqueue(AdManager.Instance.ShowNativeOverlayAd);
             });
         });
     }

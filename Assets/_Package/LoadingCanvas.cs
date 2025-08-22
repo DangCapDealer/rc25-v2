@@ -20,7 +20,10 @@ public class LoadingCanvas : MonoBehaviour
         this.canvasGroup.DOKill(true);
         // Fade out the canvasGroup to 0 opacity over 0.3 seconds
         // On completion, deactivate the GameObject associated with the canvasGroup
-        this.canvasGroup.DOFade(0.0f, 0.3f).OnComplete(() => this.canvasGroup.gameObject.SetActive(false));
+        this.canvasGroup.DOFade(0.0f, 0.3f).OnComplete(() => {
+            this.canvasGroup.gameObject.SetActive(false);
+            //AdManager.Instance.ShowNativeOverlayBannerAd();
+        });
 
         // The #if UNITY_EDITOR block might be redundant if the DOTween animation handles the immediate deactivation
         // in editor as well. If you still need it for specific editor-only behavior, keep it.

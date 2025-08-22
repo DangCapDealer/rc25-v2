@@ -23,7 +23,7 @@ public class CompleteUICanvas : PopupCanvas
                 });
             }, () =>
             {
-                UnityMainThreadDispatcher.Instance().Enqueue(() => CanvasSystem.Instance.ShowNativeIntertitial());
+                UnityMainThreadDispatcher.Instance().Enqueue(AdManager.Instance.ShowNativeOverlayAd);
             });
         });
     }
@@ -46,7 +46,7 @@ public class CompleteUICanvas : PopupCanvas
                 });
             }, () =>
             {
-                UnityMainThreadDispatcher.Instance().Enqueue(() => CanvasSystem.Instance.ShowNativeIntertitial());
+                UnityMainThreadDispatcher.Instance().Enqueue(AdManager.Instance.ShowNativeOverlayAd);
             });
         });
     }

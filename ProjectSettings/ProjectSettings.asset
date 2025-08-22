@@ -821,7 +821,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN;INAPP;ADMOB;FIREBASE;AppsFlyerSDK
+    Android: DOTWEEN;INAPP;FIREBASE;AppsFlyerSDK;ADMOB
     EmbeddedLinux: DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN

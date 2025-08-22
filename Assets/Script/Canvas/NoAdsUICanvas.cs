@@ -55,6 +55,12 @@ public class NoAdsUICanvas : PopupCanvas
         Application.OpenURL("https://support.google.com/googleplay/answer/7018481?hl=en&co=GENIE.Platform%3DAndroid");
     }
 
+    public override void Hide()
+    {
+        AdManager.Instance.ShowNativeOverlayBannerAd();
+        base.Hide();
+    }
+
     public void BtnRestorePurchase()
     {
         base.Hide();
