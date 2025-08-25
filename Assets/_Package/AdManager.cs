@@ -74,6 +74,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
         CaculaterCounterInterOpenAd();
         CaculaterCounterOpenAd();
         CaculaterCounterBannerAd();
+        CaculaterCounterCollapseAd();
 
         if (RuntimeStorageData.Player.IsLoadAds == false) return;
 

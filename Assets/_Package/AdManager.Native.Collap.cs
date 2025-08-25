@@ -16,35 +16,27 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     public int NativerOverlayAdReloadCount = 0;
     public int NativeOverlayShowCount = 0;
 
-    //public Color MainBackgroundColor;
-    //public Color CallToActionTextBackgroundColor;
+    public bool NativerOverAdUsed = false;
 
-    //public float CollapseAdSpaceTimeCounter = 0.0f;
-    //public float CollapseAdSpaceTime = 15.0f;
+    public float CollapseAdSpaceTimeCounter = 0.0f;
+    public float CollapseAdSpaceTime = 15.0f;
     public string _adUnitNativerOverlayId = "ca-app-pub-3940256099942544/2247696110";
 
     private NativeOverlayAd _nativeOverlayAd;
 
-    //private void CaculaterCounterCollapseAd()
-    //{
-    //    if (RuntimeStorageData.Player.IsLoadAds == false) return;
-    //    if (Manager.Instance.IsLoading == true) return;
+    private void CaculaterCounterCollapseAd()
+    {
+        if (RuntimeStorageData.Player.IsLoadAds == false) return;
+        if (Manager.Instance.IsLoading == true) return;
+        if (NativerOverAdUsed == false) return; 
 
-    //    CollapseAdSpaceTimeCounter += Time.deltaTime;
-    //    if (NativeOverlayShowCount == 0)
-    //    {
-    //        if (CollapseAdSpaceTimeCounter >= 15.0f)
-    //        {
-    //            CollapseAdSpaceTimeCounter = 0;
-    //            ShowNativeOverlayAd();
-    //        }    
-    //    }   
-    //    else if (CollapseAdSpaceTimeCounter >= 60.0f)
-    //    {
-    //        CollapseAdSpaceTimeCounter = 0;
-    //        ShowNativeOverlayAd();
-    //    }    
-    //}
+        CollapseAdSpaceTimeCounter += Time.deltaTime;
+        if (CollapseAdSpaceTimeCounter >= 15.0f)
+        {
+            CollapseAdSpaceTimeCounter = 0;
+            LoadNativeOverlayAd();
+        }
+    }
 
     /// <summary>
     /// Loads the ad.
@@ -102,6 +94,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
                 _nativeOverlayAd.OnAdClicked += onAdClicked;
 
                 NativeOverlayAdState = AdState.Ready;
+                NativerOverAdUsed = false;
             });
     }
 
@@ -145,6 +138,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             var adSize = new AdSize(screenWidth, screenHeight);
 
             _nativeOverlayAd.RenderTemplate(overlayInterStyle, adSize, AdPosition.Center);
+
+            NativerOverAdUsed = true;
         }
     }
 
