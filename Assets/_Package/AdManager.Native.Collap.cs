@@ -16,7 +16,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     public int NativerOverlayAdReloadCount = 0;
     public int NativeOverlayShowCount = 0;
 
-    public bool NativerOverAdUsed = false;
+    public bool NativerOverlayAdUsed = false;
+    public bool NativeOverlayShowing = false;
 
     public float CollapseAdSpaceTimeCounter = 0.0f;
     public float CollapseAdSpaceTime = 15.0f;
@@ -28,10 +29,10 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     {
         if (RuntimeStorageData.Player.IsLoadAds == false) return;
         if (Manager.Instance.IsLoading == true) return;
-        if (NativerOverAdUsed == false) return; 
+        if (NativeOverlayShowing == false) return;
 
         CollapseAdSpaceTimeCounter += Time.deltaTime;
-        if (CollapseAdSpaceTimeCounter >= 15.0f)
+        if (CollapseAdSpaceTimeCounter >= 30.0f)
         {
             CollapseAdSpaceTimeCounter = 0;
             LoadNativeOverlayAd();
@@ -94,15 +95,15 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
                 _nativeOverlayAd.OnAdClicked += onAdClicked;
 
                 NativeOverlayAdState = AdState.Ready;
-                NativerOverAdUsed = false;
+                NativerOverlayAdUsed = false;
+
+                if (NativeOverlayShowing == true) ShowNativeOverlayAd();
             });
     }
 
     private void onAdClicked()
     {
-        NativeOverlayAdState = AdState.NotAvailable;
-
-        UnityMainThreadDispatcher.Instance().Enqueue(() => HideNativeOverlayAd());
+        UnityMainThreadDispatcher.Instance().Enqueue(() => LoadNativeOverlayAd());
     }
 
     //private NativeTemplateStyle overlayInterStyle;
@@ -110,7 +111,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     /// <summary>
     /// Renders the ad.
     /// </summary>
-    public void RenderNativeOverlayAd()
+    private void RenderNativeOverlayAd()
     {
         if (_nativeOverlayAd != null)
         {
@@ -138,8 +139,6 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             var adSize = new AdSize(screenWidth, screenHeight);
 
             _nativeOverlayAd.RenderTemplate(overlayInterStyle, adSize, AdPosition.Center);
-
-            NativerOverAdUsed = true;
         }
     }
 
@@ -166,6 +165,9 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             DOVirtual.DelayedCall(0.1f, _nativeOverlayAd.Show);
 
             HideBanner();
+
+            NativerOverlayAdUsed = true;
+            NativeOverlayShowing = true;
         }
     }
 
@@ -191,6 +193,9 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
         }
 
         ShowBanner();
+        NativeOverlayAdState = AdState.NotAvailable;
+
+        NativeOverlayShowing = false;
     }
 
     /// <summary>
