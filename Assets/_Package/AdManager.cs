@@ -15,6 +15,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     public enum AdShowState { None, Pending }
     public enum AdBannerSize { Banner, FullWidth }
 
+
+    [Header("ADMOB SETTING")]
     public bool IsInitalized = false;
     private bool IsCanUpdate = false;
     public bool IsBlockedAutoIntertitialAd = false;

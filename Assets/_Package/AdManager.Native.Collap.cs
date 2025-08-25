@@ -107,6 +107,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
 
     private void onAdClicked()
     {
+        NativeOverlayAdState = AdState.NotAvailable;
+
         UnityMainThreadDispatcher.Instance().Enqueue(() => HideNativeOverlayAd());
     }
 
