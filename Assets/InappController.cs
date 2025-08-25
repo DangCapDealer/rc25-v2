@@ -148,7 +148,7 @@ public class InappController : MonoBehaviour, IDetailedStoreListener
         if (AntiSpamClick() == true) return;
         var index = GetProductIndexById(productId);
         Debug.Log($"[InappPurchase] Buy IAP: {productId} | index: {index}");
-        AdManager.Instance.OpenAdSpaceTimeCounter = 0;
+        AdManager.Instance.ResetOpenAdSpaceTime();
 #if UNITY_EDITOR
         OnPurchaseComplete = (complete) =>
         {

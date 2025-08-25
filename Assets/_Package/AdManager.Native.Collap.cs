@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public partial class AdManager : MonoSingletonGlobal<AdManager>
 {
 #if ADMOB
-    [Header("Nativer Overlay Ad")]
+    [Header("NATIVE OVERLAY AD")]
     public bool IsPreloadNativeOverlayAd = true;
     public AdState NativeOverlayAdState = AdState.NotAvailable;
     public int NativerOverlayAdReloadCount = 0;
@@ -208,5 +208,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             _nativeOverlayAd = null;
         }
     }
+#else
+    public void ShowAdNativeOverlay() { }
 #endif
 }
