@@ -78,6 +78,8 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
 
         if (RuntimeStorageData.Player.IsLoadAds == false) return;
 
+        if (IsPreloadBanner && BannerAdState == AdState.NotAvailable) LoadBannerAd();
+        
         timerReload += Time.deltaTime;
         if (timerReload < 5.0f) return;
 
@@ -85,7 +87,6 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
         if (IsPreloadInterstitial && InterAdState == AdState.NotAvailable) LoadInterstitialAd();
         if (IsPreloadOpen && OpenAdState == AdState.NotAvailable) LoadAppOpenAd();
         if (IsPreloadNativeOverlayAd && NativeOverlayAdState == AdState.NotAvailable) LoadNativeOverlayAd();
-        if (IsPreloadBanner && BannerAdState == AdState.NotAvailable) LoadBannerAd();
 
         timerReload = 0;
     }
@@ -101,13 +102,17 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
 
     private void Start() { Manager.Instance.CompleteOpenAd(); }
 
-    public void ShowRewardedAd(UnityAction cb){ cb?.Invoke(); }
-    public void ShowRewardedSecondAd(UnityAction cb){ cb?.Invoke(); }
-    public void ShowRewardedThridAd(UnityAction cb){ cb?.Invoke(); }
-    public void ShowInterstitialAdWithSpaceTime(UnityAction cb){ cb?.Invoke(); }
-    public void ShowInterstitialAd(UnityAction cb){ cb?.Invoke(); }
-    public void ShowInterstitialHomeAd(UnityAction cb, UnityAction after){ cb?.Invoke(); after?.Invoke(); }
-    public void CheckingOpenAd(){ Debug.Log($"[{GetType()}] Checking Open Ad."); }
+    public void ShowRewardedAd(UnityAction cb) { cb?.Invoke(); }
+    public void ShowRewardedSecondAd(UnityAction cb) { cb?.Invoke(); }
+    public void ShowRewardedThridAd(UnityAction cb) { cb?.Invoke(); }
+    public void ShowInterstitialAdWithSpaceTime(UnityAction cb) { cb?.Invoke(); }
+    public void ShowInterstitialAd(UnityAction cb) { cb?.Invoke(); }
+    public void ShowInterstitialHomeAd(UnityAction cb, UnityAction after) { cb?.Invoke(); after?.Invoke(); }
+    public void CheckingOpenAd() { Debug.Log($"[{GetType()}] Checking Open Ad."); }
+    public void ShowNativeOverlayAd() { }
+    public void ShowBanner() { }
+    public void HideBanner() { }
+    public void ResetOpenAdSpaceTime() { }
 #endif
 }
     

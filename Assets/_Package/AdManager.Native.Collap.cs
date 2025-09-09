@@ -7,7 +7,7 @@ using PimDeWitte.UnityMainThreadDispatcher;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class AdManager : MonoSingletonGlobal<AdManager>
+public partial class AdManager
 {
 #if ADMOB
     [Header("NATIVE OVERLAY AD")]

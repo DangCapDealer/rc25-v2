@@ -18,7 +18,10 @@ public partial class AdManager
 
     private void CaculaterCounterBannerAd()
     {
-        if (Time.time - TimeBanner > 30)
+        // Chỉnh về 15s tự động load lại banner
+        if (Manager.Instance.IsLoading == true) return;
+        if (RuntimeStorageData.Player.IsLoadAds == false) return;
+        if (Time.time - TimeBanner > 15.0f)
         {
             TimeBanner = Time.time;
             BannerAdState = AdState.NotAvailable;
