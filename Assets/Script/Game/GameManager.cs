@@ -5,24 +5,9 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public enum GameStyle
-    {
-        Normal,
-        Horror,
-        Battle,
-        Battle_Single,
-        Monster,
-        Monstrous,
-        ItalianBrainrot
+    public enum GameStyle { Normal, Horror, Battle, Battle_Single, Monster, Monstrous, ItalianBrainrot, Kpop }
 
-    }
-
-    public enum GameState
-    {
-        Playing,
-        Pause,
-        Stop
-    }    
+    public enum GameState { Playing, Pause, Stop }    
 
     public GameStyle Style = GameStyle.Normal;
     public int NumberOfCharacter = 7;

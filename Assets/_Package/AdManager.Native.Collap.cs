@@ -177,10 +177,7 @@ public partial class AdManager
     public void HideNativeOverlayAd()
     {
         Debug.Log("Hide Native Overlay Ad");
-
         IsBlockedAutoIntertitialAd = false;
-
-        //ShowNativeOverlayBannerAd();
 
         if (_nativeOverlayAd != null)
         {
@@ -194,7 +191,6 @@ public partial class AdManager
 
         ShowBanner();
         NativeOverlayAdState = AdState.NotAvailable;
-
         NativeOverlayShowing = false;
     }
 

@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,13 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -362,10 +358,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 58015793485202852, guid: 62656a09c4fe8ec419ddf79a7b36ab9e, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 64199056511469472, guid: 62656a09c4fe8ec419ddf79a7b36ab9e, type: 3}
       propertyPath: m_Name
       value: parker
@@ -576,10 +568,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7464244594769308820, guid: e8d4356f81204f04bbc2d6d9153cef95, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -729,7 +717,7 @@ PrefabInstance:
     - target: {fileID: 7747592014221007217, guid: aecd94cfcf721124da8c376dd3460385, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -6136796650082907268, guid: aecd94cfcf721124da8c376dd3460385, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 8980325765420774130, guid: aecd94cfcf721124da8c376dd3460385, type: 3}
       propertyPath: m_Name
       value: do
@@ -901,10 +889,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 220333314364975336, guid: 3ece8c62b6040df43a8ed104499060cf, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1105689507639603770, guid: 3ece8c62b6040df43a8ed104499060cf, type: 3}
       propertyPath: m_Mesh
       value: 
