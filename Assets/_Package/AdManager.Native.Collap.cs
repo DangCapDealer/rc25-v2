@@ -93,6 +93,7 @@ public partial class AdManager
                        ad.GetResponseInfo());
                 _nativeOverlayAd = ad;
                 _nativeOverlayAd.OnAdClicked += onAdClicked;
+                _nativeOverlayAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
 
                 NativeOverlayAdState = AdState.Ready;
                 NativerOverlayAdUsed = false;

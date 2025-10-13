@@ -205,4 +205,54 @@ public class MenuEditor
 
         UnityEngine.Debug.Log("Keystore settings updated successfully!");
     }
+
+    [MenuItem("Tools/Toggle ADMOB Define")]
+    public static void ToggleAdmobDefine()
+    {
+        string symbol = "ADMOB";
+        BuildTargetGroup buildTarget = EditorUserBuildSettings.selectedBuildTargetGroup;
+        string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget);
+
+        var defineList = new List<string>(defines.Split(';'));
+        if (defineList.Contains(symbol))
+        {
+            defineList.Remove(symbol);
+            Debug.Log("ADMOB define removed.");
+        }
+        else
+        {
+            defineList.Add(symbol);
+            Debug.Log("ADMOB define added.");
+        }
+
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTarget, string.Join(";", defineList));
+    }
+
+    [MenuItem("Tools/Set Selected SpriteRenderer Layer To Character")]
+    static void SetSelectedSpriteRendererLayerToCharacter()
+    {
+        var selectedObjects = Selection.objects;
+        if (selectedObjects.Length == 0)
+        {
+            Debug.Log("No objects selected.");
+            return;
+        }
+
+        int changedCount = 0;
+        foreach (var obj in selectedObjects)
+        {
+            GameObject go = obj as GameObject;
+            if (go == null) continue;
+
+            // Tìm tất cả SpriteRenderer trong object và con của nó
+            var renderers = go.GetComponentsInChildren<SpriteRenderer>(true);
+            foreach (var renderer in renderers)
+            {
+                renderer.sortingLayerName = "Character";
+                changedCount++;
+            }
+        }
+
+        Debug.Log($"Changed Sorting Layer to 'Character' for {changedCount} SpriteRenderer(s).");
+    }
 }

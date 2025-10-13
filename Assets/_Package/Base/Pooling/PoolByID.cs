@@ -31,6 +31,7 @@ public class PoolByID : MonoSingleton<PoolByID>
     public GameObject GetPrefab(GameObject obj)
     {
         var id = obj.GetInstanceID();
+        // var hash = obj.GetHashCode();
         if (pools.ContainsKey(id))
         {
             for (int i = 0; i < pools[id].Count; i++)

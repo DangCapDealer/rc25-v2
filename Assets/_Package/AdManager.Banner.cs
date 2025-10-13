@@ -45,6 +45,7 @@ public partial class AdManager
         bannerAd.OnBannerAdLoaded += () => { BannerAdState = AdState.Ready; };
         bannerAd.OnBannerAdLoadFailed += (LoadAdError error) => { BannerAdState = AdState.NotAvailable; };
         bannerAd.OnAdClicked += () => { BannerAdState = AdState.NotAvailable; };
+        bannerAd.OnAdPaid += (revenue) => { AppflyerEventSender.Instance.logAdRevenue(revenue); };
     }
 
     public void ShowBanner() { IsBanner = true; bannerAd?.Show(); }

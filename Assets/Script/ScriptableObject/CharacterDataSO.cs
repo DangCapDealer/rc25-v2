@@ -24,6 +24,7 @@ public class CharacterDataSO : ScriptableObject
         public Sprite GetIcon(string _mode)
         {
             if (_mode == "ItalianBrainrot") return Icons[1];
+            if (_mode == "Kpop") return Icons[2];
             else return Icons[0];
         }
 
@@ -46,6 +47,7 @@ public class CharacterDataSO : ScriptableObject
             else if (gameStyle == GameManager.GameStyle.Monster) return AudioClipMonster;
             else if (gameStyle == GameManager.GameStyle.Monstrous) return AudioClipMonstrous;
             else if (gameStyle == GameManager.GameStyle.ItalianBrainrot) return AudioClipItalianBrainrot;
+            else if (gameStyle == GameManager.GameStyle.Kpop) return AudioClipHorror;
             else return null;
         }
     }

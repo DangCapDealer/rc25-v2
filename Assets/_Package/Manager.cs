@@ -81,8 +81,12 @@ public class Manager : MonoSingletonGlobal<Manager>
     //    Debug.Log($"[Manager] {Time.timeScale}");
     //}
 
+    public bool IsLockedCompleteOpenAd = false;
     public void CompleteOpenAd()
     {
+        if (IsLockedCompleteOpenAd) return;
+        IsLockedCompleteOpenAd = true;
+        
         Debug.Log("[Manager] Complete ad");
         IsLoading = false;
         loadingCanvas.Show(() =>
