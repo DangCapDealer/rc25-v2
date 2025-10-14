@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c9b6b8bf5b905e845936f76d9f64ed66, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -973,6 +973,10 @@ PrefabInstance:
     - target: {fileID: 8435520505031817528, guid: 50bb6af0b53bf9e498355f1a0640ae83, type: 3}
       propertyPath: m_Name
       value: Kpop
+      objectReference: {fileID: 0}
+    - target: {fileID: 8435520505031817528, guid: 50bb6af0b53bf9e498355f1a0640ae83, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

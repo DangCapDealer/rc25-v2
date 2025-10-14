@@ -17,7 +17,7 @@ public partial class AdManager
     private AppOpenAd appOpenAd;
 
     public float OpenAdSpaceTimeCounter = 0.0f;
-    public float OpenAdSpaceTime = 5.0f;
+    public float OpenAdSpaceTime = 2.0f;
 
     private void CaculaterCounterOpenAd()
     {
@@ -54,6 +54,7 @@ public partial class AdManager
 
             appOpenAd.OnAdFullScreenContentFailed += (AdError e) =>
             {
+                Debug.LogError($"[{GetType()}] App open ad failed to show: {e.GetMessage()}");
                 UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Hide());
                 OpenAdState = AdState.NotAvailable;
             };
@@ -67,11 +68,10 @@ public partial class AdManager
     {
         if (OpenAdSpaceTimeCounter < OpenAdSpaceTime) return;
         Debug.Log($"[{GetType()}] Checking Open Ad");
-        ResetOpenAdSpaceTime();
-
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {
             if (RuntimeStorageData.Player.IsLoadAds == false) return;
+            ResetOpenAdSpaceTime();
             ShowAppOpenAd();
         });
     }
@@ -82,12 +82,14 @@ public partial class AdManager
 
     private void ShowAppOpenAd()
     {
+        Debug.Log($"[{GetType()}] Try to show app open ad.");
         if (IsAdAvailable)
         {
             Debug.Log($"[{GetType()}] Showing app open ad.");
-            UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Show());
-            DOVirtual.DelayedCall(0.1f, () => appOpenAd.Show());
+            // UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Show());
+            // DOVirtual.DelayedCall(0.1f, () => appOpenAd.Show());
         }
+        DOVirtual.DelayedCall(0.1f, () => appOpenAd.Show());
     }
 #endif
 }

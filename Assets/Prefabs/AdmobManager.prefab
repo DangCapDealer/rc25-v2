@@ -398,7 +398,7 @@ MonoBehaviour:
   IsPreloadOpen: 1
   OpenAdState: 2
   _openReloadCount: 0
-  _adUnitOpenId: ca-app-pub-8190506959251235/4305287493
+  _adUnitOpenId: ca-app-pub-8190506959251235~1053497684
   OpenAdSpaceTimeCounter: 0
   OpenAdSpaceTime: 5
   IsPreloadBanner: 1
@@ -427,7 +427,8 @@ MonoBehaviour:
   NativeOverlayAdState: 2
   NativerOverlayAdReloadCount: 0
   NativeOverlayShowCount: 0
-  NativerOverAdUsed: 0
+  NativerOverlayAdUsed: 0
+  NativeOverlayShowing: 0
   CollapseAdSpaceTimeCounter: 0
   CollapseAdSpaceTime: 15
   _adUnitNativerOverlayId: ca-app-pub-8190506959251235/9906173937
@@ -1192,7 +1193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 113478853178861122, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 113478853178861122, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1200,7 +1201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 113478853178861122, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 113478853178861122, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1216,11 +1217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 113478853178861122, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 415.27777
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 113478853178861122, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -32.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1375209286894556368, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1344,7 +1345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4928044794585186174, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 448.77777
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4928044794585186174, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1385,7 +1386,7 @@ PrefabInstance:
     - target: {fileID: 7460693288811781664, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2618974185985536461}
     - target: {fileID: 7460693288811781664, guid: ff63520e332aca24c81852f9e1a7949a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: HideNativeOverlayAd

@@ -641,7 +641,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 16176f2437665f24e8261f28128f867e, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -799,6 +799,10 @@ PrefabInstance:
     - target: {fileID: 7422337837189729235, guid: f9a47a13c9cec894898d78a294ecc53f, type: 3}
       propertyPath: m_Name
       value: Kpop
+      objectReference: {fileID: 0}
+    - target: {fileID: 7422337837189729235, guid: f9a47a13c9cec894898d78a294ecc53f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8631545767798625200, guid: f9a47a13c9cec894898d78a294ecc53f, type: 3}
       propertyPath: m_LocalScale.x
