@@ -27,6 +27,7 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
     {
         IsCanUpdate = false;
         yield return new WaitUntil(() => Bacon.UMP.Instance.IsUMPReady);
+        Debug.Log("[AdManager] UMP is ready");
         MobileAds.RaiseAdEventsOnUnityMainThread = true;
         MobileAds.SetiOSAppPauseOnBackground(true);
         MobileAds.Initialize(initStatus =>
@@ -34,9 +35,10 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
             Debug.Log($"[{GetType()}] Admob Initialized");
             Manager.Instance.IsAds = true;
             IsInitalized = true;
-            PromiseShowInterstitialAd(() => {
-                UnityMainThreadDispatcher.Instance().Enqueue(() => Manager.Instance.CompleteOpenAd());
-            });
+            PromiseShowInterstitialAd(OnDispatcher);
+
+            void OnDispatcher() => UnityMainThreadDispatcher.Instance().Enqueue(onComplete); 
+            void onComplete() => Manager.Instance.CompleteOpenAd();
         });
 
         yield return new WaitUntil(() => IsInitalized);

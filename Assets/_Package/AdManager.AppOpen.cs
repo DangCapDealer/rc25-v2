@@ -30,6 +30,7 @@ public partial class AdManager
         if (RuntimeStorageData.Player.IsLoadAds == false) return;
         if (OpenAdState == AdState.Loading) return;
         OpenAdState = AdState.Loading;
+        Debug.Log($"[{GetType()}] Loading App Open Ad.");
 
         if (appOpenAd != null) { appOpenAd.Destroy(); appOpenAd = null; }
 
@@ -40,6 +41,7 @@ public partial class AdManager
             {
                 OpenAdState = AdState.NotAvailable;
                 _openReloadCount += 1;
+                Debug.LogError($"[{GetType()}] Failed to load the app open ad: {error.GetMessage()}");
                 return;
             }
 
@@ -48,6 +50,7 @@ public partial class AdManager
 
             appOpenAd.OnAdFullScreenContentClosed += () =>
             {
+                Debug.Log($"[{GetType()}] App open ad closed.");
                 UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Hide());
                 OpenAdState = AdState.NotAvailable;
             };
@@ -86,10 +89,9 @@ public partial class AdManager
         if (IsAdAvailable)
         {
             Debug.Log($"[{GetType()}] Showing app open ad.");
-            // UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Show());
-            // DOVirtual.DelayedCall(0.1f, () => appOpenAd.Show());
+            UnityMainThreadDispatcher.Instance().Enqueue(() => LoadingOpenAdCanvas.Show());
+            DOVirtual.DelayedCall(0.1f, () => appOpenAd.Show());
         }
-        DOVirtual.DelayedCall(0.1f, () => appOpenAd.Show());
     }
 #endif
 }
