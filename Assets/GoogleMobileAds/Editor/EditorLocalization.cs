@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace GoogleMobileAds.Editor
@@ -84,16 +85,16 @@ namespace GoogleMobileAds.Editor
         Path.Combine(Application.dataPath, LOCALIZATION_DATA_JSON_RELATIVE_PATH,
           LOCALIZATION_DATA_JSON_FILENAME);
       // Handle importing the localization data file via Unity Package Manager.
-      var pathUtils = ScriptableObject.CreateInstance<EditorPathUtils>();
+      EditorPathUtils pathUtils = ScriptableObject.CreateInstance<EditorPathUtils>();
       if (pathUtils.IsPackageRootPath())
       {
         localizationDataPath =
-            Path.Combine(pathUtils.GetDirectoryAssetPath(), LOCALIZATION_DATA_JSON_FILENAME);
+          Path.Combine(pathUtils.GetDirectoryAssetPath(), LOCALIZATION_DATA_JSON_FILENAME);
       }
       try
       {
         string json = File.ReadAllText(localizationDataPath);
-        var data = DeserializeFromJson(json);
+        EditorLocalizationData data = DeserializeFromJson(json);
         if (data.LocalizationsByKey == null)
         {
           throw new ArgumentNullException("LocalizationsByKey");

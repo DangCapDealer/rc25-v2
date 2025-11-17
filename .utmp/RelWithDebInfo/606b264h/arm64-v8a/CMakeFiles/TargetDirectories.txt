@@ -1,5 +1,0 @@
-D:/GitHub/spronky-beat/.utmp/RelWithDebInfo/606b264h/arm64-v8a/CMakeFiles/edit_cache.dir
-D:/GitHub/spronky-beat/.utmp/RelWithDebInfo/606b264h/arm64-v8a/CMakeFiles/rebuild_cache.dir
-D:/GitHub/spronky-beat/.utmp/RelWithDebInfo/606b264h/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
-D:/GitHub/spronky-beat/.utmp/RelWithDebInfo/606b264h/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
-D:/GitHub/spronky-beat/.utmp/RelWithDebInfo/606b264h/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir

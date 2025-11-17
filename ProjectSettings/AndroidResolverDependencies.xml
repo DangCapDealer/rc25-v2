@@ -1,7 +1,6 @@
 <dependencies>
   <packages>
     <package>androidx.constraintlayout:constraintlayout:2.1.4</package>
-    <package>androidx.lifecycle:lifecycle-process:2.6.2</package>
     <package>com.android.installreferrer:installreferrer:2.1</package>
     <package>com.android.support:appcompat-v7:25.3.1</package>
     <package>com.android.support:cardview-v7:25.3.1</package>
@@ -16,28 +15,38 @@
     <package>com.facebook.android:facebook-gamingservices:[18.0.0,19)</package>
     <package>com.facebook.android:facebook-login:[18.0.0,19)</package>
     <package>com.facebook.android:facebook-share:[18.0.0,19)</package>
-    <package>com.google.android.gms:play-services-ads:24.5.0</package>
+    <package>com.google.ads.mediation:applovin:13.3.1.1</package>
+    <package>com.google.ads.mediation:facebook:6.20.0.0</package>
+    <package>com.google.ads.mediation:ironsource:8.11.0.0</package>
+    <package>com.google.ads.mediation:mintegral:16.9.91.1</package>
+    <package>com.google.ads.mediation:pangle:7.6.0.2.0</package>
+    <package>com.google.ads.mediation:unity:4.16.0.0</package>
+    <package>com.google.ads.mediation:vungle:7.5.0.1</package>
+    <package>com.google.android.gms:play-services-ads:24.1.0</package>
     <package>com.google.android.gms:play-services-base:18.5.0</package>
-    <package>com.google.android.ump:user-messaging-platform:3.2.0</package>
-    <package>com.google.firebase:firebase-analytics:22.1.2</package>
-    <package>com.google.firebase:firebase-analytics-unity:12.5.0</package>
-    <package>com.google.firebase:firebase-app-unity:12.5.0</package>
+    <package>com.google.android.ump:user-messaging-platform:3.1.0</package>
+    <package>com.google.firebase:firebase-analytics:22.3.0</package>
+    <package>com.google.firebase:firebase-analytics-unity:12.7.0</package>
+    <package>com.google.firebase:firebase-app-unity:12.7.0</package>
     <package>com.google.firebase:firebase-common:21.0.0</package>
-    <package>com.google.firebase:firebase-config:22.0.1</package>
-    <package>com.google.firebase:firebase-config-unity:12.5.0</package>
-    <package>com.google.firebase:firebase-crashlytics-ndk:19.3.0</package>
-    <package>com.google.firebase:firebase-crashlytics-unity:12.5.0</package>
+    <package>com.google.firebase:firebase-config:22.1.0</package>
+    <package>com.google.firebase:firebase-config-unity:12.7.0</package>
+    <package>com.google.firebase:firebase-crashlytics-ndk:19.4.1</package>
+    <package>com.google.firebase:firebase-crashlytics-unity:12.7.0</package>
     <package>com.parse.bolts:bolts-android:1.4.0</package>
+    <package>com.unity3d.ads:unity-ads:4.16.0</package>
   </packages>
   <files>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/12.5.0/firebase-analytics-unity-12.5.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/12.5.0/firebase-analytics-unity-12.5.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.5.0/firebase-app-unity-12.5.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.5.0/firebase-app-unity-12.5.0.pom</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/12.7.0/firebase-analytics-unity-12.7.0.aar</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/12.7.0/firebase-analytics-unity-12.7.0.pom</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.7.0/firebase-app-unity-12.7.0.aar</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.7.0/firebase-app-unity-12.7.0.pom</file>
     <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-config-unity/12.5.0/firebase-config-unity-12.5.0.aar</file>
     <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-config-unity/12.5.0/firebase-config-unity-12.5.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-crashlytics-unity/12.5.0/firebase-crashlytics-unity-12.5.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-crashlytics-unity/12.5.0/firebase-crashlytics-unity-12.5.0.pom</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-config-unity/12.7.0/firebase-config-unity-12.7.0.aar</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-config-unity/12.7.0/firebase-config-unity-12.7.0.pom</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-crashlytics-unity/12.7.0/firebase-crashlytics-unity-12.7.0.aar</file>
+    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-crashlytics-unity/12.7.0/firebase-crashlytics-unity-12.7.0.pom</file>
   </files>
   <settings>
     <setting name="androidAbis" value="arm64-v8a,armeabi-v7a" />

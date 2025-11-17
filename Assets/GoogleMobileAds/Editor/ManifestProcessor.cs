@@ -88,12 +88,6 @@ public class ManifestProcessor : IPreprocessBuild
             manifestPath = Path.Combine("Packages/com.google.ads.mobile", MANIFEST_RELATIVE_PATH);
         }
 
-        if (!File.Exists(manifestPath))
-        {
-            manifestPath = Path.Combine(Path.GetDirectoryName(manifestPath), "src", "main",
-                                        "AndroidManifest.xml");
-        }
-
         XDocument manifest = null;
         try
         {

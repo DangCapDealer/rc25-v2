@@ -32,6 +32,14 @@ public partial class AdManager : MonoSingletonGlobal<AdManager>
         MobileAds.SetiOSAppPauseOnBackground(true);
         MobileAds.Initialize(initStatus =>
         {
+            if (initStatus == null)
+            {
+                Debug.LogError($"[{GetType()}] Admob Initialize Failed");
+                Manager.Instance.IsAds = false;
+                IsInitalized = false;
+                onComplete();
+                return;
+            }
             Debug.Log($"[{GetType()}] Admob Initialized");
             Manager.Instance.IsAds = true;
             IsInitalized = true;

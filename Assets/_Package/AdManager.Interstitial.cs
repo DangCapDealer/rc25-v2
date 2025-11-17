@@ -121,10 +121,14 @@ public partial class AdManager
 
     public void ShowInterstitialHomeAd(UnityAction Callback, UnityAction CallbackAfterInter)
     {
+        Debug.Log($"[{GetType()}] ShowInterstitialHomeAd called");
         if (RuntimeStorageData.Player.IsLoadAds == false) { Callback?.Invoke(); CallbackAfterInter?.Invoke(); return; }
+        Debug.Log($"[{GetType()}] Attempting to show interstitial home ad.");
         if (InterHomeAdShowState == AdShowState.Pending) return;
+        Debug.Log($"[{GetType()}] InterHomeAdShowState is not pending.");
         if (InterHomeAdSpaceTimeAutoCounter < Manager.Instance.InterHomeReloadTimer) { Callback?.Invoke(); return; }
 
+        Debug.Log($"[{GetType()}] InterHomeAdSpaceTimeAutoCounter has reached the threshold.");
         if (_interstitialHomeAd != null && _interstitialHomeAd.CanShowAd())
         {
             Debug.Log($"[{GetType()}] Showing interstitial home ad.");
