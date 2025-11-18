@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "spronky-beat.sln"
+    "dotnet.defaultSolution": "RC25-V2.sln"
 }
