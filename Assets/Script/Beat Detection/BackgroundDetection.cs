@@ -56,17 +56,14 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
 
     public void SettingBackground()
     {
+        backgroundDatas.ForEach(_background => _background.Light.SetActive(false));
         backgroundDatas.ForEach(background => {
-            if(background.Style == GameManager.Instance.Style)
+            if(background.Style.ToString() == GameManager.Instance.Style.ToString())
             {
                 backgroudBase.sprite = background.Normal;
                 backgroudEffect.sprite = background.Kick;
                 background.Light.SetActive(true);
-            }
-            else
-            {
-                background.Light.SetActive(false);
-            }    
+            }   
         });
 
         if (GameManager.Instance.IsGameDefault())

@@ -19,6 +19,6 @@
     <meta-data android:name="com.facebook.sdk.ClientToken" android:value="25b45b905c52efd6a69c0618c7f9d8cf" />
     <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled" android:value="true" />
     <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled" android:value="true" />
-    <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider1109363227185647" android:exported="true" />
+    <!-- <provider android:name="com.facebook.FacebookContentProvider" android:authorities="com.facebook.app.FacebookContentProvider1109363227185647" android:exported="true" /> -->
   </application>
 </manifest>

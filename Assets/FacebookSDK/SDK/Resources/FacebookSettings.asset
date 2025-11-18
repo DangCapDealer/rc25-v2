@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - 25b45b905c52efd6a69c0618c7f9d8cf
+  - 
   appIds:
-  - 1109363227185647
+  - 
   appLabels:
-  - Sprank Beats Studio
+  - 
   cookie: 1
   logging: 1
   status: 1

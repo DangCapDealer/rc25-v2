@@ -48,7 +48,7 @@ public class PopupCanvas : MonoBehaviour
             case PopupAnimation.Punch:
                 this.panel.localScale = Vector3.one;
                 this.panel.DOKill();
-                this.panel.DOPunchScale(Vector3.one * 0.1f, 0.25f, 2, 0.2f);
+                this.panel.DOPunchScale(Vector3.one * 0.1f, 0.25f, 2, 0.2f).SetEase(Ease.OutBack);
                 break;
             case PopupAnimation.MoveToUp:
                 var rect = this.panel.GetComponent<RectTransform>();
