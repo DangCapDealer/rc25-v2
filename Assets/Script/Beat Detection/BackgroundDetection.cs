@@ -56,6 +56,7 @@ public class BackgroundDetection : MonoSingleton<BackgroundDetection>
 
     public void SettingBackground()
     {
+        Debug.Log("[BackgroundDetection] Setting Background for " + GameManager.Instance.Style.ToString());
         backgroundDatas.ForEach(_background => _background.Light.SetActive(false));
         backgroundDatas.ForEach(background => {
             if(background.Style.ToString() == GameManager.Instance.Style.ToString())

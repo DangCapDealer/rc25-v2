@@ -53,5 +53,8 @@ TagManager:
   - name: GameCanvas
     uniqueID: 3970454517
     locked: 0
+  - name: GameEffect
+    uniqueID: 309470899
+    locked: 0
   m_RenderingLayers:
   - Default
