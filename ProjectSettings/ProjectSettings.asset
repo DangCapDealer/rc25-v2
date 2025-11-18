@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: trip
-  productName: Monster Studio Music Beats
+  productName: 'Beat Monster: Music Lab'
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -141,7 +141,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.3.5
+  bundleVersion: 0.0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -164,7 +164,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.sprank.horror.beats.studio.battle
+    Android: com.RC25B.beat.monster.music.lab
     Standalone: com.DefaultCompany.2DProject
   buildNumber:
     Standalone: 0
@@ -172,7 +172,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 45
+  AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 24
   AndroidTargetSdkVersion: 35
   AndroidPreferredInstallLocation: 1
@@ -266,8 +266,8 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: key.keystore'
-  AndroidKeyaliasName: key_rc25
+  AndroidKeystoreName: '{inproject}: rc25v2.keystore'
+  AndroidKeyaliasName: key_rc25v2
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidEnableArm64MTE: 0
   AndroidBuildApkPerCpuArchitecture: 0
@@ -826,7 +826,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN;INAPP;FIREBASE;AppsFlyerSDK;ADMOB
+    Android: DOTWEEN;INAPP;FIREBASE;AppsFlyerSDK
     EmbeddedLinux: DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN
