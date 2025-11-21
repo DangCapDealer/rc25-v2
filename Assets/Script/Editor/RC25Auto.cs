@@ -16,7 +16,7 @@ public class RC25Auto : EditorWindow
     static string basePath = "Assets/Animation/{0}/{1}/export/";
     static bool isSpine = true;
 
-    [MenuItem("Auto/Custom Prefabs")]
+    [MenuItem("Tools/Created Prefabs [Windows]")]
     public static void ShowWindow()
     {
         GetWindow<RC25Auto>("Text Editor");
