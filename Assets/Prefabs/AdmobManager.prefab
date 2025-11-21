@@ -398,13 +398,13 @@ MonoBehaviour:
   IsPreloadOpen: 1
   OpenAdState: 2
   _openReloadCount: 0
-  _adUnitOpenId: ca-app-pub-8190506959251235/4305287493
+  _adUnitOpenId: ca-app-pub-8190506959251235/8923798784
   OpenAdSpaceTimeCounter: 0
   OpenAdSpaceTime: 5
   IsPreloadBanner: 1
   BannerAdState: 2
   _bannerReloadCount: 0
-  _adUnitBannerId: ca-app-pub-8190506959251235/7651090773
+  _adUnitBannerId: ca-app-pub-8190506959251235/2395432343
   IsInitalized: 0
   IsBlockedAutoIntertitialAd: 0
   _loadingInterstitalAd: {fileID: 5513636964888865855}
@@ -413,34 +413,32 @@ MonoBehaviour:
   InterAdShowState: 0
   _interstitalReloadCount: 0
   InterAdSpaceTimeAutoCounter: 0
-  _adUnitInterId: ca-app-pub-8190506959251235/3532337274
+  _adUnitInterId: ca-app-pub-8190506959251235/6334677353
   IsPreloadinterstitialHome: 1
   InterHomeAdState: 2
   InterHomeAdShowState: 0
   _interstitialHomeAdReloadCount: 0
   InterHomeAdSpaceTimeAutoCounter: 0
-  _adUnitInterHomeId: ca-app-pub-8190506959251235/6987516492
-  _adUnitInterOpenId: ca-app-pub-8190506959251235/8740416011
+  _adUnitInterHomeId: ca-app-pub-8190506959251235/1153119976
+  _adUnitInterOpenId: ca-app-pub-8190506959251235/5635290467
   InterOpenAdMaximusTimeCounter: 0
   InterOpenAdMaximusTime: 15
   IsPreloadNativeOverlayAd: 1
   NativeOverlayAdState: 2
   NativerOverlayAdReloadCount: 0
   NativeOverlayShowCount: 0
-  NativerOverlayAdUsed: 0
-  NativeOverlayShowing: 0
   CollapseAdSpaceTimeCounter: 0
   CollapseAdSpaceTime: 15
-  _adUnitNativerOverlayId: ca-app-pub-8190506959251235/9906173937
+  _adUnitNativerOverlayId: ca-app-pub-8190506959251235/7610717119
   UseReward: 1
   IsPreloadReward: 1
   RewardAdState: 2
   _rewardReloadCount: 0
-  _adUnitRewardId: ca-app-pub-8190506959251235/1368358305
+  _adUnitRewardId: ca-app-pub-8190506959251235/8840038307
   IsPreloadRewardThrid: 1
   RewardThridAdState: 2
   _rewardThridLoadCount: 0
-  _adUnitRewardThriddId: ca-app-pub-8190506959251235/1096895560
+  _adUnitRewardThriddId: ca-app-pub-8190506959251235/9550484747
 --- !u!1 &4069789085193034263
 GameObject:
   m_ObjectHideFlags: 0
