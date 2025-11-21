@@ -82,19 +82,15 @@ public class MenuEditor
     [MenuItem("Tools/Version/Version and Version Code")]
     public static void LogVersionAndVersionCode()
     {
-        LogProductNameAndDatetime();
-    }   
-
-    public static void LogProductNameAndDatetime()
-    {
         string currentDateTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         Debug.Log($"📱 Product: {PlayerSettings.productName}");
         Debug.Log($"📅 DateTime: {currentDateTime}");
         Debug.Log($"🔢 App Version: {PlayerSettings.bundleVersion}");
         Debug.Log($"⚡ Version Code: {PlayerSettings.Android.bundleVersionCode}");
         Debug.Log($"📦 Bundle ID: {PlayerSettings.applicationIdentifier}");
-    }
+    }   
 
+    [MenuItem("Tools/Version/Increment Version and Version Code")]
     public static void ChangeVersionAndVersionCode()
     {
         var vCode = PlayerSettings.Android.bundleVersionCode;
@@ -231,7 +227,7 @@ public class MenuEditor
             string app = $"{PlayerSettings.productName}_{PlayerSettings.bundleVersion}_{PlayerSettings.Android.bundleVersionCode}_{System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}";
             app = app.Replace(" ", "_").Replace(":", "_").Replace("-", "_");
             string fileExtension = _buildAppBundle ? ".aab" : ".apk";
-            string path = $"Builds/{app}.{fileExtension}";
+            string path = $"Builds/{app}{fileExtension}";
             if (File.Exists(path))
             {
                 long oldSize = new FileInfo(path).Length;

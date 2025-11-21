@@ -57,7 +57,7 @@
     },
     "banner_normal_active": {
       "defaultValue": {
-        "value": "0"
+        "value": "1"
       },
       "description": "Có dùng banner bình thường không 0 = tắt 1 = bật",
       "valueType": "STRING"
