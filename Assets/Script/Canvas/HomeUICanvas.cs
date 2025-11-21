@@ -93,7 +93,7 @@ public class HomeUICanvas : MonoBehaviour
     public void BtnRate()
     {
 #if UNITY_ANDROID
-        Application.OpenURL("https://play.google.com/store/apps/details?id=com.sprank.horror.beats.studio.battle");
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.RC25B.beat.monster.music.lab");
 #elif UNITY_IOS
             Application.OpenURL("itms-apps://itunes.apple.com/app/id1234567890");
 #else

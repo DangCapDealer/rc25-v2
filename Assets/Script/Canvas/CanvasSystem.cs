@@ -86,8 +86,6 @@ public class CanvasSystem : MonoSingleton<CanvasSystem>
 
     public void ShowNoAd()
     {
-        LogSystem.LogWarning("[CanvasSystem] Bật lại đoạn này khi có IAP");
-        return;
         if(Manager.Instance.IsVIPMember == false)
         {
             var isProduct = RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1));
