@@ -30,15 +30,15 @@ public class HomeUICanvas : MonoBehaviour
 
     private void OnIAPurechase(string productID, string action)
     {
-        // if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) &&
-        //     RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
-        // {
-        //     _btnProductRemoveAd.SetActive(false);
-        // }
-        // else
-        // {
-        //     _btnProductRemoveAd.SetActive(true);
-        // }
+        if (RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(0)) &&
+            RuntimeStorageData.Player.IsProductId(InappController.Instance.GetProductIdByIndex(1)))
+        {
+            _btnProductRemoveAd.SetActive(false);
+        }
+        else
+        {
+            _btnProductRemoveAd.SetActive(true);
+        }
     }
 
     //vào game thôi

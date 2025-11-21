@@ -4478,6 +4478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInitialized: 0
+  firebaseConfigJson: {fileID: 4900000, guid: 7fe5b7e27e1539847ac7e8ee3915607e, type: 3}
 --- !u!4 &296237028
 Transform:
   m_ObjectHideFlags: 0
@@ -5746,7 +5747,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -215}
-  m_SizeDelta: {x: 0, y: -430.00006}
+  m_SizeDelta: {x: 0, y: -430}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &407782268
 MonoBehaviour:
@@ -7007,7 +7008,7 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 10
-    m_Bottom: 10
+    m_Bottom: 160
   m_ChildAlignment: 1
   m_Spacing: 40
   m_ChildForceExpandWidth: 1
@@ -15626,7 +15627,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 30, y: 0}
+  m_SizeDelta: {x: 30, y: -150}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1210143684
 MonoBehaviour:
@@ -15672,7 +15673,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 852494886}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.6962617
+  m_Size: 0.65065503
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

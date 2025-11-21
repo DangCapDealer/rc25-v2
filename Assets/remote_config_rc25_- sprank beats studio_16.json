@@ -1,0 +1,75 @@
+{
+  "parameters": {
+    "inapp_membership": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN"
+    },
+    "inter_home": {
+      "defaultValue": {
+        "value": "30"
+      },
+      "description": "thời gian đếm ngược của inter home",
+      "valueType": "STRING"
+    },
+    "native_banner": {
+      "defaultValue": {
+        "value": "1"
+      },
+      "description": "0 = tắt 1 = bật",
+      "valueType": "STRING"
+    },
+    "button_unlock_all_character": {
+      "defaultValue": {
+        "value": "1"
+      },
+      "description": "Nút để mở toàn bộ charatcer 0 = tắt 1 = bật",
+      "valueType": "STRING"
+    },
+    "banner_mrec_active": {
+      "defaultValue": {
+        "value": "1"
+      },
+      "description": "Có dùng banner mrec không 0 = tắt 1 = bật",
+      "valueType": "STRING"
+    },
+    "native_inter": {
+      "defaultValue": {
+        "value": "1"
+      },
+      "description": "0 = tắt 1 = bật",
+      "valueType": "STRING"
+    },
+    "inter_auto": {
+      "defaultValue": {
+        "value": "40"
+      },
+      "description": "thời gian đếm ngược của inter tự động mở",
+      "valueType": "STRING"
+    },
+    "native_mrec": {
+      "defaultValue": {
+        "value": "1"
+      },
+      "description": "0 = tắt 1 = bật",
+      "valueType": "STRING"
+    },
+    "banner_normal_active": {
+      "defaultValue": {
+        "value": "0"
+      },
+      "description": "Có dùng banner bình thường không 0 = tắt 1 = bật",
+      "valueType": "STRING"
+    }
+  },
+  "version": {
+    "versionNumber": "16",
+    "updateTime": "2025-02-14T04:24:07.747518Z",
+    "updateUser": {
+      "email": "trinhvanbo87@gmail.com"
+    },
+    "updateOrigin": "CONSOLE",
+    "updateType": "INCREMENTAL_UPDATE"
+  }
+}
